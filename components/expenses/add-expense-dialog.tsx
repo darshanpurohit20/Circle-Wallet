@@ -17,7 +17,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { Family } from "@/lib/mock-data"
-import { expenseCategories } from "@/lib/mock-data"
+import { transactionCategories as expenseCategories } from "@/lib/mock-data"
+
 
 interface AddExpenseDialogProps {
   open: boolean
