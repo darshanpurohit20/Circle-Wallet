@@ -13,7 +13,8 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { CheckCircleIcon, ClockIcon } from "@/components/icons"
-import type { Expense, FamilyMember } from "@/lib/mock-data"
+import type { Transaction as Expense, FamilyMember } from "@/lib/mock-data"
+
 
 interface ExpenseDetailDialogProps {
   open: boolean
