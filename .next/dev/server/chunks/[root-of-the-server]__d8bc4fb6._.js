@@ -93,13 +93,13 @@ async function updateSession(request) {
 __turbopack_context__.s([
     "config",
     ()=>config,
-    "middleware",
-    ()=>middleware
+    "proxy",
+    ()=>proxy
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$proxy$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/supabase/proxy.ts [middleware] (ecmascript)");
 ;
-async function middleware(request) {
-    return await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$proxy$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["updateSession"])(request);
+async function proxy(request) {
+    return (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$proxy$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["updateSession"])(request);
 }
 const config = {
     matcher: [
