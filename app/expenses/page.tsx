@@ -8,7 +8,7 @@ import { AddExpenseDialog } from "@/components/expenses/add-expense-dialog"
 import { ExpenseDetailDialog } from "@/components/expenses/expense-detail-dialog"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { mockGroup, type Expense } from "@/lib/mock-data"
+import { mockGroup, type Transaction as Expense } from "@/lib/mock-data"
 import { PlusCircleIcon, ReceiptIcon } from "@/components/icons"
 
 export default function ExpensesPage() {
@@ -26,7 +26,7 @@ export default function ExpensesPage() {
   const allMembers = group.families.flatMap((f) => f.members)
 
   const filteredExpenses = useMemo(() => {
-    return group.expenses.filter((expense) => {
+    return group.transactions.filter((expense) => {
       if (search && !expense.description.toLowerCase().includes(search.toLowerCase())) {
         return false
       }
@@ -44,7 +44,7 @@ export default function ExpensesPage() {
       }
       return true
     })
-  }, [group.expenses, search, category, status, splitType])
+  }, [group.transactions, search, category, status, splitType])
 
   const handleClearFilters = () => {
     setSearch("")
@@ -69,9 +69,11 @@ export default function ExpensesPage() {
     console.log("Adding expense:", data)
   }
 
-  const totalPending = group.expenses.filter((e) => e.status === "pending").length
-  const totalConfirmed = group.expenses.filter((e) => e.status === "confirmed").length
-  const pendingAmount = group.expenses.filter((e) => e.status === "pending").reduce((acc, e) => acc + e.amount, 0)
+  const totalPending = group.transactions.filter((e) => e.status === "pending").length
+  const totalConfirmed = group.transactions.filter((e) => e.status === "confirmed").length
+  const pendingAmount = group.transactions
+    .filter((e) => e.status === "pending")
+    .reduce((acc, e) => acc + e.amount, 0)
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -105,7 +107,7 @@ export default function ExpensesPage() {
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Total Expenses</p>
-                <p className="text-xl font-bold text-foreground">{formatCurrency(group.totalExpenses)}</p>
+                <p className="text-xl font-bold text-foreground">{formatCurrency(group.totalSpent)}</p>
               </div>
             </div>
           </Card>
@@ -129,7 +131,7 @@ export default function ExpensesPage() {
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Confirmed</p>
-                <p className="text-xl font-bold text-foreground">{group.expenses.length} expenses</p>
+                <p className="text-xl font-bold text-foreground">{group.transactions.length} expenses</p>
               </div>
             </div>
           </Card>
