@@ -1,44 +1,149 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { createClient } from "@/lib/supabase/client"
+
 import { Header } from "@/components/dashboard/header"
 import { FamilySection } from "@/components/members/family-section"
 import { AddMemberDialog } from "@/components/members/add-member-dialog"
 import { AddFamilyDialog } from "@/components/members/add-family-dialog"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { mockGroup } from "@/lib/mock-data"
 import { PlusCircleIcon, UsersIcon } from "@/components/icons"
 
 export default function MembersPage() {
-  const [group] = useState(mockGroup)
+  const supabase = createClient()
+  const router = useRouter()
+
+  const [group, setGroup] = useState<any>(null)
+  const [families, setFamilies] = useState<any[]>([])
+  const [members, setMembers] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
   const [addMemberOpen, setAddMemberOpen] = useState(false)
   const [addFamilyOpen, setAddFamilyOpen] = useState(false)
   const [selectedFamilyId, setSelectedFamilyId] = useState<string | null>(null)
 
-  const selectedFamily = group.families.find((f) => f.id === selectedFamilyId)
-  const totalMembers = group.families.reduce((acc, fam) => acc + fam.members.length, 0)
-  const totalAdults = group.families.reduce((acc, fam) => acc + fam.members.filter((m) => m.type === "adult").length, 0)
+  // -------------------------------------
+  // LOAD GROUP + FAMILIES + MEMBERS
+  // -------------------------------------
+  useEffect(() => {
+    async function load() {
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        router.push("/auth/login")
+        return
+      }
+
+      // Find user's group
+      const { data: gm } = await supabase
+        .from("group_members")
+        .select("group_id")
+        .eq("profile_id", user.id)
+        .maybeSingle()
+
+      if (!gm) {
+        setLoading(false)
+        return
+      }
+
+      const groupId = gm.group_id
+
+      // Load group data
+      const { data: groupData } = await supabase
+        .from("groups")
+        .select("*")
+        .eq("id", groupId)
+        .single()
+
+      // Load families
+      const { data: familyData } = await supabase
+        .from("families")
+        .select("*")
+        .eq("group_id", groupId)
+
+      // Load family members
+      const { data: memberData } = await supabase
+        .from("family_members")
+        .select("*")
+
+      setGroup(groupData)
+      setFamilies(familyData || [])
+      setMembers(memberData || [])
+
+      setLoading(false)
+    }
+
+    load()
+  }, [])
+
+  if (loading) return <div className="p-8 text-center text-muted-foreground">Loading members...</div>
+
+  // Combine families + member list
+  const familiesWithMembers = families.map((family) => ({
+    ...family,
+    members: members.filter((m) => m.family_id === family.id),
+  }))
+
+  const totalMembers = members.length
+  const totalAdults = members.filter((m) => m.member_type === "adult").length
   const totalChildren = totalMembers - totalAdults
 
+  // -------------------------------------
+  // ADD MEMBER
+  // -------------------------------------
   const handleAddMember = (familyId: string) => {
     setSelectedFamilyId(familyId)
     setAddMemberOpen(true)
   }
 
-  const handleAddMemberSubmit = (data: { name: string; type: string; age?: number; shareRatio: number }) => {
-    console.log("Adding member:", data, "to family:", selectedFamilyId)
+  const handleAddMemberSubmit = async (data: { name: string; type: string; age?: number; shareRatio: number }) => {
+    if (!selectedFamilyId) return
+
+    await supabase.from("family_members").insert({
+      family_id: selectedFamilyId,
+      name: data.name,
+      member_type: data.type,
+      age: data.age || null,
+      share_ratio: data.shareRatio,
+    })
+
+    // Refresh members
+    const { data: memberData } = await supabase.from("family_members").select("*")
+    setMembers(memberData || [])
+
+    setAddMemberOpen(false)
   }
 
-  const handleAddFamilySubmit = (data: { name: string; initialContribution: number }) => {
-    console.log("Adding family:", data)
+  // -------------------------------------
+  // ADD FAMILY
+  // -------------------------------------
+  const handleAddFamilySubmit = async (data: { name: string; initialContribution: number }) => {
+    await supabase.from("families").insert({
+      group_id: group.id,
+      name: data.name,
+      total_contribution: data.initialContribution,
+      balance: data.initialContribution,
+    })
+
+    const { data: updatedFamilies } = await supabase
+      .from("families")
+      .select("*")
+      .eq("group_id", group.id)
+
+    setFamilies(updatedFamilies || [])
+    setAddFamilyOpen(false)
   }
 
   return (
     <div className="min-h-screen bg-background">
-      <Header groupName={group.name} />
+      <Header groupName={group?.name || "Group"} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+
+        {/* HEADER */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-foreground">Members</h1>
@@ -51,17 +156,20 @@ export default function MembersPage() {
           </Button>
         </div>
 
+        {/* SUMMARY CARD */}
         <Card className="p-4 md:p-6 mb-6">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
               <UsersIcon className="w-6 h-6 text-primary" />
             </div>
+
             <div className="flex-1">
               <h2 className="font-semibold text-foreground">Group Overview</h2>
               <p className="text-sm text-muted-foreground">
-                {group.families.length} {group.families.length === 1 ? "family" : "families"} • {totalMembers} members
+                {families.length} {families.length === 1 ? "family" : "families"} • {totalMembers} members
               </p>
             </div>
+
             <div className="flex gap-4 text-center">
               <div>
                 <p className="text-2xl font-bold text-foreground">{totalAdults}</p>
@@ -75,8 +183,9 @@ export default function MembersPage() {
           </div>
         </Card>
 
+        {/* FAMILY SECTIONS */}
         <div className="space-y-6">
-          {group.families.map((family) => (
+          {familiesWithMembers.map((family) => (
             <FamilySection
               key={family.id}
               family={family}
@@ -89,10 +198,11 @@ export default function MembersPage() {
         </div>
       </main>
 
+      {/* DIALOGS */}
       <AddMemberDialog
         open={addMemberOpen}
         onOpenChange={setAddMemberOpen}
-        familyName={selectedFamily?.name || ""}
+        familyName={families.find((f) => f.id === selectedFamilyId)?.name || ""}
         onSubmit={handleAddMemberSubmit}
       />
 

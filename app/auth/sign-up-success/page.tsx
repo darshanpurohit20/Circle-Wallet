@@ -22,11 +22,13 @@ export default function SignUpSuccessPage() {
             <CardTitle className="text-2xl">Check Your Email</CardTitle>
             <CardDescription>We&apos;ve sent you a confirmation link</CardDescription>
           </CardHeader>
+
           <CardContent className="text-center space-y-4">
             <p className="text-sm text-muted-foreground">
-              Please check your email and click the confirmation link to activate your account. After confirming, you
-              can sign in to Circle Wallet.
+              Please check your email and click the confirmation link to activate your account.
+              After confirming, you can sign in to Circle Wallet.
             </p>
+
             <Button asChild variant="outline" className="w-full bg-transparent">
               <Link href="/auth/login">Back to Sign In</Link>
             </Button>

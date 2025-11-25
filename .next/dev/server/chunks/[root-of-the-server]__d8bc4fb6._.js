@@ -45,6 +45,8 @@ module.exports = mod;
 "use strict";
 
 __turbopack_context__.s([
+    "config",
+    ()=>config,
     "updateSession",
     ()=>updateSession
 ]);
@@ -72,20 +74,32 @@ async function updateSession(request) {
         }
     });
     const { data: { user } } = await supabase.auth.getUser();
-    // Protected routes - redirect to login if not authenticated
-    if (!user && !request.nextUrl.pathname.startsWith("/auth") && request.nextUrl.pathname !== "/") {
+    const path = request.nextUrl.pathname;
+    const isAuthRoute = path.startsWith("/auth");
+    const isSettingsRoute = path.startsWith("/settings");
+    const isProtectedRoute = !isAuthRoute && !isSettingsRoute && !path.startsWith("/api") && path !== "/" && path !== "/favicon.ico";
+    // ❌ NOT LOGGED IN → send to login
+    if (!user && isProtectedRoute) {
         const url = request.nextUrl.clone();
         url.pathname = "/auth/login";
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
     }
-    // Redirect authenticated users from auth pages to dashboard
-    if (user && request.nextUrl.pathname.startsWith("/auth")) {
+    // ✔ LOGGED IN but accessing /auth → send to dashboard
+    if (user && isAuthRoute) {
         const url = request.nextUrl.clone();
         url.pathname = "/dashboard";
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
     }
+    // ✔ NOTICE:
+    // /settings is now ALWAYS allowed for logged-in users.
+    // This lets dashboard redirect → /settings work properly.
     return supabaseResponse;
 }
+const config = {
+    matcher: [
+        "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"
+    ]
+};
 }),
 "[project]/proxy.ts [middleware] (ecmascript)", ((__turbopack_context__) => {
 "use strict";

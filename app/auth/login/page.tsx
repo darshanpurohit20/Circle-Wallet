@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
@@ -24,6 +23,9 @@ export default function LoginPage() {
   const [activeTab, setActiveTab] = useState("email")
   const router = useRouter()
 
+  // ---------------------------
+  // Email + Password Login
+  // ---------------------------
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     const supabase = createClient()
@@ -36,7 +38,8 @@ export default function LoginPage() {
         password,
       })
       if (error) throw error
-      router.push("/dashboard")
+
+      router.replace("/d")
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred")
     } finally {
@@ -44,6 +47,9 @@ export default function LoginPage() {
     }
   }
 
+  // ---------------------------
+  // Google Login (Fixed)
+  // ---------------------------
   const handleGoogleLogin = async () => {
     const supabase = createClient()
     setIsLoading(true)
@@ -53,9 +59,10 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/dashboard`,
+          redirectTo: `${location.origin}/auth/callback`,
         },
       })
+
       if (error) throw error
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred")
@@ -63,6 +70,9 @@ export default function LoginPage() {
     }
   }
 
+  // ---------------------------
+  // Phone OTP: Send OTP
+  // ---------------------------
   const handleSendOtp = async () => {
     const supabase = createClient()
     setIsLoading(true)
@@ -73,6 +83,7 @@ export default function LoginPage() {
         phone: phone.startsWith("+") ? phone : `+91${phone}`,
       })
       if (error) throw error
+
       setOtpSent(true)
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred")
@@ -81,6 +92,9 @@ export default function LoginPage() {
     }
   }
 
+  // ---------------------------
+  // Phone OTP: Verify OTP
+  // ---------------------------
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault()
     const supabase = createClient()
@@ -94,7 +108,8 @@ export default function LoginPage() {
         type: "sms",
       })
       if (error) throw error
-      router.push("/dashboard")
+
+      router.replace("/")
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred")
     } finally {
@@ -117,29 +132,27 @@ export default function LoginPage() {
             <CardTitle className="text-2xl">Welcome Back</CardTitle>
             <CardDescription>Sign in to manage your shared wallet</CardDescription>
           </CardHeader>
+
           <CardContent>
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="grid grid-cols-3 w-full mb-6">
                 <TabsTrigger value="email" className="gap-2">
-                  <MailIcon className="w-4 h-4" />
-                  Email
+                  <MailIcon className="w-4 h-4" /> Email
                 </TabsTrigger>
                 <TabsTrigger value="phone" className="gap-2">
-                  <PhoneIcon className="w-4 h-4" />
-                  Phone
+                  <PhoneIcon className="w-4 h-4" /> Phone
                 </TabsTrigger>
                 <TabsTrigger value="google" className="gap-2">
-                  <ChromeIcon className="w-4 h-4" />
-                  Google
+                  <ChromeIcon className="w-4 h-4" /> Google
                 </TabsTrigger>
               </TabsList>
 
+              {/* EMAIL LOGIN */}
               <TabsContent value="email">
                 <form onSubmit={handleEmailLogin} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label>Email</Label>
                     <Input
-                      id="email"
                       type="email"
                       placeholder="you@example.com"
                       value={email}
@@ -147,66 +160,85 @@ export default function LoginPage() {
                       required
                     />
                   </div>
+
                   <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
+                    <Label>Password</Label>
                     <Input
-                      id="password"
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
                     />
                   </div>
+
                   {error && <p className="text-sm text-destructive">{error}</p>}
+
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? "Signing in..." : "Sign In with Email"}
                   </Button>
                 </form>
               </TabsContent>
 
+              {/* PHONE LOGIN */}
               <TabsContent value="phone">
                 {!otpSent ? (
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number</Label>
+                      <Label>Phone Number</Label>
                       <div className="flex gap-2">
                         <div className="flex items-center px-3 bg-muted rounded-md border text-sm text-muted-foreground">
                           +91
                         </div>
                         <Input
-                          id="phone"
                           type="tel"
                           placeholder="9876543210"
                           value={phone}
-                          onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
-                          required
+                          onChange={(e) =>
+                            setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))
+                          }
                         />
                       </div>
                     </div>
+
                     {error && <p className="text-sm text-destructive">{error}</p>}
-                    <Button onClick={handleSendOtp} className="w-full" disabled={isLoading || phone.length !== 10}>
+
+                    <Button
+                      onClick={handleSendOtp}
+                      className="w-full"
+                      disabled={isLoading || phone.length !== 10}
+                    >
                       {isLoading ? "Sending OTP..." : "Send OTP"}
                     </Button>
                   </div>
                 ) : (
                   <form onSubmit={handleVerifyOtp} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="otp">Enter OTP</Label>
+                      <Label>Enter OTP</Label>
                       <Input
-                        id="otp"
                         type="text"
                         placeholder="123456"
                         value={otp}
-                        onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                        onChange={(e) =>
+                          setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
+                        }
                         maxLength={6}
                         required
                       />
-                      <p className="text-xs text-muted-foreground">OTP sent to +91{phone}</p>
+                      <p className="text-xs text-muted-foreground">
+                        OTP sent to +91{phone}
+                      </p>
                     </div>
+
                     {error && <p className="text-sm text-destructive">{error}</p>}
-                    <Button type="submit" className="w-full" disabled={isLoading || otp.length !== 6}>
+
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={isLoading || otp.length !== 6}
+                    >
                       {isLoading ? "Verifying..." : "Verify OTP"}
                     </Button>
+
                     <Button
                       type="button"
                       variant="ghost"
@@ -222,12 +254,15 @@ export default function LoginPage() {
                 )}
               </TabsContent>
 
+              {/* GOOGLE LOGIN */}
               <TabsContent value="google">
                 <div className="space-y-4">
                   <p className="text-sm text-muted-foreground text-center">
-                    Sign in with your Google account for quick access
+                    Sign in with your Google account
                   </p>
+
                   {error && <p className="text-sm text-destructive">{error}</p>}
+
                   <Button
                     onClick={handleGoogleLogin}
                     variant="outline"

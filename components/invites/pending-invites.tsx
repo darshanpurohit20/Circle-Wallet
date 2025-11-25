@@ -1,4 +1,5 @@
 "use client"
+import React from "react"
 
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -57,44 +58,46 @@ export function PendingInvites({ invites, onResend, onCancel }: PendingInvitesPr
   }
 
   return (
-    <Card className="divide-y divide-border">
-      {invites.map((invite) => (
-        <div key={invite.id} className="p-4 flex items-center gap-4">
-          <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-sm font-medium text-secondary-foreground">
-            {invite.email[0].toUpperCase()}
-          </div>
+  <Card className="divide-y divide-border">
+  {invites.map((invite) => (
+    <div key={invite.id} className="p-4 flex items-center gap-4">
+      <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-sm font-medium text-secondary-foreground">
+        {invite.email[0].toUpperCase()}
+      </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <p className="font-medium text-foreground truncate">{invite.email}</p>
-              {getStatusBadge(invite.status)}
-              <Badge variant="outline" className="capitalize">
-                {invite.role}
-              </Badge>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Invited by {invite.invitedByName} • Expires {formatDate(invite.expiresAt)}
-            </p>
-          </div>
-
-          {invite.status === "pending" && (
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" onClick={() => onResend(invite.id)}>
-                Resend
-              </Button>
-              <Button variant="ghost" size="icon" onClick={() => onCancel(invite.id)}>
-                <XIcon className="w-4 h-4" />
-              </Button>
-            </div>
-          )}
-
-          {invite.status === "expired" && (
-            <Button variant="outline" size="sm" onClick={() => onResend(invite.id)}>
-              Resend
-            </Button>
-          )}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-wrap">
+          <p className="font-medium text-foreground truncate">{invite.email}</p>
+          {getStatusBadge(invite.status)}
+          <Badge variant="outline" className="capitalize">
+            {invite.role}
+          </Badge>
         </div>
-      ))}
-    </Card>
-  )
+        <p className="text-sm text-muted-foreground">
+          Invited by {invite.invitedByName} • Expires {formatDate(invite.expiresAt)}
+        </p>
+      </div>
+
+      {invite.status === "pending" && (
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="sm" onClick={() => onResend(invite.id)}>
+            Resend
+          </Button>
+          <Button variant="ghost" size="icon" onClick={() => onCancel(invite.id)}>
+            <XIcon className="w-4 h-4" />
+          </Button>
+        </div>
+      )}
+
+      {invite.status === "expired" && (
+        <Button variant="outline" size="sm" onClick={() => onResend(invite.id)}>
+          Resend
+        </Button>
+      )}
+    </div>
+  ))}
+</Card>
+
+)
+
 }

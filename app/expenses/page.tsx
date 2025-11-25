@@ -1,20 +1,28 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useEffect, useMemo } from "react"
+import { createClient } from "@/lib/supabase/client"
+
 import { Header } from "@/components/dashboard/header"
 import { ExpenseItem } from "@/components/dashboard/expense-item"
 import { ExpenseFilters } from "@/components/expenses/expense-filters"
 import { AddExpenseDialog } from "@/components/expenses/add-expense-dialog"
 import { ExpenseDetailDialog } from "@/components/expenses/expense-detail-dialog"
+
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { mockGroup, type Transaction as Expense } from "@/lib/mock-data"
 import { PlusCircleIcon, ReceiptIcon } from "@/components/icons"
 
 export default function ExpensesPage() {
-  const [group] = useState(mockGroup)
+  const supabase = createClient()
+
+  const [group, setGroup] = useState<any>(null)
+  const [families, setFamilies] = useState<any[]>([])
+  const [transactions, setTransactions] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
   const [addExpenseOpen, setAddExpenseOpen] = useState(false)
-  const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null)
+  const [selectedExpense, setSelectedExpense] = useState(null)
   const [detailOpen, setDetailOpen] = useState(false)
 
   // Filters
@@ -23,121 +31,141 @@ export default function ExpensesPage() {
   const [status, setStatus] = useState("all")
   const [splitType, setSplitType] = useState("all")
 
-  const allMembers = group.families.flatMap((f) => f.members)
+  // -------------------------
+  // FETCH DATA FROM SUPABASE
+  // -------------------------
+  useEffect(() => {
+    async function loadData() {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        window.location.href = "/auth/login"
+        return
+      }
 
+      // 1. Get the group this user belongs to
+      const { data: membership } = await supabase
+        .from("group_members")
+        .select("group_id")
+        .eq("profile_id", user.id)
+        .maybeSingle()
+
+      if (!membership) return
+
+      // 2. Load group
+      const { data: groupData } = await supabase
+        .from("groups")
+        .select("*")
+        .eq("id", membership.group_id)
+        .single()
+
+      setGroup(groupData)
+
+      // 3. Load families
+      const { data: fams } = await supabase
+        .from("families")
+        .select("*, family_members(*)")
+        .eq("group_id", membership.group_id)
+
+      setFamilies(fams || [])
+
+      // 4. Load transactions
+      const { data: txns } = await supabase
+        .from("transactions")
+        .select("*")
+        .eq("group_id", membership.group_id)
+        .order("created_at", { ascending: false })
+
+      setTransactions(txns || [])
+
+      setLoading(false)
+    }
+
+    loadData()
+  }, [])
+
+  // -------------------------
+  // LOADING STATE
+  // -------------------------
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-muted-foreground">
+        Loading expenses...
+      </div>
+    )
+  }
+
+  const allMembers = families.flatMap((f) => f.family_members || [])
+
+  // -------------------------
+  // FILTER LOGIC
+  // -------------------------
   const filteredExpenses = useMemo(() => {
-    return group.transactions.filter((expense) => {
-      if (search && !expense.description.toLowerCase().includes(search.toLowerCase())) {
-        return false
-      }
-      if (category !== "all" && expense.category !== category) {
-        return false
-      }
-      if (status !== "all" && expense.status !== status) {
-        return false
-      }
+    return transactions.filter((expense) => {
+      if (search && !expense.description.toLowerCase().includes(search.toLowerCase())) return false
+      if (category !== "all" && expense.category !== category) return false
+      if (status !== "all" && expense.status !== status) return false
+
       if (splitType !== "all") {
-        if (splitType === "all-members" && expense.splitType !== "all") return false
-        if (splitType === "adults" && expense.splitType !== "adults") return false
-        if (splitType === "children" && expense.splitType !== "children") return false
-        if (splitType === "custom" && expense.splitType !== "custom") return false
+        if (splitType === "adults" && expense.split_type !== "adults") return false
+        if (splitType === "children" && expense.split_type !== "children") return false
+        if (splitType === "custom" && expense.split_type !== "custom") return false
       }
+
       return true
     })
-  }, [group.transactions, search, category, status, splitType])
+  }, [transactions, search, category, status, splitType])
 
-  const handleClearFilters = () => {
-    setSearch("")
-    setCategory("all")
-    setStatus("all")
-    setSplitType("all")
-  }
+  const totalPending = transactions.filter((e) => e.status === "pending").length
+  const totalConfirmed = transactions.filter((e) => e.status === "confirmed").length
+  const pendingAmount = transactions
+    .filter((e) => e.status === "pending")
+    .reduce((acc, e) => acc + Number(e.amount), 0)
 
-  const handleExpenseClick = (expense: Expense) => {
+  const formatCurrency = (amount: number) =>
+    new Intl.NumberFormat("en-IN", { style: "currency", currency: group.currency }).format(amount)
+
+  const handleExpenseClick = (expense: any) => {
     setSelectedExpense(expense)
     setDetailOpen(true)
-  }
-
-  const handleAddExpenseSubmit = (data: {
-    description: string
-    amount: number
-    category: string
-    paidBy: string
-    splitType: string
-    splitAmong: string[]
-  }) => {
-    console.log("Adding expense:", data)
-  }
-
-  const totalPending = group.transactions.filter((e) => e.status === "pending").length
-  const totalConfirmed = group.transactions.filter((e) => e.status === "confirmed").length
-  const pendingAmount = group.transactions
-    .filter((e) => e.status === "pending")
-    .reduce((acc, e) => acc + e.amount, 0)
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: group.currency,
-    }).format(amount)
   }
 
   return (
     <div className="min-h-screen bg-background">
       <Header groupName={group.name} />
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+      <main className="max-w-5xl mx-auto px-4 py-8">
+        {/* Top Section */}
+        <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-foreground">Expenses</h1>
+            <h1 className="text-3xl font-bold">Expenses</h1>
             <p className="text-muted-foreground">Track and manage all group expenses</p>
           </div>
 
           <Button onClick={() => setAddExpenseOpen(true)} className="gap-2">
-            <PlusCircleIcon className="w-4 h-4" />
-            Add Expense
+            <PlusCircleIcon className="w-4 h-4" /> Add Expense
           </Button>
         </div>
 
+        {/* Summary Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <Card className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                <ReceiptIcon className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Total Expenses</p>
-                <p className="text-xl font-bold text-foreground">{formatCurrency(group.totalSpent)}</p>
-              </div>
-            </div>
+            <p className="text-sm text-muted-foreground">Total Spent</p>
+            <p className="text-xl font-bold">{formatCurrency(group.total_spent || 0)}</p>
           </Card>
 
           <Card className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-warning/10 flex items-center justify-center">
-                <span className="text-warning font-bold">{totalPending}</span>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Pending Approval</p>
-                <p className="text-xl font-bold text-foreground">{formatCurrency(pendingAmount)}</p>
-              </div>
-            </div>
+            <p className="text-sm text-muted-foreground">Pending</p>
+            <p className="text-xl font-bold">{formatCurrency(pendingAmount)}</p>
           </Card>
 
           <Card className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center">
-                <span className="text-success font-bold">{totalConfirmed}</span>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Confirmed</p>
-                <p className="text-xl font-bold text-foreground">{group.transactions.length} expenses</p>
-              </div>
-            </div>
+            <p className="text-sm text-muted-foreground">Confirmed</p>
+            <p className="text-xl font-bold">{totalConfirmed} expenses</p>
           </Card>
         </div>
 
-        <Card className="p-4 md:p-6">
+        {/* Expense List */}
+        <Card className="p-6">
           <ExpenseFilters
             search={search}
             onSearchChange={setSearch}
@@ -147,18 +175,17 @@ export default function ExpensesPage() {
             onStatusChange={setStatus}
             splitType={splitType}
             onSplitTypeChange={setSplitType}
-            onClearFilters={handleClearFilters}
+            onClearFilters={() => {
+              setSearch("")
+              setCategory("all")
+              setStatus("all")
+              setSplitType("all")
+            }}
           />
 
           <div className="mt-6 divide-y divide-border">
             {filteredExpenses.length === 0 ? (
-              <div className="py-12 text-center">
-                <ReceiptIcon className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">No expenses found</p>
-                <Button variant="outline" onClick={handleClearFilters} className="mt-4 bg-transparent">
-                  Clear Filters
-                </Button>
-              </div>
+              <div className="py-12 text-center text-muted-foreground">No expenses found</div>
             ) : (
               filteredExpenses.map((expense) => (
                 <ExpenseItem
@@ -176,9 +203,9 @@ export default function ExpensesPage() {
       <AddExpenseDialog
         open={addExpenseOpen}
         onOpenChange={setAddExpenseOpen}
-        families={group.families}
+        families={families}
         currency={group.currency}
-        onSubmit={handleAddExpenseSubmit}
+        onSubmit={(data) => console.log("Add expense", data)}
       />
 
       <ExpenseDetailDialog
@@ -187,8 +214,8 @@ export default function ExpensesPage() {
         expense={selectedExpense}
         allMembers={allMembers}
         currency={group.currency}
-        onConfirm={() => console.log("Confirm expense:", selectedExpense?.id)}
-        onDelete={() => console.log("Delete expense:", selectedExpense?.id)}
+        onConfirm={() => console.log("Confirm:", selectedExpense?.id)}
+        onDelete={() => console.log("Delete:", selectedExpense?.id)}
       />
     </div>
   )

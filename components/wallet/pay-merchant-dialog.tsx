@@ -35,7 +35,13 @@ interface PayMerchantDialogProps {
   }) => void
 }
 
-export function PayMerchantDialog({ open, onOpenChange, families, walletBalance, onSubmit }: PayMerchantDialogProps) {
+export function PayMerchantDialog({
+  open,
+  onOpenChange,
+  families,
+  walletBalance,
+  onSubmit,
+}: PayMerchantDialogProps) {
   const [merchantName, setMerchantName] = useState("")
   const [merchantUpi, setMerchantUpi] = useState("")
   const [amount, setAmount] = useState("")
@@ -44,9 +50,11 @@ export function PayMerchantDialog({ open, onOpenChange, families, walletBalance,
   const [splitType, setSplitType] = useState("all")
   const [selectedMembers, setSelectedMembers] = useState<string[]>([])
 
-  const allMembers = families.flatMap((f) => f.members)
-  const adults = allMembers.filter((m) => m.type === "adult")
-  const children = allMembers.filter((m) => m.type !== "adult")
+  // SAFE MEMBERS LIST
+  const allMembers = families.flatMap((f) => f.members ?? []).filter(Boolean)
+
+  const adults = allMembers.filter((m) => m.type === "adult" || m.role === "adult")
+  const children = allMembers.filter((m) => m.type !== "adult" && m.role !== "adult")
 
   const handleSplitTypeChange = (type: string) => {
     setSplitType(type)
@@ -60,14 +68,18 @@ export function PayMerchantDialog({ open, onOpenChange, families, walletBalance,
   }
 
   const toggleMember = (memberId: string) => {
-    setSelectedMembers((prev) => (prev.includes(memberId) ? prev.filter((id) => id !== memberId) : [...prev, memberId]))
+    setSelectedMembers((prev) =>
+      prev.includes(memberId)
+        ? prev.filter((id) => id !== memberId)
+        : [...prev, memberId]
+    )
   }
 
   const handleSubmit = () => {
     onSubmit({
       merchantName,
       merchantUpi: merchantUpi || undefined,
-      amount: Number.parseFloat(amount),
+      amount: Number(amount),
       description,
       category,
       splitType,
@@ -75,10 +87,10 @@ export function PayMerchantDialog({ open, onOpenChange, families, walletBalance,
         splitType === "custom"
           ? selectedMembers
           : splitType === "adults"
-            ? adults.map((m) => m.id)
-            : splitType === "children"
-              ? children.map((m) => m.id)
-              : allMembers.map((m) => m.id),
+          ? adults.map((m) => m.id)
+          : splitType === "children"
+          ? children.map((m) => m.id)
+          : allMembers.map((m) => m.id),
     })
     resetForm()
     onOpenChange(false)
@@ -99,14 +111,15 @@ export function PayMerchantDialog({ open, onOpenChange, families, walletBalance,
 
   const calculateSplit = () => {
     if (!amount) return null
+
     const membersToSplit =
       splitType === "custom"
         ? selectedMembers
         : splitType === "adults"
-          ? adults.map((m) => m.id)
-          : splitType === "children"
-            ? children.map((m) => m.id)
-            : allMembers.map((m) => m.id)
+        ? adults.map((m) => m.id)
+        : splitType === "children"
+        ? children.map((m) => m.id)
+        : allMembers.map((m) => m.id)
 
     const membersData = allMembers.filter((m) => membersToSplit.includes(m.id))
     const totalRatio = membersData.reduce((acc, m) => acc + m.shareRatio, 0)
@@ -130,38 +143,23 @@ export function PayMerchantDialog({ open, onOpenChange, families, walletBalance,
         </DialogHeader>
 
         <div className="space-y-4 py-4">
+          {/* Merchant Inputs */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="merchantName">Merchant Name</Label>
-              <Input
-                id="merchantName"
-                value={merchantName}
-                onChange={(e) => setMerchantName(e.target.value)}
-                placeholder="Shop/Restaurant name"
-              />
+              <Label>Merchant Name</Label>
+              <Input value={merchantName} onChange={(e) => setMerchantName(e.target.value)} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="merchantUpi">UPI ID (Optional)</Label>
-              <Input
-                id="merchantUpi"
-                value={merchantUpi}
-                onChange={(e) => setMerchantUpi(e.target.value)}
-                placeholder="merchant@upi"
-              />
+              <Label>UPI ID (Optional)</Label>
+              <Input value={merchantUpi} onChange={(e) => setMerchantUpi(e.target.value)} />
             </div>
           </div>
 
+          {/* Amount + Category */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="amount">Amount (INR)</Label>
-              <Input
-                id="amount"
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="0"
-                min={1}
-              />
+              <Label>Amount (INR)</Label>
+              <Input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
               {insufficientBalance && (
                 <p className="text-xs text-destructive flex items-center gap-1">
                   <AlertCircleIcon className="w-3 h-3" />
@@ -169,6 +167,7 @@ export function PayMerchantDialog({ open, onOpenChange, families, walletBalance,
                 </p>
               )}
             </div>
+
             <div className="space-y-2">
               <Label>Category</Label>
               <Select value={category} onValueChange={setCategory}>
@@ -188,49 +187,50 @@ export function PayMerchantDialog({ open, onOpenChange, families, walletBalance,
             </div>
           </div>
 
+          {/* Description */}
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label>Description</Label>
             <Input
-              id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="What was this payment for?"
             />
           </div>
 
+          {/* Split selection */}
           <div className="space-y-3">
             <Label>Split Among</Label>
             <Tabs value={splitType} onValueChange={handleSplitTypeChange}>
-              <TabsList className="grid grid-cols-4 w-full">
+              <TabsList className="grid grid-cols-4">
                 <TabsTrigger value="all">Everyone</TabsTrigger>
                 <TabsTrigger value="adults">Adults</TabsTrigger>
                 <TabsTrigger value="children">Kids</TabsTrigger>
                 <TabsTrigger value="custom">Custom</TabsTrigger>
               </TabsList>
 
+              {/* Custom Split */}
               <TabsContent value="custom" className="mt-4">
                 <div className="border rounded-lg p-3 max-h-48 overflow-y-auto space-y-2">
                   {families.map((family) => (
                     <div key={family.id} className="space-y-2">
                       <p className="text-xs font-medium text-muted-foreground">{family.name}</p>
-                      {family.members.map((member) => (
+
+                      {(family.members ?? []).map((member) => (
                         <div key={member.id} className="flex items-center gap-3">
                           <Checkbox
                             id={member.id}
                             checked={selectedMembers.includes(member.id)}
                             onCheckedChange={() => toggleMember(member.id)}
                           />
-                          <label htmlFor={member.id} className="flex items-center gap-2 cursor-pointer flex-1">
+                          <label htmlFor={member.id} className="flex items-center gap-2 flex-1 cursor-pointer">
                             <Avatar className="w-6 h-6">
                               <AvatarImage src={member.avatar || "/placeholder.svg"} />
                               <AvatarFallback className="text-[10px]">
-                                {member.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
+                                {member.name.split(" ").map((x) => x[0]).join("")}
                               </AvatarFallback>
                             </Avatar>
                             <span className="text-sm">{member.name}</span>
+
                             <span className="text-xs text-muted-foreground ml-auto">
                               {(member.shareRatio * 100).toFixed(0)}%
                             </span>
@@ -244,17 +244,16 @@ export function PayMerchantDialog({ open, onOpenChange, families, walletBalance,
             </Tabs>
           </div>
 
-          {splitPreview && splitPreview.length > 0 && (
+          {/* Split Preview */}
+          {splitPreview && (
             <div className="bg-muted/50 rounded-lg p-4">
-              <p className="text-sm font-medium text-foreground mb-3">Split Preview</p>
-              <div className="space-y-2">
-                {splitPreview.map((member) => (
-                  <div key={member.id} className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">{member.name}</span>
-                    <span className="font-medium text-foreground">{formatINR(member.share)}</span>
-                  </div>
-                ))}
-              </div>
+              <p className="text-sm font-medium mb-2">Split Preview</p>
+              {splitPreview.map((member) => (
+                <div key={member.id} className="flex justify-between text-sm">
+                  <span>{member.name}</span>
+                  <span className="font-medium">{formatINR(member.share)}</span>
+                </div>
+              ))}
             </div>
           )}
         </div>
