@@ -87,7 +87,7 @@ async function updateSession(request) {
     // ✔ LOGGED IN but accessing /auth → send to dashboard
     if (user && isAuthRoute) {
         const url = request.nextUrl.clone();
-        url.pathname = "/dashboard";
+        url.pathname = "/";
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
     }
     // ✔ NOTICE:

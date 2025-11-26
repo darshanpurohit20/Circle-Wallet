@@ -34,7 +34,6 @@ export default function CreateGroupPage() {
     setError(null)
 
     try {
-      // Get current logged-in user
       const {
         data: { user },
         error: userErr,
@@ -45,7 +44,6 @@ export default function CreateGroupPage() {
         return router.push("/auth/login")
       }
 
-      // Fetch profile row via email (correct)
       const { data: profile, error: pErr } = await supabase
         .from("profiles")
         .select("*")
@@ -57,7 +55,6 @@ export default function CreateGroupPage() {
 
       const profileId = profile.id
 
-      // Create new group
       const { data: newGroup, error: gErr } = await supabase
         .from("groups")
         .insert({
@@ -76,7 +73,6 @@ export default function CreateGroupPage() {
 
       if (gErr) throw gErr
 
-      // Add user to `group_members` as admin
       const { error: gmErr } = await supabase.from("group_members").insert({
         group_id: newGroup.id,
         profile_id: profileId,
@@ -86,7 +82,6 @@ export default function CreateGroupPage() {
 
       if (gmErr) throw gmErr
 
-      // Redirect to dashboard
       router.push("/")
     } catch (err: any) {
       console.error(err)
@@ -97,45 +92,48 @@ export default function CreateGroupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-6">
-      <Card className="w-full max-w-lg p-6 space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold">Create Your Group</h1>
-          <p className="text-muted-foreground mt-1">
-            Set up a group to manage shared expenses and wallet.
+    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8 sm:px-6 lg:px-8">
+      <Card className="w-full max-w-md p-6 sm:p-8 space-y-6">
+        <div className="space-y-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-center">Create Your Group</h1>
+          <p className="text-muted-foreground text-center text-sm sm:text-base">
+            Set up a group to manage shared expenses and wallet
           </p>
         </div>
 
         {error && (
-          <div className="p-3 rounded bg-destructive/10 text-destructive text-sm">
+          <div className="p-4 rounded-md bg-destructive/10 border border-destructive/20 text-destructive text-sm">
             {error}
           </div>
         )}
 
-        <div className="space-y-4">
-          <div>
-            <Label>Group Name</Label>
+        <div className="space-y-5">
+          <div className="space-y-2">
+            <Label htmlFor="name">Group Name</Label>
             <Input
+              id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ex: Goa Trip 2025"
+              className="h-11"
             />
           </div>
 
-          <div>
-            <Label>Description</Label>
+          <div className="space-y-2">
+            <Label htmlFor="description">Description (Optional)</Label>
             <Textarea
-              className="min-h-[100px]"
+              id="description"
+              className="min-h-[120px] resize-none"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Optional: Add group purpose"
+              placeholder="Add group purpose or details"
             />
           </div>
 
-          <div>
-            <Label>Currency</Label>
+          <div className="space-y-2">
+            <Label htmlFor="currency">Currency</Label>
             <Select value={currency} onValueChange={setCurrency}>
-              <SelectTrigger>
+              <SelectTrigger id="currency" className="h-11">
                 <SelectValue placeholder="Select currency" />
               </SelectTrigger>
               <SelectContent>
@@ -150,8 +148,8 @@ export default function CreateGroupPage() {
         </div>
 
         <Button
-          className="w-full"
-          disabled={loading || !name}
+          className="w-full h-11 text-base"
+          disabled={loading || !name.trim()}
           onClick={handleCreate}
         >
           {loading ? "Creating…" : "Create Group"}
