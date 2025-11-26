@@ -52,3 +52,529 @@
 [00:34:37.545] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167026373}
 [00:34:42.566] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/reports color: rgb(120, 120, 120) color: inherit {"dp":"/reports","o":"http://localhost:3000/reports","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167031394}
 [00:34:49.993] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/invites color: rgb(120, 120, 120) color: inherit {"dp":"/invites","o":"http://localhost:3000/invites","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167038822}
+[00:35:36.265] Browser ERROR   Each child in a list should have a unique "key" prop.%s%s See https://react.dev/link/warning-keys for more information. 
+
+Check the render method of `Card`.  It was passed a child from PendingInvites.
+[00:36:16.284] Server  LOG      ✓ Compiled in 74ms
+[00:36:18.534] Server  LOG      ✓ Compiled in 60ms
+[00:36:42.088] Server  LOG      ✓ Compiled in 156ms
+[00:36:57.594] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:36:57.594] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/invites","route":"/invites"}
+[00:36:57.594] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/invites color: rgb(120, 120, 120) color: inherit {"dp":"/invites","o":"http://localhost:3000/invites","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167166423}
+[00:37:43.521] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/reports color: rgb(120, 120, 120) color: inherit {"dp":"/reports","o":"http://localhost:3000/reports","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167212350}
+[00:37:59.887] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167228716}
+[00:38:12.231] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:38:12.231] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:38:12.231] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167241060}
+[00:38:29.288] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167258117}
+[00:39:07.655] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167296483}
+[00:40:15.393] Browser ERROR   Update group after payment failed {"code":"PGRST204","details":null,"hint":null,"message":"Could not find the 'total_spent' column of 'groups' in the schema cache"}
+[00:40:31.097] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:40:31.097] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:40:31.097] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167379926}
+[00:40:40.940] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167389769}
+[00:41:44.522] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167453351}
+[00:42:00.455] Browser ERROR   Update group after payment failed {"code":"PGRST204","details":null,"hint":null,"message":"Could not find the 'total_spent' column of 'groups' in the schema cache"}
+[00:43:18.752] Server  LOG      ✓ Compiled in 98ms
+[00:43:34.595] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:43:34.595] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:43:34.595] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167563426}
+[00:43:59.153] Browser LOG     Adding funds: {"amount":10000,"familyId":"aed958ff-1347-432a-ab17-e9c6c1928d3c","method":"upi"}
+[00:44:04.550] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:44:04.550] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:44:04.550] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167593385}
+[00:44:18.569] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:44:18.569] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:44:18.569] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167607404}
+[00:44:29.369] Browser LOG     Adding funds: {"amount":50000,"familyId":"04434cdb-e4c9-4a3b-9d6f-d4a614b859d1","method":"upi"}
+[00:44:41.922] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:44:41.922] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:44:41.922] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167630758}
+[00:45:22.361] Browser ERROR   Update group after payment failed: {"code":"PGRST204","details":null,"hint":null,"message":"Could not find the 'total_spent' column of 'groups' in the schema cache"}
+[00:46:56.214] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:46:56.214] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:46:56.214] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167765050}
+[00:47:19.781] Browser ERROR   Update group after payment failed: {"code":"PGRST204","details":null,"hint":null,"message":"Could not find the 'total_spent' column of 'groups' in the schema cache"}
+[00:49:49.828] Browser ERROR   Update group after payment failed: {"code":"PGRST204","details":null,"hint":null,"message":"Could not find the 'total_spent' column of 'groups' in the schema cache"}
+[00:49:54.115] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:49:54.115] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:49:54.115] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167942952}
+[00:50:29.530] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167978365}
+[00:50:33.796] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/reports color: rgb(120, 120, 120) color: inherit {"dp":"/reports","o":"http://localhost:3000/reports","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764167982632}
+[00:51:36.123] Server  LOG      ✓ Compiled in 71ms
+[00:51:40.676] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764168049513}
+[00:51:53.052] Browser LOG     Current balance: 185000
+[00:51:53.052] Browser LOG     Payment amount: 3000
+[00:51:53.455] Browser LOG     Transaction inserted: {"amount":3000,"approved_at":null,"approved_by":null,"category":"Food & Dining","created_at":"2025-11-26T14:41:02.106029+00:00","description":"na","group_id":"d2668acc-3cc5-4361-a19b-1987742b07b0","id":"9ab5a700-449e-48cf-89e3-fe67a3b057e4","merchant_id":null,"merchant_name":"gao","paid_by":null,"paid_by_name":"Group Wallet","receipt_url":null,"requires_approval":false,"split_among":[],"split_amounts":{},"split_type":null,"status":"confirmed","type":"payment","updated_at":"2025-11-26T14:41:02.106029+00:00"}
+[00:51:53.455] Browser LOG     New balance will be: 182000
+[00:51:53.455] Browser LOG     New total spent will be: 3000
+[00:52:00.543] Browser LOG     Update result: {"data":null,"error":{"code":"PGRST204","details":null,"hint":null,"message":"Could not find the 'total_spent' column of 'groups' in the schema cache"}}
+[00:52:00.543] Browser ERROR   Update group after payment failed: {"code":"PGRST204","details":null,"hint":null,"message":"Could not find the 'total_spent' column of 'groups' in the schema cache"}
+[00:55:13.474] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:55:13.474] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:55:13.474] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764168262312}
+[00:55:17.840] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:55:17.840] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
+[00:55:17.840] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764168266678}
+[00:55:19.762] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:55:19.762] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:55:19.762] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764168268600}
+[00:55:25.682] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764168274520}
+[01:02:26.536] Server  LOG      ✓ Compiled in 117ms
+[01:02:26.985] Browser ERROR   ./app/page.tsx:45:1
+Parsing ecmascript source code failed
+  43 |       // ... rest of your code
+  44 |
+> 45 | export default function DashboardPage() {
+     | ^^^^^^
+  46 |   const supabase = createClient()
+  47 |   const router = useRouter()
+  48 |
+
+'import', and 'export' cannot be used outside of module code
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:02:35.794] Server  LOG      ✓ Compiled in 49ms
+[01:02:43.713] Server  LOG      ✓ Compiled in 51ms
+[01:02:43.983] Browser ERROR   ./app/page.tsx:431:2
+Parsing ecmascript source code failed
+  429 |     </div>
+  430 |   )
+> 431 | }
+      |  ^
+  432 |
+
+Expected '}', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:02:43.983] Browser ERROR   ./app/page.tsx:431:2
+Parsing ecmascript source code failed
+  429 |     </div>
+  430 |   )
+> 431 | }
+      |  ^
+  432 |
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:02:46.083] Server  LOG      ✓ Compiled in 54ms
+[01:02:48.450] Server  LOG      ✓ Compiled in 40ms
+[01:02:49.117] Server  LOG      ✓ Compiled in 50ms
+[01:02:49.984] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected '}', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:02:49.984] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:02:55.303] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected '}', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:02:55.303] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:02:55.303] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:02:55.303] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/settings","route":"/settings"}
+[01:02:55.303] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764168724137}
+[01:02:55.303] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected '}', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:02:55.303] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:03:03.403] Server  ERROR    ⨯ ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected '}', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+
+
+./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+
+[01:03:03.514] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected '}', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:03:03.514] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:03:04.005] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected '}', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:03:04.005] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:03:04.005] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected '}', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:03:04.005] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:03:04.139] Browser ERROR   uncaughtError: Error: ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected '}', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+
+[01:03:04.299] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected '}', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:03:04.299] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:03:04.299] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected '}', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:03:04.299] Browser ERROR   ./app/page.tsx:432:2
+Parsing ecmascript source code failed
+  430 |     </div>
+  431 |   )
+> 432 | }
+      |  ^
+  433 |
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[01:03:55.627] Server  LOG      ✓ Compiled in 113ms
+[01:03:56.984] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:03:56.984] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:03:56.984] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764168785633}
+[01:03:57.826] Browser LOG     === MY USER INFO ===
+[01:03:57.826] Browser LOG     User ID: b0d849fa-eaeb-4527-bd69-3e87e550cd65
+[01:03:57.826] Browser LOG     Email: kovid72595@bablace.com
+[01:03:57.826] Browser LOG     ===================
+[01:04:00.400] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:04:00.400] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:04:00.400] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764168789243}
+[01:04:00.656] Browser LOG     === MY USER INFO ===
+[01:04:00.656] Browser LOG     User ID: b0d849fa-eaeb-4527-bd69-3e87e550cd65
+[01:04:00.656] Browser LOG     Email: kovid72595@bablace.com
+[01:04:00.656] Browser LOG     ===================
+[01:04:10.087] Server  LOG      ✓ Compiled in 54ms
+[01:04:10.565] Server  LOG      ✓ Compiled in 46ms
+[01:04:11.195] Server  LOG      ✓ Compiled in 49ms
+[01:04:13.748] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:04:13.748] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:04:13.748] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764168802591}
+[01:04:14.011] Browser LOG     === MY USER INFO ===
+[01:04:14.012] Browser LOG     User ID: b0d849fa-eaeb-4527-bd69-3e87e550cd65
+[01:04:14.012] Browser LOG     Email: kovid72595@bablace.com
+[01:04:14.012] Browser LOG     ===================
+[01:04:23.603] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764168812446}
+[01:04:34.027] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764168822870}
+[01:04:34.493] Browser LOG     === MY USER INFO ===
+[01:04:34.494] Browser LOG     User ID: b0d849fa-eaeb-4527-bd69-3e87e550cd65
+[01:04:34.494] Browser LOG     Email: kovid72595@bablace.com
+[01:04:34.494] Browser LOG     ===================
+[01:04:34.800] Browser LOG     === MY USER INFO ===
+[01:04:34.800] Browser LOG     User ID: b0d849fa-eaeb-4527-bd69-3e87e550cd65
+[01:04:34.800] Browser LOG     Email: kovid72595@bablace.com
+[01:04:34.800] Browser LOG     ===================
+[01:04:56.995] Browser ERROR   Update group after payment failed: {"code":"PGRST204","details":null,"hint":null,"message":"Could not find the 'total_spent' column of 'groups' in the schema cache"}
+[01:07:15.375] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:07:15.375] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:07:15.375] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764168984213}
+[01:07:15.740] Browser LOG     === MY USER INFO ===
+[01:07:15.740] Browser LOG     User ID: b0d849fa-eaeb-4527-bd69-3e87e550cd65
+[01:07:15.741] Browser LOG     Email: kovid72595@bablace.com
+[01:07:15.741] Browser LOG     ===================
+[01:08:38.391] Server  LOG      ✓ Compiled in 95ms
