@@ -200,7 +200,28 @@ export default function DashboardPage() {
         }
       }
 
-      const newWalletBalance = Number(group.shared_wallet_balance || 0) + Number(amount)
+      // 👇 FIX: Calculate wallet as sum of family balances
+      const { data: updatedFamilies } = await supabase
+        .from("families")
+        .select("*, family_members(*)")
+        .eq("group_id", group.id)
+
+      const normalizedFamilies = (updatedFamilies || []).map((family) => ({
+        id: family.id,
+        name: family.name,
+        balance: Number(family.balance || 0),
+        totalContribution: Number(family.total_contribution || 0),
+        members: (family.family_members || []).map((m: any) => ({
+          id: m.id,
+          name: m.name,
+          type: m.member_type,
+          age: m.age,
+          shareRatio: Number(m.share_ratio),
+          avatar: m.avatar || null,
+        })),
+      }))
+
+      const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
       
       const { error: updateError } = await supabase
         .from("groups")
@@ -210,26 +231,6 @@ export default function DashboardPage() {
       if (updateError) {
         alert("Funds added but balance update failed. Please refresh.")
       } else {
-        const { data: updatedFamilies } = await supabase
-          .from("families")
-          .select("*, family_members(*)")
-          .eq("group_id", group.id)
-
-        const normalizedFamilies = (updatedFamilies || []).map((family) => ({
-          id: family.id,
-          name: family.name,
-          balance: Number(family.balance || 0),
-          totalContribution: Number(family.total_contribution || 0),
-          members: (family.family_members || []).map((m: any) => ({
-            id: m.id,
-            name: m.name,
-            type: m.member_type,
-            age: m.age,
-            shareRatio: Number(m.share_ratio),
-            avatar: m.avatar || null,
-          })),
-        }))
-
         setGroup((g: any) => ({ ...g, shared_wallet_balance: newWalletBalance }))
         setFamilies(normalizedFamilies)
         setTransactions((prev) => [inserted, ...prev].slice(0, 10))
@@ -293,6 +294,18 @@ export default function DashboardPage() {
         amount: (split.shares / totalShares) * data.amount
       }))
 
+      // 👇 FIX: Validate family balances BEFORE payment
+      for (const split of familySplits) {
+        const family = families.find(f => f.id === split.familyId)
+        if (family) {
+          const newBalance = Number(family.balance || 0) - split.amount
+          if (newBalance < 0) {
+            alert(`${family.name} has insufficient balance (₹${family.balance.toFixed(2)}). They need ₹${Math.abs(newBalance).toFixed(2)} more.`)
+            return
+          }
+        }
+      }
+
       const { data: inserted, error: insertError } = await supabase
         .from("transactions")
         .insert({
@@ -325,8 +338,30 @@ export default function DashboardPage() {
         }
       }
 
-      const newWalletBalance = Number(group.shared_wallet_balance || 0) - Number(data.amount)
       const newTotalSpent = Number(group.total_spent || 0) + Number(data.amount)
+
+      // 👇 FIX: Calculate wallet as sum of family balances
+      const { data: updatedFamilies } = await supabase
+        .from("families")
+        .select("*, family_members(*)")
+        .eq("group_id", group.id)
+
+      const normalizedFamilies = (updatedFamilies || []).map((family) => ({
+        id: family.id,
+        name: family.name,
+        balance: Number(family.balance || 0),
+        totalContribution: Number(family.total_contribution || 0),
+        members: (family.family_members || []).map((m: any) => ({
+          id: m.id,
+          name: m.name,
+          type: m.member_type,
+          age: m.age,
+          shareRatio: Number(m.share_ratio),
+          avatar: m.avatar || null,
+        })),
+      }))
+
+      const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
 
       const { error: updateError } = await supabase
         .from("groups")
@@ -339,26 +374,6 @@ export default function DashboardPage() {
       if (updateError) {
         alert("Payment recorded but balance update failed. Please refresh.")
       } else {
-        const { data: updatedFamilies } = await supabase
-          .from("families")
-          .select("*, family_members(*)")
-          .eq("group_id", group.id)
-
-        const normalizedFamilies = (updatedFamilies || []).map((family) => ({
-          id: family.id,
-          name: family.name,
-          balance: Number(family.balance || 0),
-          totalContribution: Number(family.total_contribution || 0),
-          members: (family.family_members || []).map((m: any) => ({
-            id: m.id,
-            name: m.name,
-            type: m.member_type,
-            age: m.age,
-            shareRatio: Number(m.share_ratio),
-            avatar: m.avatar || null,
-          })),
-        }))
-
         setGroup((g: any) => ({ 
           ...g, 
           shared_wallet_balance: newWalletBalance, 

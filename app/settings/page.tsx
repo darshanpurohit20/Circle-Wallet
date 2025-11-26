@@ -1,267 +1,3 @@
-// "use client"
-
-// import React, { useEffect, useState } from "react"
-// import { useRouter } from "next/navigation"
-// import { createClient } from "@/lib/supabase/client"
-
-// import { Card } from "@/components/ui/card"
-// import { Button } from "@/components/ui/button"
-// import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
-// import { Textarea } from "@/components/ui/textarea"
-// import { Switch } from "@/components/ui/switch"
-// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-// import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-// import { Badge } from "@/components/ui/badge"
-// import { Header } from "@/components/dashboard/header"
-// import { SettingsIcon, UsersIcon, BellIcon, WalletIcon } from "@/components/icons"
-
-// type GroupRow = {
-//   id: string
-//   name: string
-//   description?: string | null
-//   currency?: string | null
-//   shared_wallet_balance?: number | null
-//   large_payment_threshold?: number | null
-//   require_approval_above_threshold?: boolean | null
-//   allow_member_invites?: boolean | null
-//   default_member_role?: string | null
-//   created_by?: string | null
-//   created_at?: string | null
-//   updated_at?: string | null
-// }
-
-// type ProfileRow = {
-//   id: string
-//   email?: string | null
-//   phone?: string | null
-//   full_name?: string | null
-//   avatar_url?: string | null
-//   role?: string | null
-//   created_at?: string | null
-//   updated_at?: string | null
-// }
-
-// const currencies = [
-//   { code: "USD", name: "US Dollar", symbol: "$" },
-//   { code: "EUR", name: "Euro", symbol: "€" },
-//   { code: "GBP", name: "British Pound", symbol: "£" },
-//   { code: "JPY", name: "Japanese Yen", symbol: "¥" },
-//   { code: "CAD", name: "Canadian Dollar", symbol: "C$" },
-//   { code: "AUD", name: "Australian Dollar", symbol: "A$" },
-//   { code: "INR", name: "Indian Rupee", symbol: "₹" },
-// ]
-
-// export default function SettingsPage() {
-//   const router = useRouter()
-//   const supabase = createClient()
-
-//   // page state
-//   const [loading, setLoading] = useState(true)
-//   const [savingGroup, setSavingGroup] = useState(false)
-//   const [savingProfile, setSavingProfile] = useState(false)
-//   const [error, setError] = useState<string | null>(null)
-
-//   const [userId, setUserId] = useState<string | null>(null)
-
-//   // group state
-//   const [group, setGroup] = useState<GroupRow | null>(null)
-//   const [groupName, setGroupName] = useState("")
-//   const [groupDescription, setGroupDescription] = useState("")
-//   const [currency, setCurrency] = useState("INR")
-//   const [largePaymentThreshold, setLargePaymentThreshold] = useState<number | "">(50000)
-//   const [requireApprovalAboveThreshold, setRequireApprovalAboveThreshold] = useState(true)
-//   const [allowMemberInvites, setAllowMemberInvites] = useState(false)
-//   const [defaultMemberRole, setDefaultMemberRole] =
-//     useState<"member" | "co-admin" | "admin">("member")
-
-//   // profile state
-//   const [profile, setProfile] = useState<ProfileRow | null>(null)
-//   const [fullName, setFullName] = useState("")
-//   const [avatarUrl, setAvatarUrl] = useState("")
-
-//   // Local notification prefs
-//   const [emailNotifications, setEmailNotifications] = useState(true)
-//   const [pushNotifications, setPushNotifications] = useState(true)
-//   const [expenseAlerts, setExpenseAlerts] = useState(true)
-//   const [lowBalanceAlerts, setLowBalanceAlerts] = useState(true)
-//   const [lowBalanceThreshold, setLowBalanceThreshold] =
-//     useState<number | "">(500)
-
-//   useEffect(() => {
-//     let mounted = true
-
-//     async function load() {
-//       setLoading(true)
-//       setError(null)
-
-//       try {
-//         // 1️⃣ load auth user
-//         const {
-//           data: { user },
-//           error: userErr,
-//         } = await supabase.auth.getUser()
-
-//         if (userErr) throw userErr
-//         if (!user) return router.push("/auth/login")
-
-//         setUserId(user.id)
-
-//         // 2️⃣ load profile using email (correct identifier)
-//         const { data: profileRow, error: pErr } = await supabase
-//           .from("profiles")
-//           .select("*")
-//           .eq("email", user.email)
-//           .maybeSingle()
-
-//         if (pErr) throw pErr
-//         if (!profileRow) throw new Error("Profile not found")
-
-//         setProfile(profileRow)
-//         setFullName(profileRow.full_name || "")
-//         setAvatarUrl(profileRow.avatar_url || "")
-
-//         // ⭐ correct profile id
-//         const profileId = profileRow.id
-
-//         // 3️⃣ find user's group
-//         const { data: gm, error: gmErr } = await supabase
-//           .from("group_members")
-//           .select("group_id")
-//           .eq("profile_id", profileId)
-//           .maybeSingle()
-
-//         if (gmErr) throw gmErr
-
-//         const groupId = gm?.group_id
-
-//         if (!groupId) {
-//           setGroup(null)
-//           setLoading(false)
-//           return
-//         }
-
-//         // 4️⃣ load group
-//         const { data: gRow, error: gErr } = await supabase
-//           .from("groups")
-//           .select("*")
-//           .eq("id", groupId)
-//           .maybeSingle()
-
-//         if (gErr) throw gErr
-
-//         if (gRow) {
-//           setGroup(gRow)
-//           setGroupName(gRow.name || "")
-//           setGroupDescription(gRow.description || "")
-//           setCurrency(gRow.currency || "INR")
-//           setLargePaymentThreshold(gRow.large_payment_threshold ?? 50000)
-//           setRequireApprovalAboveThreshold(
-//             !!gRow.require_approval_above_threshold
-//           )
-//           setAllowMemberInvites(!!gRow.allow_member_invites)
-//           setDefaultMemberRole((gRow.default_member_role as any) || "member")
-//         }
-
-//         // 5️⃣ load notifications from localStorage
-//         const prefs =
-//           typeof window !== "undefined"
-//             ? localStorage.getItem("cw_notification_prefs")
-//             : null
-
-//         if (prefs) {
-//           const parsed = JSON.parse(prefs)
-//           setEmailNotifications(parsed.emailNotifications)
-//           setPushNotifications(parsed.pushNotifications)
-//           setExpenseAlerts(parsed.expenseAlerts)
-//           setLowBalanceAlerts(parsed.lowBalanceAlerts)
-//           setLowBalanceThreshold(parsed.lowBalanceThreshold ?? 500)
-//         }
-//       } catch (err) {
-//         console.error("Settings load error:", err)
-//         setError(err instanceof Error ? err.message : String(err))
-//       } finally {
-//         if (mounted) setLoading(false)
-//       }
-//     }
-
-//     load()
-//     return () => {
-//       mounted = false
-//     }
-//   }, [supabase, router])
-
-//   // 💥 Create Group Button handler
-//   const handleCreateGroup = () => {
-//     router.push("/settings/create-group") // change route if you want
-//   }
-
-//   if (loading) {
-//     return (
-//       <div className="min-h-screen flex items-center justify-center">
-//         <p>Loading settings…</p>
-//       </div>
-//     )
-//   }
-
-//   // ⭐ If NO GROUP — show create group UI
-//   if (!group) {
-//     return (
-//       <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-background">
-//         <h2 className="text-xl font-bold">You are not part of any group</h2>
-//         <p className="text-muted-foreground">
-//           Create your first group to get started.
-//         </p>
-
-//         <Button onClick={handleCreateGroup} className="mt-4">
-//           Create Group
-//         </Button>
-//       </div>
-//     )
-//   }
-
-//   // =============================
-//   // NORMAL SETTINGS PAGE BELOW
-//   // (UNCHANGED)
-//   // =============================
-
-//   return (
-//     <div className="min-h-screen bg-background">
-//       <Header groupName={group?.name || "My Group"} />
-
-//       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-//         <div className="mb-6">
-//           <h1 className="text-2xl md:text-3xl font-bold text-foreground">
-//             Settings
-//           </h1>
-//           <p className="text-muted-foreground">
-//             Manage your group and account settings
-//           </p>
-//         </div>
-
-//         {/** Everything below is exactly same UI, unchanged */}
-//         {/* ——————————————— */}
-//         {/* KEEPING REST SAME */}
-//         {/* ——————————————— */}
-
-//         {/* your tabs... */}
-//         {/* your group form... */}
-//         {/* your wallet... */}
-//         {/* your notifications... */}
-//         {/* your account tab... */}
-
-//       </main>
-
-//       {error && (
-//         <div className="fixed bottom-4 right-4 p-3 bg-destructive/10 rounded">
-//           <p className="text-sm text-destructive">Error: {error}</p>
-//         </div>
-//       )}
-//     </div>
-//   )
-// }
-
 "use client"
 
 import React, { useEffect, useState } from "react"
@@ -275,33 +11,43 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
 import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select"
-import {
   Tabs,
   TabsList,
   TabsTrigger,
   TabsContent,
 } from "@/components/ui/tabs"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog"
 import { Header } from "@/components/dashboard/header"
-import { SettingsIcon, UsersIcon, BellIcon, WalletIcon } from "@/components/icons"
+import { SettingsIcon, UsersIcon, BellIcon, WalletIcon, AlertCircleIcon, CheckCircleIcon } from "@/components/icons"
+
+type ToastType = "success" | "error" | "warning"
 
 export default function SettingsPage() {
   const router = useRouter()
   const supabase = createClient()
 
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [savingGroup, setSavingGroup] = useState(false)
+  const [savingProfile, setSavingProfile] = useState(false)
 
-  // --------------------------
-  // GROUP + PROFILE STATE
-  // --------------------------
+  // Toast state
+  const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null)
+  
+  // Delete confirmation dialog
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [deleteConfirmText, setDeleteConfirmText] = useState("")
+
+  // Group & Profile state
   const [group, setGroup] = useState<any>(null)
+  const [families, setFamilies] = useState<any[]>([])
   const [groupName, setGroupName] = useState("")
   const [groupDescription, setGroupDescription] = useState("")
 
@@ -316,9 +62,13 @@ export default function SettingsPage() {
   const [lowBalanceAlerts, setLowBalanceAlerts] = useState(true)
   const [lowBalanceThreshold, setLowBalanceThreshold] = useState<number | "">(500)
 
-  // --------------------------
+  // Show toast helper
+  const showToast = (message: string, type: ToastType = "success") => {
+    setToast({ message, type })
+    setTimeout(() => setToast(null), 4000)
+  }
+
   // Load settings data
-  // --------------------------
   useEffect(() => {
     let mounted = true
 
@@ -334,7 +84,6 @@ export default function SettingsPage() {
           return
         }
 
-        // Profile
         const { data: p } = await supabase
           .from("profiles")
           .select("*")
@@ -345,7 +94,6 @@ export default function SettingsPage() {
         setFullName(p?.full_name || "")
         setAvatarUrl(p?.avatar_url || "")
 
-        // Group membership
         const { data: gm } = await supabase
           .from("group_members")
           .select("group_id")
@@ -368,18 +116,24 @@ export default function SettingsPage() {
         setGroupName(g?.name || "")
         setGroupDescription(g?.description || "")
 
-        // notification prefs local
+        const { data: familyRows } = await supabase
+          .from("families")
+          .select("id")
+          .eq("group_id", gm.group_id)
+
+        setFamilies(familyRows || [])
+
         const prefs = localStorage.getItem("cw_notification_prefs")
         if (prefs) {
           const parsed = JSON.parse(prefs)
-          setEmailNotifications(parsed.emailNotifications)
-          setPushNotifications(parsed.pushNotifications)
-          setExpenseAlerts(parsed.expenseAlerts)
-          setLowBalanceAlerts(parsed.lowBalanceAlerts)
-          setLowBalanceThreshold(parsed.lowBalanceThreshold)
+          setEmailNotifications(parsed.emailNotifications ?? true)
+          setPushNotifications(parsed.pushNotifications ?? true)
+          setExpenseAlerts(parsed.expenseAlerts ?? true)
+          setLowBalanceAlerts(parsed.lowBalanceAlerts ?? true)
+          setLowBalanceThreshold(parsed.lowBalanceThreshold ?? 500)
         }
       } catch (err) {
-        setError("Failed to load settings")
+        showToast("Failed to load settings", "error")
         console.error(err)
       } finally {
         if (mounted) setLoading(false)
@@ -389,11 +143,61 @@ export default function SettingsPage() {
     return () => {
       mounted = false
     }
-  }, [])
+  }, [router, supabase])
 
-  // --------------------------
+  // Save Group Settings
+  const handleSaveGroup = async () => {
+    if (!group) return
+    
+    setSavingGroup(true)
+    try {
+      const { error } = await supabase
+        .from("groups")
+        .update({
+          name: groupName,
+          description: groupDescription,
+        })
+        .eq("id", group.id)
+
+      if (error) throw error
+
+      setGroup({ ...group, name: groupName, description: groupDescription })
+      showToast("Group settings saved successfully!", "success")
+    } catch (err) {
+      console.error("Save group error:", err)
+      showToast("Failed to save group settings", "error")
+    } finally {
+      setSavingGroup(false)
+    }
+  }
+
+  // Save Profile Settings
+  const handleSaveProfile = async () => {
+    if (!profile) return
+
+    setSavingProfile(true)
+    try {
+      const { error } = await supabase
+        .from("profiles")
+        .update({
+          full_name: fullName,
+          avatar_url: avatarUrl,
+        })
+        .eq("id", profile.id)
+
+      if (error) throw error
+
+      setProfile({ ...profile, full_name: fullName, avatar_url: avatarUrl })
+      showToast("Profile updated successfully!", "success")
+    } catch (err) {
+      console.error("Save profile error:", err)
+      showToast("Failed to save profile", "error")
+    } finally {
+      setSavingProfile(false)
+    }
+  }
+
   // Save Notification Prefs
-  // --------------------------
   const saveNotificationPrefs = () => {
     const prefs = {
       emailNotifications,
@@ -403,21 +207,61 @@ export default function SettingsPage() {
       lowBalanceThreshold,
     }
     localStorage.setItem("cw_notification_prefs", JSON.stringify(prefs))
+    showToast("Notification preferences saved!", "success")
   }
 
-  if (loading)
+  // Delete Group (with dialog)
+  const handleDeleteGroup = async () => {
+    if (!group) return
+
+    const expectedText = `DELETE ${groupName}`
+    
+    if (deleteConfirmText !== expectedText) {
+      showToast(`Please type "${expectedText}" to confirm`, "warning")
+      return
+    }
+
+    try {
+      if (families.length > 0) {
+        await supabase
+          .from("family_members")
+          .delete()
+          .in("family_id", families.map(f => f.id))
+      }
+
+      await supabase.from("families").delete().eq("group_id", group.id)
+      await supabase.from("transactions").delete().eq("group_id", group.id)
+      await supabase.from("group_members").delete().eq("group_id", group.id)
+
+      const { error } = await supabase.from("groups").delete().eq("id", group.id)
+
+      if (error) throw error
+
+      showToast("Group deleted successfully", "success")
+      setTimeout(() => router.push("/settings/create-group"), 1500)
+    } catch (err) {
+      console.error("Delete group error:", err)
+      showToast("Failed to delete group", "error")
+    } finally {
+      setDeleteDialogOpen(false)
+      setDeleteConfirmText("")
+    }
+  }
+
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading settings…
+        <p className="text-muted-foreground">Loading settings…</p>
       </div>
     )
+  }
 
   if (!group) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-background">
-        <h2 className="text-xl font-bold">You are not part of any group</h2>
-        <p className="text-muted-foreground">Create your first group to continue.</p>
-        <Button onClick={() => router.push("/settings/create-group")}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-background px-4">
+        <h2 className="text-2xl font-bold">You are not part of any group</h2>
+        <p className="text-muted-foreground text-center">Create your first group to continue.</p>
+        <Button size="lg" onClick={() => router.push("/settings/create-group")}>
           Create Group
         </Button>
       </div>
@@ -428,138 +272,308 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-background">
       <Header groupName={group.name} />
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold mb-2">Settings</h1>
-        <p className="text-muted-foreground mb-6">
-          Manage your group and account settings
-        </p>
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">Settings</h1>
+          <p className="text-muted-foreground text-lg">
+            Manage your group and account preferences
+          </p>
+        </div>
 
         <Tabs defaultValue="group" className="w-full">
-          <TabsList className="mb-6">
-            <TabsTrigger value="group"><SettingsIcon className="w-4 h-4 mr-1" /> Group</TabsTrigger>
-            <TabsTrigger value="wallet"><WalletIcon className="w-4 h-4 mr-1" /> Wallet</TabsTrigger>
-            <TabsTrigger value="notifications"><BellIcon className="w-4 h-4 mr-1" /> Notifications</TabsTrigger>
-            <TabsTrigger value="account"><UsersIcon className="w-4 h-4 mr-1" /> Account</TabsTrigger>
+          <TabsList className="mb-8 grid w-full grid-cols-4">
+            <TabsTrigger value="group" className="gap-2">
+              <SettingsIcon className="w-4 h-4" />
+              <span className="hidden sm:inline">Group</span>
+            </TabsTrigger>
+            <TabsTrigger value="wallet" className="gap-2">
+              <WalletIcon className="w-4 h-4" />
+              <span className="hidden sm:inline">Wallet</span>
+            </TabsTrigger>
+            <TabsTrigger value="notifications" className="gap-2">
+              <BellIcon className="w-4 h-4" />
+              <span className="hidden sm:inline">Notifications</span>
+            </TabsTrigger>
+            <TabsTrigger value="account" className="gap-2">
+              <UsersIcon className="w-4 h-4" />
+              <span className="hidden sm:inline">Account</span>
+            </TabsTrigger>
           </TabsList>
 
-          {/* ------------------ GROUP SETTINGS ------------------- */}
-          <TabsContent value="group">
-            <Card className="p-5 space-y-4">
-              <h2 className="text-xl font-semibold">Group Settings</h2>
+          {/* GROUP SETTINGS */}
+          <TabsContent value="group" className="space-y-6">
+            <Card className="p-6">
+              <h2 className="text-xl font-semibold mb-6">Group Information</h2>
 
-              <div>
-                <Label>Group Name</Label>
-                <Input
-                  value={groupName}
-                  onChange={(e) => setGroupName(e.target.value)}
-                />
+              <div className="space-y-5">
+                <div>
+                  <Label htmlFor="group-name" className="text-base">Group Name</Label>
+                  <Input
+                    id="group-name"
+                    value={groupName}
+                    onChange={(e) => setGroupName(e.target.value)}
+                    placeholder="Enter group name"
+                    className="mt-2"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="group-desc" className="text-base">Description</Label>
+                  <Textarea
+                    id="group-desc"
+                    value={groupDescription}
+                    onChange={(e) => setGroupDescription(e.target.value)}
+                    placeholder="What's this group for?"
+                    rows={4}
+                    className="mt-2"
+                  />
+                </div>
+
+                <Button onClick={handleSaveGroup} disabled={savingGroup} className="w-full sm:w-auto">
+                  {savingGroup ? "Saving..." : "Save Group Settings"}
+                </Button>
               </div>
+            </Card>
 
-              <div>
-                <Label>Description</Label>
-                <Textarea
-                  value={groupDescription}
-                  onChange={(e) => setGroupDescription(e.target.value)}
-                />
+            {/* DANGER ZONE */}
+            <Card className="p-6 border-2 border-destructive/50 bg-destructive/5">
+              <div className="flex items-center gap-2 text-destructive mb-4">
+                <AlertCircleIcon className="w-5 h-5" />
+                <h3 className="text-lg font-semibold">Danger Zone</h3>
               </div>
+              
+              <p className="text-sm text-muted-foreground mb-6">
+                Once you delete this group, there is no going back. All families, members, 
+                transactions, and balances will be permanently deleted.
+              </p>
 
-              <Button>Save Group</Button>
+              <Button 
+                variant="destructive" 
+                onClick={() => setDeleteDialogOpen(true)}
+                className="w-full sm:w-auto"
+              >
+                Delete "{groupName}" Group
+              </Button>
             </Card>
           </TabsContent>
 
-          {/* ------------------ WALLET SETTINGS ------------------- */}
+          {/* WALLET SETTINGS */}
           <TabsContent value="wallet">
-            <Card className="p-5 space-y-4">
-              <h2 className="text-xl font-semibold">Wallet Settings</h2>
+            <Card className="p-6">
+              <h2 className="text-xl font-semibold mb-6">Wallet Preferences</h2>
 
-              <div>
-                <Label>Low Balance Alerts</Label>
-                <div className="flex items-center gap-3">
+              <div className="space-y-6">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <Label className="text-base">Low Balance Alerts</Label>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Get notified when your wallet balance is running low
+                    </p>
+                  </div>
                   <Switch
                     checked={lowBalanceAlerts}
                     onCheckedChange={setLowBalanceAlerts}
                   />
-                  <span className="text-sm">Enable alerts</span>
                 </div>
-              </div>
 
-              <div>
-                <Label>Low Balance Threshold (₹)</Label>
-                <Input
-                  type="number"
-                  value={lowBalanceThreshold}
-                  onChange={(e) => setLowBalanceThreshold(Number(e.target.value))}
-                />
-              </div>
+                {lowBalanceAlerts && (
+                  <div>
+                    <Label htmlFor="threshold" className="text-base">Alert Threshold (₹)</Label>
+                    <Input
+                      id="threshold"
+                      type="number"
+                      value={lowBalanceThreshold}
+                      onChange={(e) => setLowBalanceThreshold(Number(e.target.value))}
+                      placeholder="500"
+                      className="mt-2"
+                    />
+                    <p className="text-xs text-muted-foreground mt-2">
+                      You'll be notified when balance falls below this amount
+                    </p>
+                  </div>
+                )}
 
-              <Button onClick={saveNotificationPrefs}>Save Wallet Settings</Button>
+                <Button onClick={saveNotificationPrefs} className="w-full sm:w-auto">
+                  Save Wallet Settings
+                </Button>
+              </div>
             </Card>
           </TabsContent>
 
-          {/* ------------------ NOTIFICATION SETTINGS ------------------- */}
+          {/* NOTIFICATION SETTINGS */}
           <TabsContent value="notifications">
-            <Card className="p-5 space-y-4">
-              <h2 className="text-xl font-semibold">Notifications</h2>
+            <Card className="p-6">
+              <h2 className="text-xl font-semibold mb-6">Notification Preferences</h2>
 
-              <div className="flex items-center justify-between">
-                <span>Email Notifications</span>
-                <Switch
-                  checked={emailNotifications}
-                  onCheckedChange={setEmailNotifications}
-                />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span>Push Notifications</span>
-                <Switch
-                  checked={pushNotifications}
-                  onCheckedChange={setPushNotifications}
-                />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span>Expense Alerts</span>
-                <Switch
-                  checked={expenseAlerts}
-                  onCheckedChange={setExpenseAlerts}
-                />
-              </div>
-
-              <Button onClick={saveNotificationPrefs}>Save Notifications</Button>
-            </Card>
-          </TabsContent>
-
-          {/* ------------------ ACCOUNT SETTINGS ------------------- */}
-          <TabsContent value="account">
-            <Card className="p-5 space-y-4">
-              <h2 className="text-xl font-semibold">Account</h2>
-
-              <div className="flex items-center gap-4">
-                <Avatar className="w-16 h-16">
-                  <AvatarImage src={avatarUrl} />
-                  <AvatarFallback>
-                    {fullName ? fullName.charAt(0) : "U"}
-                  </AvatarFallback>
-                </Avatar>
-
-                <div className="flex-1">
-                  <Label>Full Name</Label>
-                  <Input
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
+              <div className="space-y-6">
+                <div className="flex items-start justify-between gap-4 py-3">
+                  <div className="flex-1">
+                    <p className="font-medium text-base">Email Notifications</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Receive transaction updates via email
+                    </p>
+                  </div>
+                  <Switch
+                    checked={emailNotifications}
+                    onCheckedChange={setEmailNotifications}
                   />
                 </div>
-              </div>
 
-              <Button>Save Profile</Button>
+                <div className="flex items-start justify-between gap-4 py-3 border-t">
+                  <div className="flex-1">
+                    <p className="font-medium text-base">Push Notifications</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Get instant alerts on your device
+                    </p>
+                  </div>
+                  <Switch
+                    checked={pushNotifications}
+                    onCheckedChange={setPushNotifications}
+                  />
+                </div>
+
+                <div className="flex items-start justify-between gap-4 py-3 border-t">
+                  <div className="flex-1">
+                    <p className="font-medium text-base">Expense Alerts</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Notify when new expenses are added
+                    </p>
+                  </div>
+                  <Switch
+                    checked={expenseAlerts}
+                    onCheckedChange={setExpenseAlerts}
+                  />
+                </div>
+
+                <Button onClick={saveNotificationPrefs} className="w-full sm:w-auto mt-4">
+                  Save Notification Settings
+                </Button>
+              </div>
+            </Card>
+          </TabsContent>
+
+          {/* ACCOUNT SETTINGS */}
+          <TabsContent value="account">
+            <Card className="p-6">
+              <h2 className="text-xl font-semibold mb-6">Account Information</h2>
+
+              <div className="space-y-6">
+                <div className="flex items-center gap-6">
+                  <Avatar className="w-24 h-24">
+                    <AvatarImage src={avatarUrl} />
+                    <AvatarFallback className="text-3xl">
+                      {fullName ? fullName.charAt(0).toUpperCase() : "U"}
+                    </AvatarFallback>
+                  </Avatar>
+
+                  <div className="flex-1">
+                    <p className="font-medium text-lg">{fullName || "No name set"}</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {profile?.email || "No email"}
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="full-name" className="text-base">Full Name</Label>
+                  <Input
+                    id="full-name"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="Enter your full name"
+                    className="mt-2"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="avatar-url" className="text-base">Avatar URL (Optional)</Label>
+                  <Input
+                    id="avatar-url"
+                    value={avatarUrl}
+                    onChange={(e) => setAvatarUrl(e.target.value)}
+                    placeholder="https://example.com/avatar.jpg"
+                    className="mt-2"
+                  />
+                </div>
+
+                <Button onClick={handleSaveProfile} disabled={savingProfile} className="w-full sm:w-auto">
+                  {savingProfile ? "Saving..." : "Save Profile"}
+                </Button>
+
+                <div className="pt-6 border-t">
+                  <Button 
+                    variant="outline" 
+                    onClick={async () => {
+                      await supabase.auth.signOut()
+                      router.push("/auth/login")
+                    }}
+                    className="w-full"
+                  >
+                    Sign Out
+                  </Button>
+                </div>
+              </div>
             </Card>
           </TabsContent>
         </Tabs>
       </main>
 
-      {error && (
-        <div className="fixed bottom-4 right-4 p-3 bg-red-200 rounded">
-          <p className="text-sm text-red-700">{error}</p>
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-destructive">
+              <AlertCircleIcon className="w-5 h-5" />
+              Delete Group
+            </DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. All data will be permanently deleted.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="py-4">
+            <Label>Type <strong>DELETE {groupName}</strong> to confirm:</Label>
+            <Input
+              value={deleteConfirmText}
+              onChange={(e) => setDeleteConfirmText(e.target.value)}
+              placeholder={`DELETE ${groupName}`}
+              className="mt-2"
+            />
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => {
+              setDeleteDialogOpen(false)
+              setDeleteConfirmText("")
+            }}>
+              Cancel
+            </Button>
+            <Button 
+              variant="destructive" 
+              onClick={handleDeleteGroup}
+              disabled={deleteConfirmText !== `DELETE ${groupName}`}
+            >
+              Delete Permanently
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Custom Toast Notification */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom-5">
+          <Card className={`p-4 pr-6 shadow-lg border-l-4 ${
+            toast.type === "success" ? "border-l-green-500 bg-green-50 dark:bg-green-950" :
+            toast.type === "error" ? "border-l-red-500 bg-red-50 dark:bg-red-950" :
+            "border-l-yellow-500 bg-yellow-50 dark:bg-yellow-950"
+          }`}>
+            <div className="flex items-center gap-3">
+              {toast.type === "success" && <CheckCircleIcon className="w-5 h-5 text-green-600" />}
+              {toast.type === "error" && <AlertCircleIcon className="w-5 h-5 text-red-600" />}
+              {toast.type === "warning" && <AlertCircleIcon className="w-5 h-5 text-yellow-600" />}
+              <p className="text-sm font-medium">{toast.message}</p>
+            </div>
+          </Card>
         </div>
       )}
     </div>

@@ -689,3 +689,244 @@ Incoming: %s useEffect [[object Object]] [[object Object], [object Object]]
 [01:49:56.055] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
 [01:49:56.055] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
 [01:49:56.055] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764171544909}
+[01:58:44.170] Server  LOG      ✓ Compiled in 120ms
+[01:59:10.941] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:59:10.941] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:59:10.942] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172099799}
+[02:00:29.920] Server  LOG      ✓ Compiled in 84ms
+[02:02:04.395] Server  LOG      ✓ Compiled in 114ms
+[02:02:27.628] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:02:27.628] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:02:27.628] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172296488}
+[02:03:30.880] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:03:30.880] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:03:30.880] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172359736}
+[02:03:34.936] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172363794}
+[02:03:44.411] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172373270}
+[02:04:07.834] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172396694}
+[02:04:14.688] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172403547}
+[02:04:20.094] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172408953}
+[02:04:29.194] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172418052}
+[02:06:44.972] Server  LOG      ✓ Compiled in 142ms
+[02:06:52.867] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172561727}
+[02:07:15.402] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172584260}
+[02:07:19.898] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172588758}
+[02:07:40.227] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:07:40.227] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/settings","route":"/settings"}
+[02:07:40.227] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172609086}
+[02:08:22.657] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/auth/login color: rgb(120, 120, 120) color: inherit {"dp":"/auth/login","o":"http://localhost:3000/auth/login","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172651515}
+[02:08:59.254] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172688113}
+[02:09:06.203] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172695063}
+[02:09:32.515] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings/create-group color: rgb(120, 120, 120) color: inherit {"dp":"/settings/create-group","o":"http://localhost:3000/settings/create-group","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172721366}
+[02:09:37.095] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:09:37.095] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:09:37.095] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172725955}
+[02:09:38.141] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172727002}
+[02:09:41.676] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings/create-group color: rgb(120, 120, 120) color: inherit {"dp":"/settings/create-group","o":"http://localhost:3000/settings/create-group","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172730525}
+[02:11:06.321] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172815180}
+[02:11:11.023] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172819882}
+[02:11:35.841] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172844699}
+[02:11:43.516] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:11:43.516] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:11:43.516] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764172852376}
+[02:12:23.354] Server  LOG      ✓ Compiled in 119ms
+[02:12:23.984] Browser ERROR   ./app/settings/page.tsx:29:1
+Export XCircleIcon doesn't exist in target module
+  27 | } from "@/components/ui/dialog"
+  28 | import { Header } from "@/components/dashboard/header"
+> 29 | import { SettingsIcon, UsersIcon, BellIcon, WalletIcon, AlertCircleIcon, CheckCircleIcon, XCircleIcon } from "@/components/icons"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  30 |
+  31 | type ToastType = "success" | "error" | "warning"
+  32 |
+
+The export XCircleIcon was not found in module [project]/components/icons.tsx [app-client] (ecmascript).
+Did you mean to import CircleIcon?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/settings/page.tsx [Client Component Browser]
+    ./app/settings/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/settings/page.tsx [Client Component SSR]
+    ./app/settings/page.tsx [Server Component]
+[02:12:23.985] Browser ERROR   ./app/settings/page.tsx:29:1
+Export XCircleIcon doesn't exist in target module
+  27 | } from "@/components/ui/dialog"
+  28 | import { Header } from "@/components/dashboard/header"
+> 29 | import { SettingsIcon, UsersIcon, BellIcon, WalletIcon, AlertCircleIcon, CheckCircleIcon, XCircleIcon } from "@/components/icons"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  30 |
+  31 | type ToastType = "success" | "error" | "warning"
+  32 |
+
+The export XCircleIcon was not found in module [project]/components/icons.tsx [app-ssr] (ecmascript).
+Did you mean to import CircleIcon?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/settings/page.tsx [Client Component Browser]
+    ./app/settings/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/settings/page.tsx [Client Component SSR]
+    ./app/settings/page.tsx [Server Component]
+[02:12:23.985] Browser ERROR   ./app/settings/page.tsx:29:1
+Export XCircleIcon doesn't exist in target module
+  27 | } from "@/components/ui/dialog"
+  28 | import { Header } from "@/components/dashboard/header"
+> 29 | import { SettingsIcon, UsersIcon, BellIcon, WalletIcon, AlertCircleIcon, CheckCircleIcon, XCircleIcon } from "@/components/icons"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  30 |
+  31 | type ToastType = "success" | "error" | "warning"
+  32 |
+
+The export XCircleIcon was not found in module [project]/components/icons.tsx [app-client] (ecmascript).
+Did you mean to import CircleIcon?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/settings/page.tsx [Client Component Browser]
+    ./app/settings/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/settings/page.tsx [Client Component SSR]
+    ./app/settings/page.tsx [Server Component]
+[02:12:23.985] Browser ERROR   ./app/settings/page.tsx:29:1
+Export XCircleIcon doesn't exist in target module
+  27 | } from "@/components/ui/dialog"
+  28 | import { Header } from "@/components/dashboard/header"
+> 29 | import { SettingsIcon, UsersIcon, BellIcon, WalletIcon, AlertCircleIcon, CheckCircleIcon, XCircleIcon } from "@/components/icons"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  30 |
+  31 | type ToastType = "success" | "error" | "warning"
+  32 |
+
+The export XCircleIcon was not found in module [project]/components/icons.tsx [app-ssr] (ecmascript).
+Did you mean to import CircleIcon?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/settings/page.tsx [Client Component Browser]
+    ./app/settings/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/settings/page.tsx [Client Component SSR]
+    ./app/settings/page.tsx [Server Component]
+[02:15:12.867] Server  LOG      ✓ Compiled in 76ms
+[02:15:21.986] Browser ERROR   ./app/settings/page.tsx:29:1
+Export XCircleIcon doesn't exist in target module
+  27 | } from "@/components/ui/dialog"
+  28 | import { Header } from "@/components/dashboard/header"
+> 29 | import { SettingsIcon, UsersIcon, BellIcon, WalletIcon, AlertCircleIcon, CheckCircleIcon, XCircleIcon } from "@/components/icons"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  30 |
+  31 | type ToastType = "success" | "error" | "warning"
+  32 |
+
+The export XCircleIcon was not found in module [project]/components/icons.tsx [app-client] (ecmascript).
+Did you mean to import CircleIcon?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/settings/page.tsx [Client Component Browser]
+    ./app/settings/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/settings/page.tsx [Client Component SSR]
+    ./app/settings/page.tsx [Server Component]
+[02:15:21.986] Browser ERROR   ./app/settings/page.tsx:29:1
+Export XCircleIcon doesn't exist in target module
+  27 | } from "@/components/ui/dialog"
+  28 | import { Header } from "@/components/dashboard/header"
+> 29 | import { SettingsIcon, UsersIcon, BellIcon, WalletIcon, AlertCircleIcon, CheckCircleIcon, XCircleIcon } from "@/components/icons"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  30 |
+  31 | type ToastType = "success" | "error" | "warning"
+  32 |
+
+The export XCircleIcon was not found in module [project]/components/icons.tsx [app-ssr] (ecmascript).
+Did you mean to import CircleIcon?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/settings/page.tsx [Client Component Browser]
+    ./app/settings/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/settings/page.tsx [Client Component SSR]
+    ./app/settings/page.tsx [Server Component]
+[02:15:21.989] Browser ERROR   ./app/settings/page.tsx:29:1
+Export XCircleIcon doesn't exist in target module
+  27 | } from "@/components/ui/dialog"
+  28 | import { Header } from "@/components/dashboard/header"
+> 29 | import { SettingsIcon, UsersIcon, BellIcon, WalletIcon, AlertCircleIcon, CheckCircleIcon, XCircleIcon } from "@/components/icons"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  30 |
+  31 | type ToastType = "success" | "error" | "warning"
+  32 |
+
+The export XCircleIcon was not found in module [project]/components/icons.tsx [app-client] (ecmascript).
+Did you mean to import CircleIcon?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/settings/page.tsx [Client Component Browser]
+    ./app/settings/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/settings/page.tsx [Client Component SSR]
+    ./app/settings/page.tsx [Server Component]
+[02:15:21.989] Browser ERROR   ./app/settings/page.tsx:29:1
+Export XCircleIcon doesn't exist in target module
+  27 | } from "@/components/ui/dialog"
+  28 | import { Header } from "@/components/dashboard/header"
+> 29 | import { SettingsIcon, UsersIcon, BellIcon, WalletIcon, AlertCircleIcon, CheckCircleIcon, XCircleIcon } from "@/components/icons"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  30 |
+  31 | type ToastType = "success" | "error" | "warning"
+  32 |
+
+The export XCircleIcon was not found in module [project]/components/icons.tsx [app-ssr] (ecmascript).
+Did you mean to import CircleIcon?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/settings/page.tsx [Client Component Browser]
+    ./app/settings/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/settings/page.tsx [Client Component SSR]
+    ./app/settings/page.tsx [Server Component]
+[02:16:35.073] Server  LOG      ✓ Compiled in 79ms
+[02:17:43.292] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:17:43.292] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:17:43.292] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173212152}
+[02:17:57.724] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173226584}
+[02:18:21.332] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:18:21.332] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/settings","route":"/settings"}
+[02:18:21.332] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173250192}
+[02:18:36.968] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173265828}
+[02:18:45.491] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173274351}
+[02:19:28.315] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173317175}
+[02:21:09.416] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173418277}
+[02:21:12.619] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173421480}
+[02:21:57.043] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173465883}
+[02:21:58.181] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173467042}
+[02:25:35.847] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/invites color: rgb(120, 120, 120) color: inherit {"dp":"/invites","o":"http://localhost:3000/invites","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173684709}
+[02:25:56.605] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173705452}
+[02:26:25.929] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/reports color: rgb(120, 120, 120) color: inherit {"dp":"/reports","o":"http://localhost:3000/reports","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173734792}
+[02:27:08.739] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764173777601}
+[02:30:20.190] Server  LOG      ✓ Compiled in 98ms
+[02:31:03.242] Server  LOG      ✓ Compiled in 78ms
+[02:31:04.104] Server  LOG      ✓ Compiled in 59ms
+[02:31:11.540] Server  LOG      ✓ Compiled in 50ms

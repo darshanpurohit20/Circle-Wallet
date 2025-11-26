@@ -50,7 +50,6 @@ export function PayMerchantDialog({
   const [splitType, setSplitType] = useState("everyone")
   const [selectedMembers, setSelectedMembers] = useState<string[]>([])
 
-  // SAFE MEMBERS LIST
   const allMembers = families.flatMap((f) => f.members ?? []).filter(Boolean)
 
   const adults = allMembers.filter((m) => m.type === "adult")
@@ -91,7 +90,7 @@ export function PayMerchantDialog({
       amount: Number(amount),
       description,
       category,
-      splitType, // This will now be "everyone", "adults", "kids", or "custom"
+      splitType,
       splitAmong: membersToSplit,
     })
     resetForm()
@@ -134,6 +133,38 @@ export function PayMerchantDialog({
 
   const splitPreview = calculateSplit()
 
+  // 👇 NEW: Check for insufficient family balances
+  const checkFamilyBalances = () => {
+    if (!splitPreview || !amount) return null
+
+    const familyDebts: { familyId: string; familyName: string; totalShare: number; currentBalance: number }[] = []
+
+    families.forEach(family => {
+      const familyMembers = splitPreview.filter(m => 
+        family.members?.some(fm => fm.id === m.id)
+      )
+      
+      if (familyMembers.length > 0) {
+        const totalShare = familyMembers.reduce((sum, m) => sum + m.share, 0)
+        const newBalance = Number(family.balance || 0) - totalShare
+        
+        if (newBalance < 0) {
+          familyDebts.push({
+            familyId: family.id,
+            familyName: family.name,
+            totalShare,
+            currentBalance: Number(family.balance || 0)
+          })
+        }
+      }
+    })
+
+    return familyDebts.length > 0 ? familyDebts : null
+  }
+
+  const insufficientFamilyBalances = checkFamilyBalances()
+  const hasInsufficientFamilyBalance = insufficientFamilyBalances && insufficientFamilyBalances.length > 0
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
@@ -165,7 +196,7 @@ export function PayMerchantDialog({
               {insufficientBalance && (
                 <p className="text-xs text-destructive flex items-center gap-1">
                   <AlertCircleIcon className="w-3 h-3" />
-                  Insufficient balance
+                  Insufficient wallet balance
                 </p>
               )}
             </div>
@@ -258,6 +289,22 @@ export function PayMerchantDialog({
               ))}
             </div>
           )}
+
+          {/* 👇 NEW: Insufficient Family Balance Warning */}
+          {hasInsufficientFamilyBalance && (
+            <div className="bg-destructive/10 border border-destructive rounded-lg p-3">
+              <p className="text-sm font-medium text-destructive flex items-center gap-2 mb-2">
+                <AlertCircleIcon className="w-4 h-4" />
+                Insufficient Family Balance
+              </p>
+              {insufficientFamilyBalances!.map((debt) => (
+                <p key={debt.familyId} className="text-xs text-destructive">
+                  {debt.familyName}: Has {formatINR(debt.currentBalance)} but needs {formatINR(debt.totalShare)}
+                  (Short by {formatINR(debt.totalShare - debt.currentBalance)})
+                </p>
+              ))}
+            </div>
+          )}
         </div>
 
         <DialogFooter>
@@ -265,11 +312,19 @@ export function PayMerchantDialog({
             Cancel
           </Button>
           <Button
-            onClick={handleSubmit}
-            disabled={!merchantName || !amount || !category || !description || insufficientBalance}
-          >
-            Pay {amount ? formatINR(amountNum) : "Merchant"}
-          </Button>
+  onClick={handleSubmit}
+  disabled={
+    !merchantName || 
+    !amount || 
+    !category || 
+    !description || 
+    insufficientBalance || 
+    (hasInsufficientFamilyBalance !== null && hasInsufficientFamilyBalance !== undefined)
+  }
+>
+  Pay {amount ? formatINR(amountNum) : "Merchant"}
+</Button>
+
         </DialogFooter>
       </DialogContent>
     </Dialog>
