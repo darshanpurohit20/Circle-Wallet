@@ -19,23 +19,32 @@ export interface Family {
   balance: number
 }
 
+// 👇 UPDATED Transaction interface
 export interface Transaction {
   id: string
   type: TransactionType
   description: string
   amount: number
   category: string
-  paidBy: string
-  paidByName: string
+  paidBy?: string
+  paidByName?: string
+  paid_by?: string | null          // 👈 ADD (Supabase field)
+  paid_by_name?: string | null     // 👈 ADD (Supabase field)
   merchantName?: string
+  merchant_name?: string | null    // 👈 ADD (Supabase field)
   merchantId?: string
-  date: string
-  splitType: "all" | "adults" | "children" | "custom"
-  splitAmong: string[]
+  date?: string
+  created_at: string               // 👈 ADD (Supabase field)
+  updated_at?: string | null       // 👈 ADD (Supabase field)
+  splitType?: "all" | "adults" | "children" | "custom" | "everyone" | "kids"
+  split_type?: "everyone" | "adults" | "kids" | "custom" | null  // 👈 ADD (Supabase field)
+  splitAmong?: string[]
+  split_among?: string[] | null    // 👈 ADD (Supabase field)
   status: TransactionStatus
-  requiresApproval: boolean
+  requiresApproval?: boolean
   approvedBy?: string
   approvedAt?: string
+  group_id?: string                // 👈 ADD (Supabase field)
 }
 
 export interface Group {
@@ -166,6 +175,7 @@ export const mockGroup: Group = {
       paidBy: "mem_001",
       paidByName: "Rajesh Sharma",
       date: "2025-01-15",
+      created_at: "2025-01-15",
       splitType: "all",
       splitAmong: [],
       status: "confirmed",
@@ -180,6 +190,7 @@ export const mockGroup: Group = {
       paidBy: "mem_005",
       paidByName: "Amit Patel",
       date: "2025-01-15",
+      created_at: "2025-01-15",
       splitType: "all",
       splitAmong: [],
       status: "confirmed",
@@ -194,6 +205,7 @@ export const mockGroup: Group = {
       paidBy: "mem_007",
       paidByName: "Vikram Singh",
       date: "2025-01-16",
+      created_at: "2025-01-16",
       splitType: "all",
       splitAmong: [],
       status: "confirmed",
@@ -210,6 +222,7 @@ export const mockGroup: Group = {
       merchantName: "Goa Beach Resort",
       merchantId: "mer_001",
       date: "2025-01-20",
+      created_at: "2025-01-20",
       splitType: "all",
       splitAmong: ["mem_001", "mem_002", "mem_003", "mem_004", "mem_005", "mem_006", "mem_007"],
       status: "confirmed",
@@ -228,6 +241,7 @@ export const mockGroup: Group = {
       merchantName: "Fisherman's Wharf",
       merchantId: "mer_002",
       date: "2025-01-21",
+      created_at: "2025-01-21",
       splitType: "all",
       splitAmong: ["mem_001", "mem_002", "mem_003", "mem_004", "mem_005", "mem_006", "mem_007"],
       status: "confirmed",
@@ -243,6 +257,7 @@ export const mockGroup: Group = {
       paidByName: "Vikram Singh",
       merchantName: "Sunset Bar",
       date: "2025-01-21",
+      created_at: "2025-01-21",
       splitType: "adults",
       splitAmong: ["mem_001", "mem_002", "mem_005", "mem_006", "mem_007"],
       status: "pending",
@@ -258,6 +273,7 @@ export const mockGroup: Group = {
       paidByName: "Priya Sharma",
       merchantName: "Naturals Ice Cream",
       date: "2025-01-22",
+      created_at: "2025-01-22",
       splitType: "children",
       splitAmong: ["mem_003", "mem_004"],
       status: "confirmed",
@@ -274,6 +290,7 @@ export const mockGroup: Group = {
       merchantName: "Goa Water Sports",
       merchantId: "mer_003",
       date: "2025-01-23",
+      created_at: "2025-01-23",
       splitType: "custom",
       splitAmong: ["mem_001", "mem_002", "mem_003", "mem_005", "mem_006", "mem_007"],
       status: "pending",

@@ -39,28 +39,41 @@ export function TransactionDetailDialog({
     switch (splitType) {
       case "adults":
         return "Adults Only"
+      case "kids":
       case "children":
         return "Kids Only"
       case "custom":
         return "Custom Split"
+      case "everyone":
       default:
         return "Everyone"
     }
   }
 
-  // ✅ FIXED: Correct DB field names
-  const splitAmong = transaction.split_among || []
-
+  // Get split info with proper fallbacks
+  const splitAmong = transaction.split_among || transaction.splitAmong || []
   const membersInSplit = allMembers.filter((m) => splitAmong.includes(m.id))
 
-  // ✅ FIXED: Proper share_ratio field + number guard
+  // Calculate total ratio
   const totalRatio = membersInSplit.reduce(
-    (acc, m) => acc + Number(m.share_ratio || 0),
+    (acc, m) => acc + Number(m.shareRatio || 0),
     0
   )
 
   const isDeposit = transaction.type === "deposit"
   const isPending = transaction.status === "pending"
+  
+  // Get split type with fallback
+  const splitType = transaction.split_type || transaction.splitType || "everyone"
+  
+  // Get merchant name with fallback
+  const merchantName = transaction.merchant_name || transaction.merchantName
+  
+  // Get paid by name with fallback
+  const paidByName = transaction.paid_by_name || transaction.paidByName || "Unknown"
+  
+  // Get date with fallback
+  const transactionDate = transaction.created_at || transaction.date || new Date().toISOString()
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -78,7 +91,9 @@ export function TransactionDetailDialog({
             )}
             <div>
               <DialogTitle className="text-left">{transaction.description}</DialogTitle>
-              <p className="text-sm text-muted-foreground">{formatDate(transaction.date)}</p>
+              <p className="text-sm text-muted-foreground">
+                {formatDate(transactionDate)}
+              </p>
             </div>
           </div>
         </DialogHeader>
@@ -88,7 +103,9 @@ export function TransactionDetailDialog({
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">Amount</span>
             <span
-              className={`text-2xl font-bold ${isDeposit ? "text-green-600 dark:text-green-400" : "text-foreground"}`}
+              className={`text-2xl font-bold ${
+                isDeposit ? "text-green-600 dark:text-green-400" : "text-foreground"
+              }`}
             >
               {isDeposit ? "+" : "-"}
               {formatINR(transaction.amount)}
@@ -132,59 +149,61 @@ export function TransactionDetailDialog({
           )}
 
           {/* Merchant */}
-          {transaction.merchant_name && (
+          {merchantName && (
             <div className="flex items-center justify-between">
               <span className="text-muted-foreground">Merchant</span>
-              <span className="font-medium">{transaction.merchant_name}</span>
+              <span className="font-medium">{merchantName}</span>
             </div>
           )}
 
           {/* Paid by */}
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">{isDeposit ? "Added by" : "Paid by"}</span>
-            <span className="font-medium">{transaction.paid_by_name}</span>
+            <span className="font-medium">{paidByName}</span>
           </div>
 
           {/* Split Breakdown */}
-          {!isDeposit && transaction.split_type && (
+          {!isDeposit && splitType && (
             <>
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Split Type</span>
-                <Badge variant="secondary">{getSplitLabel(transaction.split_type)}</Badge>
+                <Badge variant="secondary">{getSplitLabel(splitType)}</Badge>
               </div>
 
-              <div className="border-t pt-4">
-                <p className="text-sm font-medium text-foreground mb-3">Split Breakdown</p>
-                <div className="space-y-2 max-h-48 overflow-y-auto">
-                  {membersInSplit.map((member) => {
-                    const ratio = Number(member.share_ratio || 0)
-                    const share = totalRatio > 0 ? (transaction.amount * ratio) / totalRatio : 0
+              {membersInSplit.length > 0 && (
+                <div className="border-t pt-4">
+                  <p className="text-sm font-medium text-foreground mb-3">Split Breakdown</p>
+                  <div className="space-y-2 max-h-48 overflow-y-auto">
+                    {membersInSplit.map((member) => {
+                      const ratio = Number(member.shareRatio || 0)
+                      const share = totalRatio > 0 ? (transaction.amount * ratio) / totalRatio : 0
 
-                    return (
-                      <div key={member.id} className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Avatar className="w-6 h-6">
-                            <AvatarImage src={member.avatar || "/placeholder.svg"} />
-                            <AvatarFallback className="text-[10px]">
-                              {member.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </AvatarFallback>
-                          </Avatar>
-                          <span className="text-sm">{member.name}</span>
+                      return (
+                        <div key={member.id} className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Avatar className="w-6 h-6">
+                              <AvatarImage src={member.avatar || "/placeholder.svg"} />
+                              <AvatarFallback className="text-[10px]">
+                                {member.name
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            </Avatar>
+                            <span className="text-sm">{member.name}</span>
+                          </div>
+                          <span className="text-sm font-medium">{formatINR(share)}</span>
                         </div>
-                        <span className="text-sm font-medium">{formatINR(share)}</span>
-                      </div>
-                    )
-                  })}
+                      )
+                    })}
+                  </div>
                 </div>
-              </div>
+              )}
             </>
           )}
 
           {/* Approval */}
-          {transaction.requires_approval && (
+          {transaction.requiresApproval && (
             <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
               <p className="text-sm text-amber-800 dark:text-amber-200">
                 This transaction requires admin approval as it exceeds the threshold.
@@ -197,7 +216,11 @@ export function TransactionDetailDialog({
         <DialogFooter className="flex-col sm:flex-row gap-2">
           {isPending ? (
             <>
-              <Button variant="outline" onClick={onDecline} className="w-full sm:w-auto text-destructive bg-transparent">
+              <Button
+                variant="outline"
+                onClick={onDecline}
+                className="w-full sm:w-auto text-destructive"
+              >
                 Decline
               </Button>
               <Button onClick={onApprove} className="w-full sm:w-auto">

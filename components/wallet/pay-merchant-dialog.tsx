@@ -63,6 +63,9 @@ export function PayMerchantDialog({
       setSelectedMembers(adults.map((m) => m.id))
     } else if (type === "kids") {
       setSelectedMembers(kids.map((m) => m.id))
+    } else if (type === "custom") {
+      // Keep current selection for custom
+      setSelectedMembers([])
     }
   }
 
@@ -83,6 +86,12 @@ export function PayMerchantDialog({
         : splitType === "kids"
         ? kids.map((m) => m.id)
         : allMembers.map((m) => m.id)
+
+    console.log("🚀 Dialog submitting:", {
+      splitType,
+      splitAmong: membersToSplit,
+      memberCount: membersToSplit.length
+    })
 
     onSubmit({
       merchantName,
@@ -133,7 +142,6 @@ export function PayMerchantDialog({
 
   const splitPreview = calculateSplit()
 
-  // 👇 NEW: Check for insufficient family balances
   const checkFamilyBalances = () => {
     if (!splitPreview || !amount) return null
 
@@ -163,7 +171,7 @@ export function PayMerchantDialog({
   }
 
   const insufficientFamilyBalances = checkFamilyBalances()
-  const hasInsufficientFamilyBalance = insufficientFamilyBalances && insufficientFamilyBalances.length > 0
+  const hasInsufficientFamilyBalance = !!insufficientFamilyBalances
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -180,19 +188,32 @@ export function PayMerchantDialog({
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Merchant Name</Label>
-              <Input value={merchantName} onChange={(e) => setMerchantName(e.target.value)} />
+              <Input 
+                value={merchantName} 
+                onChange={(e) => setMerchantName(e.target.value)} 
+                placeholder="Enter merchant name"
+              />
             </div>
             <div className="space-y-2">
               <Label>UPI ID (Optional)</Label>
-              <Input value={merchantUpi} onChange={(e) => setMerchantUpi(e.target.value)} />
+              <Input 
+                value={merchantUpi} 
+                onChange={(e) => setMerchantUpi(e.target.value)} 
+                placeholder="example@upi"
+              />
             </div>
           </div>
 
           {/* Amount + Category */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>Amount (INR)</Label>
-              <Input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
+              <Label>Amount (₹)</Label>
+              <Input 
+                type="number" 
+                value={amount} 
+                onChange={(e) => setAmount(e.target.value)} 
+                placeholder="0"
+              />
               {insufficientBalance && (
                 <p className="text-xs text-destructive flex items-center gap-1">
                   <AlertCircleIcon className="w-3 h-3" />
@@ -278,19 +299,33 @@ export function PayMerchantDialog({
           </div>
 
           {/* Split Preview */}
-          {splitPreview && (
+          {splitPreview && splitPreview.length > 0 && (
             <div className="bg-muted/50 rounded-lg p-4">
-              <p className="text-sm font-medium mb-2">Split Preview</p>
-              {splitPreview.map((member) => (
-                <div key={member.id} className="flex justify-between text-sm">
-                  <span>{member.name}</span>
-                  <span className="font-medium">{formatINR(member.share)}</span>
-                </div>
-              ))}
+              <p className="text-sm font-medium mb-2">
+                Split Preview ({splitPreview.length} {splitPreview.length === 1 ? "member" : "members"})
+              </p>
+              <div className="space-y-1">
+                {splitPreview.map((member) => (
+                  <div key={member.id} className="flex justify-between text-sm">
+                    <span>{member.name}</span>
+                    <span className="font-medium">{formatINR(member.share)}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
-          {/* 👇 NEW: Insufficient Family Balance Warning */}
+          {/* No members selected warning */}
+          {splitPreview && splitPreview.length === 0 && (
+            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
+              <p className="text-sm text-amber-800 dark:text-amber-200 flex items-center gap-2">
+                <AlertCircleIcon className="w-4 h-4" />
+                No members selected for this split
+              </p>
+            </div>
+          )}
+
+          {/* Insufficient Family Balance Warning */}
           {hasInsufficientFamilyBalance && (
             <div className="bg-destructive/10 border border-destructive rounded-lg p-3">
               <p className="text-sm font-medium text-destructive flex items-center gap-2 mb-2">
@@ -300,7 +335,7 @@ export function PayMerchantDialog({
               {insufficientFamilyBalances!.map((debt) => (
                 <p key={debt.familyId} className="text-xs text-destructive">
                   {debt.familyName}: Has {formatINR(debt.currentBalance)} but needs {formatINR(debt.totalShare)}
-                  (Short by {formatINR(debt.totalShare - debt.currentBalance)})
+                  {" "}(Short by {formatINR(debt.totalShare - debt.currentBalance)})
                 </p>
               ))}
             </div>
@@ -312,18 +347,19 @@ export function PayMerchantDialog({
             Cancel
           </Button>
           <Button
-  onClick={handleSubmit}
-  disabled={
-    !merchantName || 
-    !amount || 
-    !category || 
-    !description || 
-    insufficientBalance || 
-    (hasInsufficientFamilyBalance !== null && hasInsufficientFamilyBalance !== undefined)
-  }
->
-  Pay {amount ? formatINR(amountNum) : "Merchant"}
-</Button>
+          onClick={handleSubmit}
+          disabled={
+            !merchantName || 
+            !amount || 
+            !category || 
+            !description || 
+            insufficientBalance || 
+            hasInsufficientFamilyBalance ||
+            (splitPreview !== null && splitPreview.length === 0)
+          }
+        >
+          Pay {amount ? formatINR(amountNum) : "Merchant"}
+        </Button>
 
         </DialogFooter>
       </DialogContent>

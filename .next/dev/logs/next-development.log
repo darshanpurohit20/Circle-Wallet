@@ -930,3 +930,611 @@ Import traces:
 [02:31:03.242] Server  LOG      ✓ Compiled in 78ms
 [02:31:04.104] Server  LOG      ✓ Compiled in 59ms
 [02:31:11.540] Server  LOG      ✓ Compiled in 50ms
+[02:31:38.414] Server  LOG      ✓ Compiled in 89ms
+[02:32:14.762] Server  LOG      ✓ Compiled in 197ms
+[02:32:26.720] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:32:26.720] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:32:26.720] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764174095577}
+[02:32:51.544] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764174120405}
+[02:33:21.893] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[02:33:21.893] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[02:34:34.643] Server  LOG      ✓ Compiled in 86ms
+[02:34:42.495] Server  LOG      ✓ Compiled in 59ms
+[02:34:57.135] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:34:57.139] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/transactions","route":"/transactions"}
+[02:34:57.139] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764174245986}
+[02:35:03.589] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764174252451}
+[02:37:56.989] Server  LOG      ✓ Compiled in 203ms
+[02:41:17.698] Server  LOG      ✓ Compiled in 155ms
+[02:41:34.007] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:41:34.007] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:41:34.007] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764174642871}
+[02:42:01.373] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:42:01.374] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:42:01.374] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764174670238}
+[02:46:39.157] Server  LOG      ✓ Compiled in 199ms
+[02:47:13.488] Server  LOG      ✓ Compiled in 72ms
+[02:47:20.134] Server  LOG      ✓ Compiled in 52ms
+[02:47:20.686] Server  LOG      ✓ Compiled in 48ms
+[02:47:21.555] Server  LOG      ✓ Compiled in 52ms
+[02:47:22.184] Server  LOG      ✓ Compiled in 44ms
+[02:47:24.297] Server  LOG      ✓ Compiled in 52ms
+[02:47:24.719] Server  LOG      ✓ Compiled in 60ms
+[02:47:24.963] Server  LOG      ✓ Compiled in 49ms
+[02:47:25.357] Server  LOG      ✓ Compiled in 50ms
+[02:47:33.119] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:47:33.119] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:47:33.119] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175001980}
+[02:47:49.458] Browser LOG     🚀 Dialog submitting: {"memberCount":4,"splitAmong":["6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b","c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8"],"splitType":"kids"}
+[02:52:30.633] Server  LOG      ✓ Compiled in 127ms
+[02:52:30.983] Browser ERROR   ./app/page.tsx:389:7
+Parsing ecmascript source code failed
+  387 |
+  388 |       setPayMerchantOpen(false)
+> 389 |     } catch (error) {
+      |       ^^^^^
+  390 |       alert("An unexpected error occurred.")
+  391 |     }
+  392 |   }
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:30.983] Browser ERROR   ./app/page.tsx:368:38
+Parsing ecmascript source code failed
+  366 |       const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
+  367 |
+> 368 |       const { error: updateError } = await supabase
+      |                                      ^^^^^
+  369 |         .from("groups")
+  370 |         .update({
+  371 |           shared_wallet_balance: newWalletBalance,
+
+await isn't allowed in non-async function
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:30.983] Browser ERROR   ./app/page.tsx:389:7
+Parsing ecmascript source code failed
+  387 |
+  388 |       setPayMerchantOpen(false)
+> 389 |     } catch (error) {
+      |       ^^^^^
+  390 |       alert("An unexpected error occurred.")
+  391 |     }
+  392 |   }
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:30.983] Browser ERROR   ./app/page.tsx:368:38
+Parsing ecmascript source code failed
+  366 |       const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
+  367 |
+> 368 |       const { error: updateError } = await supabase
+      |                                      ^^^^^
+  369 |         .from("groups")
+  370 |         .update({
+  371 |           shared_wallet_balance: newWalletBalance,
+
+await isn't allowed in non-async function
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:32.984] Browser ERROR   ./app/page.tsx:552:7
+Parsing ecmascript source code failed
+  550 |
+  551 |       setPayMerchantOpen(false)
+> 552 |     } catch (error) {
+      |       ^^^^^
+  553 |       alert("An unexpected error occurred.")
+  554 |     }
+  555 |   }
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:32.984] Browser ERROR   ./app/page.tsx:531:38
+Parsing ecmascript source code failed
+  529 |       const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
+  530 |
+> 531 |       const { error: updateError } = await supabase
+      |                                      ^^^^^
+  532 |         .from("groups")
+  533 |         .update({
+  534 |           shared_wallet_balance: newWalletBalance,
+
+await isn't allowed in non-async function
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:32.984] Browser ERROR   ./app/page.tsx:552:7
+Parsing ecmascript source code failed
+  550 |
+  551 |       setPayMerchantOpen(false)
+> 552 |     } catch (error) {
+      |       ^^^^^
+  553 |       alert("An unexpected error occurred.")
+  554 |     }
+  555 |   }
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:32.984] Browser ERROR   ./app/page.tsx:531:38
+Parsing ecmascript source code failed
+  529 |       const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
+  530 |
+> 531 |       const { error: updateError } = await supabase
+      |                                      ^^^^^
+  532 |         .from("groups")
+  533 |         .update({
+  534 |           shared_wallet_balance: newWalletBalance,
+
+await isn't allowed in non-async function
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:34.983] Browser ERROR   ./app/page.tsx:389:7
+Parsing ecmascript source code failed
+  387 |
+  388 |       setPayMerchantOpen(false)
+> 389 |     } catch (error) {
+      |       ^^^^^
+  390 |       alert("An unexpected error occurred.")
+  391 |     }
+  392 |   }
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:34.983] Browser ERROR   ./app/page.tsx:368:38
+Parsing ecmascript source code failed
+  366 |       const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
+  367 |
+> 368 |       const { error: updateError } = await supabase
+      |                                      ^^^^^
+  369 |         .from("groups")
+  370 |         .update({
+  371 |           shared_wallet_balance: newWalletBalance,
+
+await isn't allowed in non-async function
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:34.984] Browser ERROR   ./app/page.tsx:389:7
+Parsing ecmascript source code failed
+  387 |
+  388 |       setPayMerchantOpen(false)
+> 389 |     } catch (error) {
+      |       ^^^^^
+  390 |       alert("An unexpected error occurred.")
+  391 |     }
+  392 |   }
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:34.984] Browser ERROR   ./app/page.tsx:368:38
+Parsing ecmascript source code failed
+  366 |       const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
+  367 |
+> 368 |       const { error: updateError } = await supabase
+      |                                      ^^^^^
+  369 |         .from("groups")
+  370 |         .update({
+  371 |           shared_wallet_balance: newWalletBalance,
+
+await isn't allowed in non-async function
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:36.989] Browser ERROR   ./app/page.tsx:552:7
+Parsing ecmascript source code failed
+  550 |
+  551 |       setPayMerchantOpen(false)
+> 552 |     } catch (error) {
+      |       ^^^^^
+  553 |       alert("An unexpected error occurred.")
+  554 |     }
+  555 |   }
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:36.989] Browser ERROR   ./app/page.tsx:531:38
+Parsing ecmascript source code failed
+  529 |       const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
+  530 |
+> 531 |       const { error: updateError } = await supabase
+      |                                      ^^^^^
+  532 |         .from("groups")
+  533 |         .update({
+  534 |           shared_wallet_balance: newWalletBalance,
+
+await isn't allowed in non-async function
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:36.990] Browser ERROR   ./app/page.tsx:552:7
+Parsing ecmascript source code failed
+  550 |
+  551 |       setPayMerchantOpen(false)
+> 552 |     } catch (error) {
+      |       ^^^^^
+  553 |       alert("An unexpected error occurred.")
+  554 |     }
+  555 |   }
+
+Expected a semicolon
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:36.990] Browser ERROR   ./app/page.tsx:531:38
+Parsing ecmascript source code failed
+  529 |       const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
+  530 |
+> 531 |       const { error: updateError } = await supabase
+      |                                      ^^^^^
+  532 |         .from("groups")
+  533 |         .update({
+  534 |           shared_wallet_balance: newWalletBalance,
+
+await isn't allowed in non-async function
+
+Import traces:
+  Client Component Browser:
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[02:52:43.718] Server  LOG      ✓ Compiled in 64ms
+[02:53:40.925] Browser LOG     🚀 Dialog submitting: {"memberCount":4,"splitAmong":["f72cad9a-0673-49a3-8cb8-42ce03f99442","c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8","ca5f5410-d566-47fa-af4b-0f883c70ec6b"],"splitType":"custom"}
+[02:54:04.152] Server  LOG      ✓ Compiled in 99ms
+[02:54:04.208] Server  ERROR   TypeError: fetch failed
+[02:54:04.500] Server  ERROR    ⨯ Error: The default export is not a React Component in "/page"
+[02:54:04.637] Server  ERROR    ⨯ Error: The default export is not a React Component in "/page"
+[02:54:05.195] Server  ERROR    ⨯ Error: The default export is not a React Component in "/page"
+[02:54:05.344] Server  ERROR    ⨯ Error: The default export is not a React Component in "/page"
+[02:54:05.946] Server  LOG      ✓ Compiled in 521ms
+[02:54:06.038] Browser ERROR   uncaughtError: Error: The default export is not a React Component in "/page"
+[02:54:10.006] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:54:10.006] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:54:10.006] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175398867}
+[02:54:17.611] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:54:17.611] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:54:17.611] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175406473}
+[02:55:03.274] Browser LOG     🚀 Dialog submitting: {"memberCount":6,"splitAmong":["f72cad9a-0673-49a3-8cb8-42ce03f99442","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b","4ea46283-03de-4b86-b10a-9aea25bd6616","c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8"],"splitType":"everyone"}
+[02:55:03.274] Browser LOG     💰 Dashboard received: {"amount":100,"category":"Transport","description":"a","merchantName":"hao","splitAmong":["f72cad9a-0673-49a3-8cb8-42ce03f99442","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b","4ea46283-03de-4b86-b10a-9aea25bd6616","c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8"],"splitType":"everyone"}
+[02:55:03.274] Browser LOG     👥 Split among: ["f72cad9a-0673-49a3-8cb8-42ce03f99442","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b","4ea46283-03de-4b86-b10a-9aea25bd6616","c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8"]
+[02:55:03.274] Browser LOG     🔍 All families: [{"members":[{"id":"f72cad9a...","name":"A","type":"adult"}],"name":"Hao"},{"members":[{"id":"6e49c6aa...","name":"a","type":"teenager"},{"id":"ca5f5410...","name":"b","type":"child"}],"name":"Seth"},{"members":[{"id":"4ea46283...","name":"A","type":"adult"},{"id":"c7c6c0df...","name":"B","type":"teenager"},{"id":"c5aea833...","name":"c","type":"child"}],"name":"Purohit"}]
+[02:55:03.274] Browser LOG     👤 A (f72cad9a...): type=adult, included=true
+[02:55:03.274] Browser LOG     👨‍👩‍👧 Hao: 1 shares
+[02:55:03.274] Browser LOG     👤 a (6e49c6aa...): type=teenager, included=true
+[02:55:03.274] Browser LOG     👤 b (ca5f5410...): type=child, included=true
+[02:55:03.274] Browser LOG     👨‍👩‍👧 Seth: 1.3 shares
+[02:55:03.274] Browser LOG     👤 A (4ea46283...): type=adult, included=true
+[02:55:03.274] Browser LOG     👤 B (c7c6c0df...): type=teenager, included=true
+[02:55:03.274] Browser LOG     👤 c (c5aea833...): type=child, included=true
+[02:55:03.274] Browser LOG     👨‍👩‍👧 Purohit: 2.3 shares
+[02:55:03.274] Browser LOG     📊 Total shares: 4.6
+[02:55:03.274] Browser LOG     📊 Family splits BEFORE amount: [{"amount":0,"familyId":"b5109310-481d-4dfc-9388-7d3cdc213c6d","shares":1},{"amount":0,"familyId":"e70d6edd-bd18-42d3-bda9-61f951b12104","shares":1.3},{"amount":0,"familyId":"62c0b7d6-3d0e-4148-8e83-de51b90e3b1b","shares":2.3}]
+[02:55:03.274] Browser LOG     📊 Family splits AFTER amount: [{"amount":21.73913043478261,"familyId":"b5109310-481d-4dfc-9388-7d3cdc213c6d","shares":1},{"amount":28.260869565217394,"familyId":"e70d6edd-bd18-42d3-bda9-61f951b12104","shares":1.3},{"amount":50,"familyId":"62c0b7d6-3d0e-4148-8e83-de51b90e3b1b","shares":2.3}]
+[02:55:06.687] Browser ERROR   ❌ Insert error: {"code":"23514","details":null,"hint":null,"message":"new row for relation \"transactions\" violates check constraint \"transactions_split_type_check\""}
+[02:55:18.873] Browser LOG     🚀 Dialog submitting: {"memberCount":2,"splitAmong":["f72cad9a-0673-49a3-8cb8-42ce03f99442","4ea46283-03de-4b86-b10a-9aea25bd6616"],"splitType":"adults"}
+[02:55:18.873] Browser LOG     💰 Dashboard received: {"amount":100,"category":"Accommodation","description":"s","merchantName":"hao","splitAmong":["f72cad9a-0673-49a3-8cb8-42ce03f99442","4ea46283-03de-4b86-b10a-9aea25bd6616"],"splitType":"adults"}
+[02:55:18.873] Browser LOG     👥 Split among: ["f72cad9a-0673-49a3-8cb8-42ce03f99442","4ea46283-03de-4b86-b10a-9aea25bd6616"]
+[02:55:18.873] Browser LOG     🔍 All families: [{"members":[{"id":"f72cad9a...","name":"A","type":"adult"}],"name":"Hao"},{"members":[{"id":"6e49c6aa...","name":"a","type":"teenager"},{"id":"ca5f5410...","name":"b","type":"child"}],"name":"Seth"},{"members":[{"id":"4ea46283...","name":"A","type":"adult"},{"id":"c7c6c0df...","name":"B","type":"teenager"},{"id":"c5aea833...","name":"c","type":"child"}],"name":"Purohit"}]
+[02:55:18.873] Browser LOG     👤 A (f72cad9a...): type=adult, included=true
+[02:55:18.873] Browser LOG     👨‍👩‍👧 Hao: 1 shares
+[02:55:18.873] Browser LOG     👤 a (6e49c6aa...): type=teenager, included=false
+[02:55:18.873] Browser LOG     👤 b (ca5f5410...): type=child, included=false
+[02:55:18.873] Browser LOG     👨‍👩‍👧 Seth: 0 shares
+[02:55:18.873] Browser LOG     👤 A (4ea46283...): type=adult, included=true
+[02:55:18.873] Browser LOG     👤 B (c7c6c0df...): type=teenager, included=false
+[02:55:18.873] Browser LOG     👤 c (c5aea833...): type=child, included=false
+[02:55:18.873] Browser LOG     👨‍👩‍👧 Purohit: 1 shares
+[02:55:18.873] Browser LOG     📊 Total shares: 2
+[02:55:18.873] Browser LOG     📊 Family splits BEFORE amount: [{"amount":0,"familyId":"b5109310-481d-4dfc-9388-7d3cdc213c6d","shares":1},{"amount":0,"familyId":"62c0b7d6-3d0e-4148-8e83-de51b90e3b1b","shares":1}]
+[02:55:18.873] Browser LOG     📊 Family splits AFTER amount: [{"amount":50,"familyId":"b5109310-481d-4dfc-9388-7d3cdc213c6d","shares":1},{"amount":50,"familyId":"62c0b7d6-3d0e-4148-8e83-de51b90e3b1b","shares":1}]
+[02:55:19.347] Browser LOG     ✅ Transaction inserted: {"amount":100,"approved_at":null,"approved_by":null,"category":"Accommodation","created_at":"2025-11-26T16:44:27.998065+00:00","description":"s","group_id":"c55af8e5-f638-4b29-b566-15934f9cb3fe","id":"0881e5a4-b5de-4c78-bf50-86dfadfc471b","merchant_id":null,"merchant_name":"hao","paid_by":null,"paid_by_name":"Group Wallet","receipt_url":null,"requires_approval":false,"split_among":["f72cad9a-0673-49a3-8cb8-42ce03f99442","4ea46283-03de-4b86-b10a-9aea25bd6616"],"split_amounts":{},"split_type":"adults","status":"confirmed","type":"payment","updated_at":"2025-11-26T16:44:27.998065+00:00"}
+[02:55:19.654] Browser LOG     💸 Hao: 29299.07 → 29249.07
+[02:55:19.922] Browser LOG     💸 Purohit: 4679.66 → 4629.66
+[02:55:20.270] Browser LOG     💰 New wallet balance: 38600
+[02:55:20.576] Browser LOG     ✅ Payment complete!
+[02:55:39.302] Browser LOG     🚀 Dialog submitting: {"memberCount":4,"splitAmong":["6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b","c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8"],"splitType":"kids"}
+[02:55:39.302] Browser LOG     💰 Dashboard received: {"amount":1111,"category":"Treats","description":"asa","merchantName":"sdxasx","merchantUpi":"axs","splitAmong":["6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b","c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8"],"splitType":"kids"}
+[02:55:39.302] Browser LOG     👥 Split among: ["6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b","c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8"]
+[02:55:39.302] Browser LOG     🔍 All families: [{"members":[{"id":"6e49c6aa...","name":"a","type":"teenager"},{"id":"ca5f5410...","name":"b","type":"child"}],"name":"Seth"},{"members":[{"id":"f72cad9a...","name":"A","type":"adult"}],"name":"Hao"},{"members":[{"id":"4ea46283...","name":"A","type":"adult"},{"id":"c7c6c0df...","name":"B","type":"teenager"},{"id":"c5aea833...","name":"c","type":"child"}],"name":"Purohit"}]
+[02:55:39.302] Browser LOG     👤 a (6e49c6aa...): type=teenager, included=true
+[02:55:39.303] Browser LOG     👤 b (ca5f5410...): type=child, included=true
+[02:55:39.303] Browser LOG     👨‍👩‍👧 Seth: 1.3 shares
+[02:55:39.303] Browser LOG     👤 A (f72cad9a...): type=adult, included=false
+[02:55:39.303] Browser LOG     👨‍👩‍👧 Hao: 0 shares
+[02:55:39.303] Browser LOG     👤 A (4ea46283...): type=adult, included=false
+[02:55:39.303] Browser LOG     👤 B (c7c6c0df...): type=teenager, included=true
+[02:55:39.303] Browser LOG     👤 c (c5aea833...): type=child, included=true
+[02:55:39.303] Browser LOG     👨‍👩‍👧 Purohit: 1.3 shares
+[02:55:39.303] Browser LOG     📊 Total shares: 2.6
+[02:55:39.303] Browser LOG     📊 Family splits BEFORE amount: [{"amount":0,"familyId":"e70d6edd-bd18-42d3-bda9-61f951b12104","shares":1.3},{"amount":0,"familyId":"62c0b7d6-3d0e-4148-8e83-de51b90e3b1b","shares":1.3}]
+[02:55:39.303] Browser LOG     📊 Family splits AFTER amount: [{"amount":555.5,"familyId":"e70d6edd-bd18-42d3-bda9-61f951b12104","shares":1.3},{"amount":555.5,"familyId":"62c0b7d6-3d0e-4148-8e83-de51b90e3b1b","shares":1.3}]
+[02:55:41.114] Browser ERROR   ❌ Insert error: {"code":"23514","details":null,"hint":null,"message":"new row for relation \"transactions\" violates check constraint \"transactions_split_type_check\""}
+[02:55:54.097] Browser LOG     🚀 Dialog submitting: {"memberCount":1,"splitAmong":["ca5f5410-d566-47fa-af4b-0f883c70ec6b"],"splitType":"custom"}
+[02:55:54.097] Browser LOG     💰 Dashboard received: {"amount":11,"category":"Activities","description":"as","merchantName":"asd","merchantUpi":"sad","splitAmong":["ca5f5410-d566-47fa-af4b-0f883c70ec6b"],"splitType":"custom"}
+[02:55:54.097] Browser LOG     👥 Split among: ["ca5f5410-d566-47fa-af4b-0f883c70ec6b"]
+[02:55:54.097] Browser LOG     🔍 All families: [{"members":[{"id":"6e49c6aa...","name":"a","type":"teenager"},{"id":"ca5f5410...","name":"b","type":"child"}],"name":"Seth"},{"members":[{"id":"f72cad9a...","name":"A","type":"adult"}],"name":"Hao"},{"members":[{"id":"4ea46283...","name":"A","type":"adult"},{"id":"c7c6c0df...","name":"B","type":"teenager"},{"id":"c5aea833...","name":"c","type":"child"}],"name":"Purohit"}]
+[02:55:54.097] Browser LOG     👤 a (6e49c6aa...): type=teenager, included=false
+[02:55:54.097] Browser LOG     👤 b (ca5f5410...): type=child, included=true
+[02:55:54.097] Browser LOG     👨‍👩‍👧 Seth: 0.5 shares
+[02:55:54.097] Browser LOG     👤 A (f72cad9a...): type=adult, included=false
+[02:55:54.097] Browser LOG     👨‍👩‍👧 Hao: 0 shares
+[02:55:54.097] Browser LOG     👤 A (4ea46283...): type=adult, included=false
+[02:55:54.097] Browser LOG     👤 B (c7c6c0df...): type=teenager, included=false
+[02:55:54.097] Browser LOG     👤 c (c5aea833...): type=child, included=false
+[02:55:54.097] Browser LOG     👨‍👩‍👧 Purohit: 0 shares
+[02:55:54.097] Browser LOG     📊 Total shares: 0.5
+[02:55:54.097] Browser LOG     📊 Family splits BEFORE amount: [{"amount":0,"familyId":"e70d6edd-bd18-42d3-bda9-61f951b12104","shares":0.5}]
+[02:55:54.097] Browser LOG     📊 Family splits AFTER amount: [{"amount":11,"familyId":"e70d6edd-bd18-42d3-bda9-61f951b12104","shares":0.5}]
+[02:55:54.673] Browser LOG     ✅ Transaction inserted: {"amount":11,"approved_at":null,"approved_by":null,"category":"Activities","created_at":"2025-11-26T16:45:03.375272+00:00","description":"as","group_id":"c55af8e5-f638-4b29-b566-15934f9cb3fe","id":"dd44acb2-4f40-414f-97d8-c4997fd4eefb","merchant_id":null,"merchant_name":"asd","paid_by":null,"paid_by_name":"Group Wallet","receipt_url":null,"requires_approval":false,"split_among":["ca5f5410-d566-47fa-af4b-0f883c70ec6b"],"split_amounts":{},"split_type":"custom","status":"confirmed","type":"payment","updated_at":"2025-11-26T16:45:03.375272+00:00"}
+[02:55:54.982] Browser LOG     💸 Seth: 4721.27 → 4710.27
+[02:55:55.292] Browser LOG     💰 New wallet balance: 38589
+[02:55:55.596] Browser LOG     ✅ Payment complete!
+[02:57:18.048] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:57:18.048] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:57:18.048] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175586909}
+[02:57:30.999] Browser LOG     🚀 Dialog submitting: {"memberCount":4,"splitAmong":["c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b"],"splitType":"kids"}
+[02:57:30.999] Browser LOG     💰 Dashboard received: {"amount":1000,"category":"Food & Dining","description":"asd","merchantName":"100","splitAmong":["c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b"],"splitType":"kids"}
+[02:57:30.999] Browser LOG     👥 Split among: ["c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b"]
+[02:57:30.999] Browser LOG     🔍 All families: [{"members":[{"id":"f72cad9a...","name":"A","type":"adult"}],"name":"Hao"},{"members":[{"id":"4ea46283...","name":"A","type":"adult"},{"id":"c7c6c0df...","name":"B","type":"teenager"},{"id":"c5aea833...","name":"c","type":"child"}],"name":"Purohit"},{"members":[{"id":"6e49c6aa...","name":"a","type":"teenager"},{"id":"ca5f5410...","name":"b","type":"child"}],"name":"Seth"}]
+[02:57:30.999] Browser LOG     👤 A (f72cad9a...): type=adult, included=false
+[02:57:30.999] Browser LOG     👨‍👩‍👧 Hao: 0 shares
+[02:57:30.999] Browser LOG     👤 A (4ea46283...): type=adult, included=false
+[02:57:30.999] Browser LOG     👤 B (c7c6c0df...): type=teenager, included=true
+[02:57:30.999] Browser LOG     👤 c (c5aea833...): type=child, included=true
+[02:57:30.999] Browser LOG     👨‍👩‍👧 Purohit: 1.3 shares
+[02:57:30.999] Browser LOG     👤 a (6e49c6aa...): type=teenager, included=true
+[02:57:30.999] Browser LOG     👤 b (ca5f5410...): type=child, included=true
+[02:57:30.999] Browser LOG     👨‍👩‍👧 Seth: 1.3 shares
+[02:57:31.000] Browser LOG     📊 Total shares: 2.6
+[02:57:31.000] Browser LOG     📊 Family splits BEFORE amount: [{"amount":0,"familyId":"62c0b7d6-3d0e-4148-8e83-de51b90e3b1b","shares":1.3},{"amount":0,"familyId":"e70d6edd-bd18-42d3-bda9-61f951b12104","shares":1.3}]
+[02:57:31.000] Browser LOG     📊 Family splits AFTER amount: [{"amount":500,"familyId":"62c0b7d6-3d0e-4148-8e83-de51b90e3b1b","shares":1.3},{"amount":500,"familyId":"e70d6edd-bd18-42d3-bda9-61f951b12104","shares":1.3}]
+[02:57:32.973] Browser ERROR   ❌ Insert error: {"code":"23514","details":null,"hint":null,"message":"new row for relation \"transactions\" violates check constraint \"transactions_split_type_check\""}
+[02:58:40.905] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:58:40.905] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:58:40.905] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175669767}
+[02:58:51.283] Browser LOG     🚀 Dialog submitting: {"memberCount":4,"splitAmong":["c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b"],"splitType":"kids"}
+[02:58:51.283] Browser LOG     💰 Dashboard received: {"amount":100,"category":"Food & Dining","description":"as","merchantName":"hao","splitAmong":["c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b"],"splitType":"kids"}
+[02:58:51.283] Browser LOG     👥 Split among: ["c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b"]
+[02:58:51.283] Browser LOG     🔍 All families: [{"members":[{"id":"f72cad9a...","name":"A","type":"adult"}],"name":"Hao"},{"members":[{"id":"4ea46283...","name":"A","type":"adult"},{"id":"c7c6c0df...","name":"B","type":"teenager"},{"id":"c5aea833...","name":"c","type":"child"}],"name":"Purohit"},{"members":[{"id":"6e49c6aa...","name":"a","type":"teenager"},{"id":"ca5f5410...","name":"b","type":"child"}],"name":"Seth"}]
+[02:58:51.283] Browser LOG     👤 A (f72cad9a...): type=adult, included=false
+[02:58:51.283] Browser LOG     👨‍👩‍👧 Hao: 0 shares
+[02:58:51.283] Browser LOG     👤 A (4ea46283...): type=adult, included=false
+[02:58:51.283] Browser LOG     👤 B (c7c6c0df...): type=teenager, included=true
+[02:58:51.283] Browser LOG     👤 c (c5aea833...): type=child, included=true
+[02:58:51.283] Browser LOG     👨‍👩‍👧 Purohit: 1.3 shares
+[02:58:51.283] Browser LOG     👤 a (6e49c6aa...): type=teenager, included=true
+[02:58:51.283] Browser LOG     👤 b (ca5f5410...): type=child, included=true
+[02:58:51.283] Browser LOG     👨‍👩‍👧 Seth: 1.3 shares
+[02:58:51.283] Browser LOG     📊 Total shares: 2.6
+[02:58:51.283] Browser LOG     📊 Family splits BEFORE amount: [{"amount":0,"familyId":"62c0b7d6-3d0e-4148-8e83-de51b90e3b1b","shares":1.3},{"amount":0,"familyId":"e70d6edd-bd18-42d3-bda9-61f951b12104","shares":1.3}]
+[02:58:51.283] Browser LOG     📊 Family splits AFTER amount: [{"amount":50,"familyId":"62c0b7d6-3d0e-4148-8e83-de51b90e3b1b","shares":1.3},{"amount":50,"familyId":"e70d6edd-bd18-42d3-bda9-61f951b12104","shares":1.3}]
+[02:58:51.748] Browser LOG     ✅ Transaction inserted: {"amount":100,"approved_at":null,"approved_by":null,"category":"Food & Dining","created_at":"2025-11-26T16:48:00.387038+00:00","description":"as","group_id":"c55af8e5-f638-4b29-b566-15934f9cb3fe","id":"81723e62-3aa2-4b7d-a8c5-9d81e0d7e93f","merchant_id":null,"merchant_name":"hao","paid_by":null,"paid_by_name":"Group Wallet","receipt_url":null,"requires_approval":false,"split_among":["c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b"],"split_amounts":{},"split_type":"kids","status":"confirmed","type":"payment","updated_at":"2025-11-26T16:48:00.387038+00:00"}
+[02:58:52.102] Browser LOG     💸 Purohit: 4629.66 → 4579.66
+[02:58:52.440] Browser LOG     💸 Seth: 4710.27 → 4660.27
+[02:58:52.751] Browser LOG     💰 New wallet balance: 38489
+[02:58:53.158] Browser LOG     ✅ Payment complete!
+[02:59:03.346] Browser LOG     🚀 Dialog submitting: {"memberCount":6,"splitAmong":["f72cad9a-0673-49a3-8cb8-42ce03f99442","4ea46283-03de-4b86-b10a-9aea25bd6616","c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b"],"splitType":"everyone"}
+[02:59:03.346] Browser LOG     💰 Dashboard received: {"amount":2000,"category":"Activities","description":"asd","merchantName":"ashao","splitAmong":["f72cad9a-0673-49a3-8cb8-42ce03f99442","4ea46283-03de-4b86-b10a-9aea25bd6616","c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b"],"splitType":"everyone"}
+[02:59:03.346] Browser LOG     👥 Split among: ["f72cad9a-0673-49a3-8cb8-42ce03f99442","4ea46283-03de-4b86-b10a-9aea25bd6616","c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b"]
+[02:59:03.346] Browser LOG     🔍 All families: [{"members":[{"id":"f72cad9a...","name":"A","type":"adult"}],"name":"Hao"},{"members":[{"id":"4ea46283...","name":"A","type":"adult"},{"id":"c7c6c0df...","name":"B","type":"teenager"},{"id":"c5aea833...","name":"c","type":"child"}],"name":"Purohit"},{"members":[{"id":"6e49c6aa...","name":"a","type":"teenager"},{"id":"ca5f5410...","name":"b","type":"child"}],"name":"Seth"}]
+[02:59:03.346] Browser LOG     👤 A (f72cad9a...): type=adult, included=true
+[02:59:03.346] Browser LOG     👨‍👩‍👧 Hao: 1 shares
+[02:59:03.346] Browser LOG     👤 A (4ea46283...): type=adult, included=true
+[02:59:03.346] Browser LOG     👤 B (c7c6c0df...): type=teenager, included=true
+[02:59:03.346] Browser LOG     👤 c (c5aea833...): type=child, included=true
+[02:59:03.346] Browser LOG     👨‍👩‍👧 Purohit: 2.3 shares
+[02:59:03.346] Browser LOG     👤 a (6e49c6aa...): type=teenager, included=true
+[02:59:03.346] Browser LOG     👤 b (ca5f5410...): type=child, included=true
+[02:59:03.346] Browser LOG     👨‍👩‍👧 Seth: 1.3 shares
+[02:59:03.346] Browser LOG     📊 Total shares: 4.6
+[02:59:03.346] Browser LOG     📊 Family splits BEFORE amount: [{"amount":0,"familyId":"b5109310-481d-4dfc-9388-7d3cdc213c6d","shares":1},{"amount":0,"familyId":"62c0b7d6-3d0e-4148-8e83-de51b90e3b1b","shares":2.3},{"amount":0,"familyId":"e70d6edd-bd18-42d3-bda9-61f951b12104","shares":1.3}]
+[02:59:03.346] Browser LOG     📊 Family splits AFTER amount: [{"amount":434.78260869565224,"familyId":"b5109310-481d-4dfc-9388-7d3cdc213c6d","shares":1},{"amount":1000,"familyId":"62c0b7d6-3d0e-4148-8e83-de51b90e3b1b","shares":2.3},{"amount":565.2173913043479,"familyId":"e70d6edd-bd18-42d3-bda9-61f951b12104","shares":1.3}]
+[02:59:03.696] Browser LOG     ✅ Transaction inserted: {"amount":2000,"approved_at":null,"approved_by":null,"category":"Activities","created_at":"2025-11-26T16:48:12.448306+00:00","description":"asd","group_id":"c55af8e5-f638-4b29-b566-15934f9cb3fe","id":"3e581c80-6e0e-4d03-a23f-c4cfe26ffb69","merchant_id":null,"merchant_name":"ashao","paid_by":null,"paid_by_name":"Group Wallet","receipt_url":null,"requires_approval":false,"split_among":["f72cad9a-0673-49a3-8cb8-42ce03f99442","4ea46283-03de-4b86-b10a-9aea25bd6616","c7c6c0df-08b8-4e39-97bb-d13fcf3627e0","c5aea833-3c5a-45df-affa-ea542a2aa2f8","6e49c6aa-ff5d-4942-be51-e3de9a3f3cb9","ca5f5410-d566-47fa-af4b-0f883c70ec6b"],"split_amounts":{},"split_type":"everyone","status":"confirmed","type":"payment","updated_at":"2025-11-26T16:48:12.448306+00:00"}
+[02:59:04.014] Browser LOG     💸 Hao: 29249.07 → 28814.287391304348
+[02:59:04.323] Browser LOG     💸 Purohit: 4579.66 → 3579.66
+[02:59:04.628] Browser LOG     💸 Seth: 4660.27 → 4095.0526086956525
+[02:59:04.912] Browser LOG     💰 New wallet balance: 36489
+[02:59:05.241] Browser LOG     ✅ Payment complete!
+[02:59:10.147] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:59:10.147] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:59:10.147] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175699007}
+[02:59:21.576] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175710437}
+[02:59:42.962] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings/create-group color: rgb(120, 120, 120) color: inherit {"dp":"/settings/create-group","o":"http://localhost:3000/settings/create-group","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175731810}
+[03:00:08.059] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175756920}
+[03:00:14.343] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175763206}
+[03:00:45.021] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175793884}
+[03:00:50.156] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:00:50.156] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:00:50.156] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175799019}
+[03:03:39.273] Server  LOG      ✓ Compiled in 145ms
+[03:03:40.668] Server  LOG      ✓ Compiled in 40ms
+[03:03:41.926] Server  LOG      ✓ Compiled in 85ms
+[03:03:43.065] Server  ERROR    ⨯ Error: The default export is not a React Component in "/members/page"
+[03:03:43.201] Server  ERROR    ⨯ Error: The default export is not a React Component in "/members/page"
+[03:03:43.336] Server  ERROR    ⨯ Error: The default export is not a React Component in "/members/page"
+[03:03:43.494] Server  ERROR    ⨯ Error: The default export is not a React Component in "/members/page"
+[03:03:43.495] Server  LOG      ✓ Compiled in 55ms
+[03:03:43.672] Browser ERROR   uncaughtError: Error: The default export is not a React Component in "/members/page"
+[03:03:49.216] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:03:49.216] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:03:49.216] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175978078}
+[03:03:53.594] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764175982456}
+[03:04:17.564] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings/create-group color: rgb(120, 120, 120) color: inherit {"dp":"/settings/create-group","o":"http://localhost:3000/settings/create-group","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764176006417}
+[03:04:24.010] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764176012871}
+[03:04:42.339] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764176031201}
+[03:04:59.956] Browser LOG     ✅ Wallet balance updated to: 10000
+[03:05:01.020] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764176049883}
+[03:05:14.646] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764176063508}
+[03:05:28.090] Browser LOG     ✅ Wallet balance updated to: 30000
+[03:05:29.082] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764176077945}
+[03:05:43.656] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764176092518}
+[03:05:59.448] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764176108310}
+[03:06:05.035] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764176113896}
+[03:06:58.955] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764176167817}
+[03:08:06.606] Browser LOG     🚀 Dialog submitting: {"memberCount":5,"splitAmong":["9836f0cb-9da9-4034-896c-fe02edb1a9bf","9cb559c2-3074-4f27-a9cb-1ce8b574b84b","30d2d687-06ba-4210-98dc-0fbd82813bf5","92e73c1f-5244-42e3-a072-a32862b58e23","64e675c6-89be-43f2-9a65-7cc84ccd40a1"],"splitType":"everyone"}
+[03:08:06.606] Browser LOG     💰 Dashboard received: {"amount":100,"category":"Food & Dining","description":"ad","merchantName":"as","splitAmong":["9836f0cb-9da9-4034-896c-fe02edb1a9bf","9cb559c2-3074-4f27-a9cb-1ce8b574b84b","30d2d687-06ba-4210-98dc-0fbd82813bf5","92e73c1f-5244-42e3-a072-a32862b58e23","64e675c6-89be-43f2-9a65-7cc84ccd40a1"],"splitType":"everyone"}
+[03:08:06.606] Browser LOG     👥 Split among: ["9836f0cb-9da9-4034-896c-fe02edb1a9bf","9cb559c2-3074-4f27-a9cb-1ce8b574b84b","30d2d687-06ba-4210-98dc-0fbd82813bf5","92e73c1f-5244-42e3-a072-a32862b58e23","64e675c6-89be-43f2-9a65-7cc84ccd40a1"]
+[03:08:06.606] Browser LOG     🔍 All families: [{"members":[{"id":"9836f0cb...","name":"B1","type":"adult"},{"id":"9cb559c2...","name":"B0.4","type":"child"}],"name":"B"},{"members":[{"id":"30d2d687...","name":"A1","type":"adult"},{"id":"92e73c1f...","name":"A0.5","type":"child"},{"id":"64e675c6...","name":"A0.8","type":"teenager"}],"name":"A"}]
+[03:08:06.606] Browser LOG     👤 B1 (9836f0cb...): type=adult, included=true
+[03:08:06.606] Browser LOG     👤 B0.4 (9cb559c2...): type=child, included=true
+[03:08:06.606] Browser LOG     👨‍👩‍👧 B: 1.4 shares
+[03:08:06.606] Browser LOG     👤 A1 (30d2d687...): type=adult, included=true
+[03:08:06.606] Browser LOG     👤 A0.5 (92e73c1f...): type=child, included=true
+[03:08:06.606] Browser LOG     👤 A0.8 (64e675c6...): type=teenager, included=true
+[03:08:06.606] Browser LOG     👨‍👩‍👧 A: 2.3 shares
+[03:08:06.606] Browser LOG     📊 Total shares: 3.6999999999999997
+[03:08:06.606] Browser LOG     📊 Family splits BEFORE amount: [{"amount":0,"familyId":"1c470cf6-a067-46d6-a76f-71557dc66a3e","shares":1.4},{"amount":0,"familyId":"a02793e6-b307-4a5d-9bdb-b23a4fb304ee","shares":2.3}]
+[03:08:06.606] Browser LOG     📊 Family splits AFTER amount: [{"amount":37.83783783783784,"familyId":"1c470cf6-a067-46d6-a76f-71557dc66a3e","shares":1.4},{"amount":62.16216216216216,"familyId":"a02793e6-b307-4a5d-9bdb-b23a4fb304ee","shares":2.3}]
+[03:08:07.248] Browser LOG     ✅ Transaction inserted: {"amount":100,"approved_at":null,"approved_by":null,"category":"Food & Dining","created_at":"2025-11-26T16:57:15.883675+00:00","description":"ad","group_id":"a03f06d9-13f4-4358-9312-24163b78badf","id":"9be11055-ab28-4401-840a-31df2561c58e","merchant_id":null,"merchant_name":"as","paid_by":null,"paid_by_name":"Group Wallet","receipt_url":null,"requires_approval":false,"split_among":["9836f0cb-9da9-4034-896c-fe02edb1a9bf","9cb559c2-3074-4f27-a9cb-1ce8b574b84b","30d2d687-06ba-4210-98dc-0fbd82813bf5","92e73c1f-5244-42e3-a072-a32862b58e23","64e675c6-89be-43f2-9a65-7cc84ccd40a1"],"split_amounts":{},"split_type":"everyone","status":"confirmed","type":"payment","updated_at":"2025-11-26T16:57:15.883675+00:00"}
+[03:08:07.654] Browser LOG     💸 B: 20000 → 19962.162162162163
+[03:08:08.065] Browser LOG     💸 A: 10100 → 10037.837837837838
+[03:08:08.373] Browser LOG     💰 New wallet balance: 30000
+[03:08:08.632] Browser LOG     ✅ Payment complete!
+[03:09:43.103] Browser LOG     🚀 Dialog submitting: {"memberCount":3,"splitAmong":["9cb559c2-3074-4f27-a9cb-1ce8b574b84b","92e73c1f-5244-42e3-a072-a32862b58e23","64e675c6-89be-43f2-9a65-7cc84ccd40a1"],"splitType":"kids"}
+[03:09:43.104] Browser LOG     💰 Dashboard received: {"amount":100,"category":"Food & Dining","description":"k","merchantName":"hai","splitAmong":["9cb559c2-3074-4f27-a9cb-1ce8b574b84b","92e73c1f-5244-42e3-a072-a32862b58e23","64e675c6-89be-43f2-9a65-7cc84ccd40a1"],"splitType":"kids"}
+[03:09:43.104] Browser LOG     👥 Split among: ["9cb559c2-3074-4f27-a9cb-1ce8b574b84b","92e73c1f-5244-42e3-a072-a32862b58e23","64e675c6-89be-43f2-9a65-7cc84ccd40a1"]
+[03:09:43.104] Browser LOG     🔍 All families: [{"members":[{"id":"9836f0cb...","name":"B1","type":"adult"},{"id":"9cb559c2...","name":"B0.4","type":"child"}],"name":"B"},{"members":[{"id":"30d2d687...","name":"A1","type":"adult"},{"id":"92e73c1f...","name":"A0.5","type":"child"},{"id":"64e675c6...","name":"A0.8","type":"teenager"}],"name":"A"}]
+[03:09:43.104] Browser LOG     👤 B1 (9836f0cb...): type=adult, included=false
+[03:09:43.104] Browser LOG     👤 B0.4 (9cb559c2...): type=child, included=true
+[03:09:43.104] Browser LOG     👨‍👩‍👧 B: 0.4 shares
+[03:09:43.104] Browser LOG     👤 A1 (30d2d687...): type=adult, included=false
+[03:09:43.104] Browser LOG     👤 A0.5 (92e73c1f...): type=child, included=true
+[03:09:43.104] Browser LOG     👤 A0.8 (64e675c6...): type=teenager, included=true
+[03:09:43.104] Browser LOG     👨‍👩‍👧 A: 1.3 shares
+[03:09:43.104] Browser LOG     📊 Total shares: 1.7000000000000002
+[03:09:43.104] Browser LOG     📊 Family splits BEFORE amount: [{"amount":0,"familyId":"1c470cf6-a067-46d6-a76f-71557dc66a3e","shares":0.4},{"amount":0,"familyId":"a02793e6-b307-4a5d-9bdb-b23a4fb304ee","shares":1.3}]
+[03:09:43.104] Browser LOG     📊 Family splits AFTER amount: [{"amount":23.52941176470588,"familyId":"1c470cf6-a067-46d6-a76f-71557dc66a3e","shares":0.4},{"amount":76.47058823529412,"familyId":"a02793e6-b307-4a5d-9bdb-b23a4fb304ee","shares":1.3}]
+[03:09:43.608] Browser LOG     ✅ Transaction inserted: {"amount":100,"approved_at":null,"approved_by":null,"category":"Food & Dining","created_at":"2025-11-26T16:58:52.262948+00:00","description":"k","group_id":"a03f06d9-13f4-4358-9312-24163b78badf","id":"b6d14b4c-7405-4d9b-a62a-6d5499d580c9","merchant_id":null,"merchant_name":"hai","paid_by":null,"paid_by_name":"Group Wallet","receipt_url":null,"requires_approval":false,"split_among":["9cb559c2-3074-4f27-a9cb-1ce8b574b84b","92e73c1f-5244-42e3-a072-a32862b58e23","64e675c6-89be-43f2-9a65-7cc84ccd40a1"],"split_amounts":{},"split_type":"kids","status":"confirmed","type":"payment","updated_at":"2025-11-26T16:58:52.262948+00:00"}
+[03:09:44.013] Browser LOG     💸 B: 19962.16 → 19938.630588235294
+[03:09:44.321] Browser LOG     💸 A: 10037.84 → 9961.369411764706
+[03:09:44.731] Browser LOG     💰 New wallet balance: 29900
+[03:09:45.006] Browser LOG     ✅ Payment complete!
+[03:10:13.802] Browser LOG     🚀 Dialog submitting: {"memberCount":2,"splitAmong":["9cb559c2-3074-4f27-a9cb-1ce8b574b84b","64e675c6-89be-43f2-9a65-7cc84ccd40a1"],"splitType":"custom"}
+[03:10:13.802] Browser LOG     💰 Dashboard received: {"amount":10,"category":"Food & Dining","description":"wds","merchantName":"as","splitAmong":["9cb559c2-3074-4f27-a9cb-1ce8b574b84b","64e675c6-89be-43f2-9a65-7cc84ccd40a1"],"splitType":"custom"}
+[03:10:13.802] Browser LOG     👥 Split among: ["9cb559c2-3074-4f27-a9cb-1ce8b574b84b","64e675c6-89be-43f2-9a65-7cc84ccd40a1"]
+[03:10:13.802] Browser LOG     🔍 All families: [{"members":[{"id":"9836f0cb...","name":"B1","type":"adult"},{"id":"9cb559c2...","name":"B0.4","type":"child"}],"name":"B"},{"members":[{"id":"30d2d687...","name":"A1","type":"adult"},{"id":"92e73c1f...","name":"A0.5","type":"child"},{"id":"64e675c6...","name":"A0.8","type":"teenager"}],"name":"A"}]
+[03:10:13.802] Browser LOG     👤 B1 (9836f0cb...): type=adult, included=false
+[03:10:13.802] Browser LOG     👤 B0.4 (9cb559c2...): type=child, included=true
+[03:10:13.802] Browser LOG     👨‍👩‍👧 B: 0.4 shares
+[03:10:13.802] Browser LOG     👤 A1 (30d2d687...): type=adult, included=false
+[03:10:13.802] Browser LOG     👤 A0.5 (92e73c1f...): type=child, included=false
+[03:10:13.802] Browser LOG     👤 A0.8 (64e675c6...): type=teenager, included=true
+[03:10:13.802] Browser LOG     👨‍👩‍👧 A: 0.8 shares
+[03:10:13.802] Browser LOG     📊 Total shares: 1.2000000000000002
+[03:10:13.802] Browser LOG     📊 Family splits BEFORE amount: [{"amount":0,"familyId":"1c470cf6-a067-46d6-a76f-71557dc66a3e","shares":0.4},{"amount":0,"familyId":"a02793e6-b307-4a5d-9bdb-b23a4fb304ee","shares":0.8}]
+[03:10:13.802] Browser LOG     📊 Family splits AFTER amount: [{"amount":3.333333333333333,"familyId":"1c470cf6-a067-46d6-a76f-71557dc66a3e","shares":0.4},{"amount":6.666666666666666,"familyId":"a02793e6-b307-4a5d-9bdb-b23a4fb304ee","shares":0.8}]
+[03:10:14.428] Browser LOG     ✅ Transaction inserted: {"amount":10,"approved_at":null,"approved_by":null,"category":"Food & Dining","created_at":"2025-11-26T16:59:23.103887+00:00","description":"wds","group_id":"a03f06d9-13f4-4358-9312-24163b78badf","id":"ae058c83-6a83-44fc-9378-40b48bb3adb7","merchant_id":null,"merchant_name":"as","paid_by":null,"paid_by_name":"Group Wallet","receipt_url":null,"requires_approval":false,"split_among":["9cb559c2-3074-4f27-a9cb-1ce8b574b84b","64e675c6-89be-43f2-9a65-7cc84ccd40a1"],"split_amounts":{},"split_type":"custom","status":"confirmed","type":"payment","updated_at":"2025-11-26T16:59:23.103887+00:00"}
+[03:10:14.736] Browser LOG     💸 B: 19938.63 → 19935.29666666667
+[03:10:14.983] Browser LOG     💸 A: 9961.37 → 9954.703333333335
+[03:10:15.231] Browser LOG     💰 New wallet balance: 29890
+[03:10:15.556] Browser LOG     ✅ Payment complete!
+[03:10:53.650] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764176402512}
