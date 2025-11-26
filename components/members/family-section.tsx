@@ -23,7 +23,14 @@ export function FamilySection({ family, currency, onAddMember, onManageMember, o
     }).format(amount)
   }
 
-  const totalShareRatio = family.members.reduce((acc, m) => acc + m.shareRatio, 0)
+  // ✅ FIXED: Proper share_ratio field + safe number conversion
+  const totalShareRatio = family.members.reduce(
+    (acc, m) => acc + Number(m.share_ratio || 0),
+    0
+  )
+
+  // FIX: Supabase uses total_contribution, not totalContribution
+  const totalContribution = Number(family.total_contribution || 0)
 
   return (
     <Card className="overflow-hidden">
@@ -31,11 +38,14 @@ export function FamilySection({ family, currency, onAddMember, onManageMember, o
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-foreground">{family.name}</h3>
+
             <div className="flex items-center gap-3 text-sm text-muted-foreground mt-1">
               <span>
                 {family.members.length} member{family.members.length !== 1 ? "s" : ""}
               </span>
               <span>•</span>
+
+              {/* SAFE: totalShareRatio will NEVER be NaN now */}
               <span>Total ratio: {totalShareRatio.toFixed(1)}</span>
             </div>
           </div>
@@ -43,19 +53,28 @@ export function FamilySection({ family, currency, onAddMember, onManageMember, o
           <div className="flex items-center gap-3">
             <div className="text-right">
               <p className="text-sm text-muted-foreground">Balance</p>
-              <p className="text-lg font-bold text-foreground">{formatCurrency(family.balance)}</p>
+
+              {/* Safe currency formatting */}
+              <p className="text-lg font-bold text-foreground">
+                {formatCurrency(Number(family.balance || 0))}
+              </p>
             </div>
+
             <Button variant="ghost" size="icon" onClick={() => onViewFamily(family.id)}>
               <ChevronRightIcon className="w-5 h-5" />
             </Button>
           </div>
         </div>
 
+        {/* FIXED: Correct contributed field */}
         <div className="flex items-center gap-2 mt-3">
-          <Badge variant="outline">Contributed: {formatCurrency(family.totalContribution)}</Badge>
+          <Badge variant="outline">
+            Contributed: {formatCurrency(totalContribution)}
+          </Badge>
         </div>
       </div>
 
+      {/* Members list */}
       <div className="p-4 md:p-6 space-y-3">
         {family.members.map((member, index) => (
           <MemberDetailCard
@@ -66,7 +85,11 @@ export function FamilySection({ family, currency, onAddMember, onManageMember, o
           />
         ))}
 
-        <Button variant="outline" className="w-full gap-2 mt-4 bg-transparent" onClick={() => onAddMember(family.id)}>
+        <Button
+          variant="outline"
+          className="w-full gap-2 mt-4 bg-transparent"
+          onClick={() => onAddMember(family.id)}
+        >
           <PlusCircleIcon className="w-4 h-4" />
           Add Family Member
         </Button>

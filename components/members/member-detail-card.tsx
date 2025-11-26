@@ -15,15 +15,25 @@ interface MemberDetailCardProps {
 }
 
 export function MemberDetailCard({ member, isAdmin, isCoAdmin, onManage }: MemberDetailCardProps) {
-  const getTypeLabel = (type: string, age?: number) => {
+  // --- FIX 1: Use correct DB field names ---
+  const type = member.member_type || "adult"
+  const age = member.age || null
+
+  // --- FIX 2: Use correct share_ratio field ---
+  const shareRatio = Number(member.share_ratio || 0)
+
+  // Show human-readable type
+  const getTypeLabel = () => {
     if (type === "child") return `Child${age ? ` (${age}y)` : ""}`
     if (type === "teenager") return `Teen${age ? ` (${age}y)` : ""}`
     return "Adult"
   }
 
-  const getShareRatioDisplay = (ratio: number) => {
-    if (ratio === 1) return "Full share"
-    return `${ratio * 100}% share`
+  // Show readable share (without causing NaN)
+  const getShareRatioDisplay = () => {
+    if (!shareRatio || shareRatio === 0) return "0% share"
+    if (shareRatio === 1) return "100% share"
+    return `${(shareRatio * 100).toFixed(1)}% share`
   }
 
   return (
@@ -45,10 +55,11 @@ export function MemberDetailCard({ member, isAdmin, isCoAdmin, onManage }: Membe
             {isAdmin && <Badge className="bg-primary text-primary-foreground">Admin</Badge>}
             {isCoAdmin && <Badge variant="secondary">Co-Admin</Badge>}
           </div>
+
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span>{getTypeLabel(member.type, member.age)}</span>
+            <span>{getTypeLabel()}</span>
             <span>•</span>
-            <span>{getShareRatioDisplay(member.shareRatio)}</span>
+            <span>{getShareRatioDisplay()}</span>
           </div>
         </div>
 

@@ -1,10 +1,4 @@
 {
-  "/auth/login/page": "app/auth/login/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/invites/page": "app/invites/page.js",
-  "/members/page": "app/members/page.js",
   "/page": "app/page.js",
-  "/reports/page": "app/reports/page.js",
-  "/settings/page": "app/settings/page.js",
-  "/transactions/page": "app/transactions/page.js"
+  "/settings/page": "app/settings/page.js"
 }
