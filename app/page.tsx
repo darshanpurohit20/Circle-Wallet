@@ -32,9 +32,6 @@ export default function DashboardPage() {
   const [addFundsOpen, setAddFundsOpen] = useState(false)
   const [payMerchantOpen, setPayMerchantOpen] = useState(false)
 
-  // -------------------------------------------------------
-  // LOAD USER, GROUP, FAMILIES, MEMBERS, TRANSACTIONS
-  // -------------------------------------------------------
   useEffect(() => {
     let mounted = true
     ;(async () => {
@@ -49,7 +46,6 @@ export default function DashboardPage() {
           return
         }
 
-        // find group membership
         const { data: gm } = await supabase
           .from("group_members")
           .select("group_id")
@@ -63,20 +59,17 @@ export default function DashboardPage() {
 
         const groupId = gm.group_id
 
-        // group
         const { data: groupRow } = await supabase
           .from("groups")
           .select("*")
           .eq("id", groupId)
           .maybeSingle()
 
-        // families + members
         const { data: familyRows } = await supabase
           .from("families")
           .select("*, family_members(*)")
           .eq("group_id", groupId)
 
-        // transactions (latest 10)
         const { data: trx } = await supabase
           .from("transactions")
           .select("*")
@@ -89,7 +82,7 @@ export default function DashboardPage() {
         const normalizedFamilies = (familyRows || []).map((family) => ({
           id: family.id,
           name: family.name,
-          balance: Number(family.balance_amount || 0),
+          balance: Number(family.balance || 0),
           totalContribution: Number(family.total_contribution || 0),
           members: (family.family_members || []).map((m: any) => ({
             id: m.id,
@@ -114,13 +107,11 @@ export default function DashboardPage() {
     return () => {
       mounted = false
     }
-  }, [])
+  }, [router, supabase])
 
-  // -------------------------------------------------------
-  // REALTIME: keep transactions list updated
-  // -------------------------------------------------------
   useEffect(() => {
     if (!group) return
+    
     const channel = supabase
       .channel("realtime-dashboard")
       .on(
@@ -129,9 +120,9 @@ export default function DashboardPage() {
         (payload) => {
           const newRow = payload.new
           if (!newRow) return
-          setTransactions((prev) => [newRow, ...prev].slice(0, 5))
           
-          // Update balance based on transaction type
+          setTransactions((prev) => [newRow, ...prev].slice(0, 10))
+          
           if (newRow.type === "deposit") {
             setGroup((g: any) => ({ 
               ...g, 
@@ -151,11 +142,8 @@ export default function DashboardPage() {
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [group])
+  }, [group, supabase])
 
-  // -------------------------------------------------------
-  // COMPUTED STATS
-  // -------------------------------------------------------
   const totalMembers = families.reduce((acc, fam) => acc + fam.members.length, 0)
   const totalContributions = families.reduce((acc, fam) => acc + fam.totalContribution, 0)
   const totalExpenses = transactions
@@ -163,9 +151,6 @@ export default function DashboardPage() {
     .reduce((acc, t) => acc + Number(t.amount || 0), 0)
   const pendingTransactions = transactions.filter((t) => t.status === "pending").length
 
-  // -------------------------------
-  // ADD FUNDS handler
-  // -------------------------------
   const handleAddFundsSubmit = async ({ 
     familyId, 
     amount 
@@ -176,116 +161,215 @@ export default function DashboardPage() {
     if (!group) return
 
     try {
-      const insertPayload: any = {
-        group_id: group.id,
-        type: "deposit",
-        description: familyId 
-          ? `${families.find(f => f.id === familyId)?.name || "Family"} deposit`
-          : "Group deposit",
-        amount: amount,
-        status: "confirmed",
-        paid_by: null,
-        paid_by_name: familyId 
-          ? families.find(f => f.id === familyId)?.name 
-          : "Group",
-      }
-
       const { data: inserted, error: insertError } = await supabase
         .from("transactions")
-        .insert(insertPayload)
+        .insert({
+          group_id: group.id,
+          type: "deposit",
+          description: familyId 
+            ? `${families.find(f => f.id === familyId)?.name || "Family"} deposit`
+            : "Group deposit",
+          amount: amount,
+          status: "confirmed",
+          paid_by: null,
+          paid_by_name: familyId 
+            ? families.find(f => f.id === familyId)?.name 
+            : "Group",
+        })
         .select()
         .single()
 
       if (insertError) {
-        console.error("Insert deposit failed:", insertError)
         alert("Failed to add funds. Please try again.")
         return
       }
 
-      // Update group's shared_wallet_balance
-      const newBalance = Number(group.shared_wallet_balance || 0) + Number(amount || 0)
+      if (familyId) {
+        const family = families.find(f => f.id === familyId)
+        if (family) {
+          const newFamilyBalance = Number(family.balance || 0) + Number(amount)
+          const newFamilyContribution = Number(family.totalContribution || 0) + Number(amount)
+
+          await supabase
+            .from("families")
+            .update({ 
+              balance: newFamilyBalance,
+              total_contribution: newFamilyContribution 
+            })
+            .eq("id", familyId)
+        }
+      }
+
+      const newWalletBalance = Number(group.shared_wallet_balance || 0) + Number(amount)
       
       const { error: updateError } = await supabase
         .from("groups")
-        .update({ shared_wallet_balance: newBalance })
+        .update({ shared_wallet_balance: newWalletBalance })
         .eq("id", group.id)
 
       if (updateError) {
-        console.error("Update group balance failed:", updateError)
         alert("Funds added but balance update failed. Please refresh.")
       } else {
-        setGroup((g: any) => ({ ...g, shared_wallet_balance: newBalance }))
-        setTransactions((prev) => [inserted, ...prev].slice(0, 5))
+        const { data: updatedFamilies } = await supabase
+          .from("families")
+          .select("*, family_members(*)")
+          .eq("group_id", group.id)
+
+        const normalizedFamilies = (updatedFamilies || []).map((family) => ({
+          id: family.id,
+          name: family.name,
+          balance: Number(family.balance || 0),
+          totalContribution: Number(family.total_contribution || 0),
+          members: (family.family_members || []).map((m: any) => ({
+            id: m.id,
+            name: m.name,
+            type: m.member_type,
+            age: m.age,
+            shareRatio: Number(m.share_ratio),
+            avatar: m.avatar || null,
+          })),
+        }))
+
+        setGroup((g: any) => ({ ...g, shared_wallet_balance: newWalletBalance }))
+        setFamilies(normalizedFamilies)
+        setTransactions((prev) => [inserted, ...prev].slice(0, 10))
       }
 
       setAddFundsOpen(false)
     } catch (error) {
-      console.error("Error in handleAddFundsSubmit:", error)
       alert("An unexpected error occurred.")
     }
   }
 
-  // -------------------------------
-  // PAY MERCHANT handler
-  // -------------------------------
   const handlePayMerchantSubmit = async (data: {
     merchantName: string
     amount: number
     description: string
     category: string
+    splitType?: string
+    splitAmong?: string[]
   }) => {
     if (!group) return
 
     try {
-      const insertPayload = {
-        group_id: group.id,
-        type: "payment",
-        description: data.description,
-        amount: data.amount,
-        merchant_name: data.merchantName,
-        category: data.category,
-        status: "confirmed",
-        paid_by_name: "Group Wallet",
-      }
+      let totalShares = 0
+      let familySplits: { familyId: string; shares: number; amount: number }[] = []
+
+      families.forEach(family => {
+        let familyShares = 0
+        
+        family.members.forEach((member: any) => {
+          let shouldInclude = false
+
+          if (data.splitType === "everyone") {
+            shouldInclude = true
+          } else if (data.splitType === "adults") {
+            shouldInclude = member.type === "adult"
+          } else if (data.splitType === "kids") {
+            shouldInclude = member.type !== "adult"
+          } else if (data.splitType === "custom" && data.splitAmong) {
+            shouldInclude = data.splitAmong.includes(member.id)
+          } else {
+            shouldInclude = true
+          }
+
+          if (shouldInclude) {
+            familyShares += Number(member.shareRatio || 1)
+          }
+        })
+
+        if (familyShares > 0) {
+          totalShares += familyShares
+          familySplits.push({
+            familyId: family.id,
+            shares: familyShares,
+            amount: 0
+          })
+        }
+      })
+
+      familySplits = familySplits.map(split => ({
+        ...split,
+        amount: (split.shares / totalShares) * data.amount
+      }))
 
       const { data: inserted, error: insertError } = await supabase
         .from("transactions")
-        .insert(insertPayload)
+        .insert({
+          group_id: group.id,
+          type: "payment",
+          description: data.description,
+          amount: data.amount,
+          merchant_name: data.merchantName,
+          category: data.category,
+          status: "confirmed",
+          paid_by_name: "Group Wallet",
+        })
         .select()
         .single()
 
       if (insertError) {
-        console.error("Insert payment failed:", insertError)
         alert("Payment failed. Please try again.")
         return
       }
 
-      const newBalance = Number(group.shared_wallet_balance || 0) - Number(data.amount || 0)
-      const newTotalSpent = Number(group.total_spent || 0) + Number(data.amount || 0)
+      for (const split of familySplits) {
+        const family = families.find(f => f.id === split.familyId)
+        if (family) {
+          const newFamilyBalance = Number(family.balance || 0) - split.amount
+
+          await supabase
+            .from("families")
+            .update({ balance: newFamilyBalance })
+            .eq("id", split.familyId)
+        }
+      }
+
+      const newWalletBalance = Number(group.shared_wallet_balance || 0) - Number(data.amount)
+      const newTotalSpent = Number(group.total_spent || 0) + Number(data.amount)
 
       const { error: updateError } = await supabase
         .from("groups")
         .update({
-          shared_wallet_balance: newBalance,
+          shared_wallet_balance: newWalletBalance,
           total_spent: newTotalSpent,
         })
         .eq("id", group.id)
 
       if (updateError) {
-        console.error("Update group after payment failed:", updateError)
         alert("Payment recorded but balance update failed. Please refresh.")
       } else {
+        const { data: updatedFamilies } = await supabase
+          .from("families")
+          .select("*, family_members(*)")
+          .eq("group_id", group.id)
+
+        const normalizedFamilies = (updatedFamilies || []).map((family) => ({
+          id: family.id,
+          name: family.name,
+          balance: Number(family.balance || 0),
+          totalContribution: Number(family.total_contribution || 0),
+          members: (family.family_members || []).map((m: any) => ({
+            id: m.id,
+            name: m.name,
+            type: m.member_type,
+            age: m.age,
+            shareRatio: Number(m.share_ratio),
+            avatar: m.avatar || null,
+          })),
+        }))
+
         setGroup((g: any) => ({ 
           ...g, 
-          shared_wallet_balance: newBalance, 
+          shared_wallet_balance: newWalletBalance, 
           total_spent: newTotalSpent 
         }))
-        setTransactions((prev) => [inserted, ...prev].slice(0, 5))
+        setFamilies(normalizedFamilies)
+        setTransactions((prev) => [inserted, ...prev].slice(0, 10))
       }
 
       setPayMerchantOpen(false)
     } catch (error) {
-      console.error("Error in handlePayMerchantSubmit:", error)
       alert("An unexpected error occurred.")
     }
   }
@@ -308,14 +392,14 @@ export default function DashboardPage() {
             <WalletCard
               balance={group.shared_wallet_balance}
               totalContributions={totalContributions}
-              totalSpent={totalExpenses}
+              totalSpent={group.total_spent || 0}
               onAddFunds={() => setAddFundsOpen(true)}
               onPayMerchant={() => setPayMerchantOpen(true)}
             />
 
             <StatsCards
               totalMembers={totalMembers}
-              totalSpent={totalExpenses}
+              totalSpent={group.total_spent || 0}
               walletBalance={group.shared_wallet_balance}
               pendingApprovals={pendingTransactions}
             />
@@ -338,7 +422,7 @@ export default function DashboardPage() {
                     <TransactionItem
                       key={transaction.id}
                       transaction={transaction}
-                      onClick={() => console.log("Clicked:", transaction.id)}
+                      onClick={() => {}}
                     />
                   ))
                 )}

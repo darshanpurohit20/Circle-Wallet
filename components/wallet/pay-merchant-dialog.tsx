@@ -47,23 +47,23 @@ export function PayMerchantDialog({
   const [amount, setAmount] = useState("")
   const [description, setDescription] = useState("")
   const [category, setCategory] = useState("")
-  const [splitType, setSplitType] = useState("all")
+  const [splitType, setSplitType] = useState("everyone")
   const [selectedMembers, setSelectedMembers] = useState<string[]>([])
 
   // SAFE MEMBERS LIST
   const allMembers = families.flatMap((f) => f.members ?? []).filter(Boolean)
 
-  const adults = allMembers.filter((m) => m.type === "adult" || m.role === "adult")
-  const children = allMembers.filter((m) => m.type !== "adult" && m.role !== "adult")
+  const adults = allMembers.filter((m) => m.type === "adult")
+  const kids = allMembers.filter((m) => m.type !== "adult")
 
   const handleSplitTypeChange = (type: string) => {
     setSplitType(type)
-    if (type === "all") {
+    if (type === "everyone") {
       setSelectedMembers(allMembers.map((m) => m.id))
     } else if (type === "adults") {
       setSelectedMembers(adults.map((m) => m.id))
-    } else if (type === "children") {
-      setSelectedMembers(children.map((m) => m.id))
+    } else if (type === "kids") {
+      setSelectedMembers(kids.map((m) => m.id))
     }
   }
 
@@ -76,21 +76,23 @@ export function PayMerchantDialog({
   }
 
   const handleSubmit = () => {
+    const membersToSplit =
+      splitType === "custom"
+        ? selectedMembers
+        : splitType === "adults"
+        ? adults.map((m) => m.id)
+        : splitType === "kids"
+        ? kids.map((m) => m.id)
+        : allMembers.map((m) => m.id)
+
     onSubmit({
       merchantName,
       merchantUpi: merchantUpi || undefined,
       amount: Number(amount),
       description,
       category,
-      splitType,
-      splitAmong:
-        splitType === "custom"
-          ? selectedMembers
-          : splitType === "adults"
-          ? adults.map((m) => m.id)
-          : splitType === "children"
-          ? children.map((m) => m.id)
-          : allMembers.map((m) => m.id),
+      splitType, // This will now be "everyone", "adults", "kids", or "custom"
+      splitAmong: membersToSplit,
     })
     resetForm()
     onOpenChange(false)
@@ -102,7 +104,7 @@ export function PayMerchantDialog({
     setAmount("")
     setDescription("")
     setCategory("")
-    setSplitType("all")
+    setSplitType("everyone")
     setSelectedMembers([])
   }
 
@@ -117,8 +119,8 @@ export function PayMerchantDialog({
         ? selectedMembers
         : splitType === "adults"
         ? adults.map((m) => m.id)
-        : splitType === "children"
-        ? children.map((m) => m.id)
+        : splitType === "kids"
+        ? kids.map((m) => m.id)
         : allMembers.map((m) => m.id)
 
     const membersData = allMembers.filter((m) => membersToSplit.includes(m.id))
@@ -202,9 +204,9 @@ export function PayMerchantDialog({
             <Label>Split Among</Label>
             <Tabs value={splitType} onValueChange={handleSplitTypeChange}>
               <TabsList className="grid grid-cols-4">
-                <TabsTrigger value="all">Everyone</TabsTrigger>
+                <TabsTrigger value="everyone">Everyone</TabsTrigger>
                 <TabsTrigger value="adults">Adults</TabsTrigger>
-                <TabsTrigger value="children">Kids</TabsTrigger>
+                <TabsTrigger value="kids">Kids</TabsTrigger>
                 <TabsTrigger value="custom">Custom</TabsTrigger>
               </TabsList>
 

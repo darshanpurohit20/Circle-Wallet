@@ -578,3 +578,114 @@ Import traces:
 [01:07:15.741] Browser LOG     Email: kovid72595@bablace.com
 [01:07:15.741] Browser LOG     ===================
 [01:08:38.391] Server  LOG      ✓ Compiled in 95ms
+[01:14:25.966] Server  LOG      ✓ Compiled in 66ms
+[01:14:30.909] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:14:30.909] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:14:30.909] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764169419743}
+[01:14:56.463] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:14:56.463] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:14:56.463] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764169445308}
+[01:18:10.811] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:18:10.811] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:18:10.811] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764169639653}
+[01:19:31.163] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:19:31.163] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:19:31.163] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764169719992}
+[01:23:32.835] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:23:32.836] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:23:32.836] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764169961684}
+[01:23:38.805] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764169967653}
+[01:30:03.188] Server  LOG      ✓ Compiled in 102ms
+[01:30:09.366] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:30:09.366] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:30:09.366] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764170358186}
+[01:40:35.644] Server  LOG      ✓ Compiled in 118ms
+[01:41:20.274] Browser ERROR   Insert payment failed: {"code":"23514","details":null,"hint":null,"message":"new row for relation \"transactions\" violates check constraint \"transactions_split_type_check\""}
+[01:42:37.713] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:42:37.713] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:42:37.713] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764171106554}
+[01:43:57.235] Server  LOG      ✓ Compiled in 220ms
+[01:43:58.430] Server  ERROR    ⨯ Error: The default export is not a React Component in "/page"
+[01:43:58.554] Server  ERROR    ⨯ Error: The default export is not a React Component in "/page"
+[01:43:58.765] Server  ERROR    ⨯ Error: The default export is not a React Component in "/page"
+[01:43:58.900] Server  ERROR    ⨯ Error: The default export is not a React Component in "/page"
+[01:43:58.984] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:43:58.985] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/members","route":"/members"}
+[01:43:58.985] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764171187028}
+[01:43:59.252] Browser ERROR   uncaughtError: Error: The default export is not a React Component in "/page"
+[01:44:50.690] Server  LOG      ✓ Compiled in 148ms
+[01:45:36.984] Browser ERROR   ./components/transactions/transaction-detail-dialog.tsx:145:77
+Parsing ecmascript source code failed
+  143 |           <div className="flex items-center justify-between">
+  144 |             <span className="text-muted-foreground">{isDeposit ? "Added by" : "Paid by"}</span>
+> 145 |             <span className="font-medium">{tranransaction.merchant_name && (/span>
+      |                                                                             ^^^^^^
+  146 |           </div>
+  147 |
+  148 |           {/* Split Breakdown */}
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./components/transactions/transaction-detail-dialog.tsx [Client Component Browser]
+    ./app/transactions/page.tsx [Client Component Browser]
+    ./app/transactions/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/transactions/transaction-detail-dialog.tsx [Client Component SSR]
+    ./app/transactions/page.tsx [Client Component SSR]
+    ./app/transactions/page.tsx [Server Component]
+[01:45:36.984] Browser ERROR   ./components/transactions/transaction-detail-dialog.tsx:145:77
+Parsing ecmascript source code failed
+  143 |           <div className="flex items-center justify-between">
+  144 |             <span className="text-muted-foreground">{isDeposit ? "Added by" : "Paid by"}</span>
+> 145 |             <span className="font-medium">{tranransaction.merchant_name && (/span>
+      |                                                                             ^^^^^^
+  146 |           </div>
+  147 |
+  148 |           {/* Split Breakdown */}
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./components/transactions/transaction-detail-dialog.tsx [Client Component Browser]
+    ./app/transactions/page.tsx [Client Component Browser]
+    ./app/transactions/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/transactions/transaction-detail-dialog.tsx [Client Component SSR]
+    ./app/transactions/page.tsx [Client Component SSR]
+    ./app/transactions/page.tsx [Server Component]
+[01:45:37.126] Server  LOG      ✓ Compiled in 41ms
+[01:45:40.984] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:45:40.985] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:45:40.985] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764171288976}
+[01:45:57.957] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:45:57.957] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:45:57.957] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764171306811}
+[01:46:15.474] Browser LOG     🔍 Payment data received: {"amount":1000,"category":"Food & Dining","description":"a","merchantName":"helo","splitAmong":["bf713148-dfd2-4311-8137-7d95bb50d1af","78677542-40a2-42eb-8fa2-5209a4580fa6","6650ade2-5e84-48e8-9961-459eab16edfc"],"splitType":"kids"}
+[01:46:15.474] Browser LOG     🔍 Total shares: 1.8
+[01:46:15.474] Browser LOG     🔍 Family splits: [{"amount":0,"familyId":"aed958ff-1347-432a-ab17-e9c6c1928d3c","shares":0.5},{"amount":0,"familyId":"04434cdb-e4c9-4a3b-9d6f-d4a614b859d1","shares":1.3}]
+[01:46:15.474] Browser LOG     🔍 Calculated family splits: [{"amount":277.77777777777777,"familyId":"aed958ff-1347-432a-ab17-e9c6c1928d3c","shares":0.5},{"amount":722.2222222222222,"familyId":"04434cdb-e4c9-4a3b-9d6f-d4a614b859d1","shares":1.3}]
+[01:46:15.474] Browser LOG     🔍 Inserting transaction: {"amount":1000,"category":"Food & Dining","description":"a","group_id":"d2668acc-3cc5-4361-a19b-1987742b07b0","merchant_name":"helo","paid_by_name":"Group Wallet","status":"confirmed","type":"payment"}
+[01:46:15.824] Browser LOG     ✅ Insert result: {"insertError":null,"inserted":{"amount":1000,"approved_at":null,"approved_by":null,"category":"Food & Dining","created_at":"2025-11-26T15:35:24.521536+00:00","description":"a","group_id":"d2668acc-3cc5-4361-a19b-1987742b07b0","id":"7560087a-cbc4-48ef-b4ed-d784a21a1cb5","merchant_id":null,"merchant_name":"helo","paid_by":null,"paid_by_name":"Group Wallet","receipt_url":null,"requires_approval":false,"split_among":[],"split_amounts":{},"split_type":null,"status":"confirmed","type":"payment","updated_at":"2025-11-26T15:35:24.521536+00:00"}}
+[01:46:15.824] Browser LOG     🔍 Updating Singh: 19448.63 - 277.77777777777777 = 19170.852222222224
+[01:46:16.094] Browser LOG     🔍 Updating Redasani: 18820.73 - 722.2222222222222 = 18098.507777777777
+[01:46:17.051] Browser LOG     ✅ Payment successful! Updated families: [{"balance":19577.17,"id":"11505e84-33ec-4ffb-905a-c03df716a622","members":[{"age":null,"avatar":null,"id":"226aa731-e8db-4c86-af74-2e6c0a6f4098","name":"Mota","shareRatio":1,"type":"adult"}],"name":"Kulkarnis","totalContribution":22949},{"balance":19153.42,"id":"bf39bf01-aa52-4629-9d42-b7674ea2213d","members":[{"age":null,"avatar":null,"id":"3c545f09-1418-4ca2-9f0d-7079e0ef6eba","name":"Darshan","shareRatio":1,"type":"adult"},{"age":null,"avatar":null,"id":"6623b15a-46a9-4ab7-a61e-0d9a62e30d2d","name":"Wife","shareRatio":1,"type":"adult"}],"name":"Purohit","totalContribution":25897},{"balance":19170.85,"id":"aed958ff-1347-432a-ab17-e9c6c1928d3c","members":[{"age":null,"avatar":null,"id":"7fb3cd4e-4ecd-45bb-91c8-d5c603dbbf07","name":"Chandan","shareRatio":1,"type":"adult"},{"age":12,"avatar":null,"id":"bf713148-dfd2-4311-8137-7d95bb50d1af","name":"Chandan-KID","shareRatio":0.5,"type":"child"}],"name":"Singh","totalContribution":24423},{"balance":18098.51,"id":"04434cdb-e4c9-4a3b-9d6f-d4a614b859d1","members":[{"age":null,"avatar":null,"id":"8dfd0fc2-0c38-426a-ba36-ce8f34fe8998","name":"Harsh","shareRatio":1,"type":"adult"},{"age":null,"avatar":null,"id":"07560f4d-b63a-484f-827e-41adf890650c","name":"HARSH WIFE","shareRatio":1,"type":"adult"},{"age":null,"avatar":null,"id":"78677542-40a2-42eb-8fa2-5209a4580fa6","name":"Harsh - KID 1","shareRatio":0.8,"type":"teenager"},{"age":12,"avatar":null,"id":"6650ade2-5e84-48e8-9961-459eab16edfc","name":"Harsh Kid-2","shareRatio":0.5,"type":"child"}],"name":"Redasani","totalContribution":29731}]
+[01:49:44.974] Server  LOG      ✓ Compiled in 78ms
+[01:49:45.984] Browser ERROR   The final argument passed to %s changed size between renders. The order and size of this array must remain constant.
+
+Previous: %s
+Incoming: %s useEffect [] [[object Object], [object Object]]
+[01:49:45.984] Browser ERROR   The final argument passed to %s changed size between renders. The order and size of this array must remain constant.
+
+Previous: %s
+Incoming: %s useEffect [[object Object]] [[object Object], [object Object]]
+[01:49:49.808] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:49:49.808] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:49:49.808] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764171538663}
+[01:49:56.055] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:49:56.055] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:49:56.055] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764171544909}
