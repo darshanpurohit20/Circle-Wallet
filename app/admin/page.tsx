@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { supabase } from "@/lib/supabase/client"
+import { createClient } from "@/lib/supabase/client"
 import { Header } from "@/components/dashboard/header"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -19,7 +19,7 @@ import {
 } from "@/components/icons"
 
 const GROUP_ID = "PUT-YOUR-GROUP-ID-HERE" // <— IMPORTANT
-
+const supabase = createClient()
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("pending")
 
