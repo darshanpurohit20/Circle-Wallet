@@ -1538,3 +1538,9 @@ Import traces:
 [03:10:15.231] Browser LOG     💰 New wallet balance: 29890
 [03:10:15.556] Browser LOG     ✅ Payment complete!
 [03:10:53.650] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/members color: rgb(120, 120, 120) color: inherit {"dp":"/members","o":"http://localhost:3000/members","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764176402512}
+[03:31:48.562] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/shared/lib/router/router.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[03:31:48.575] Server  LOG      ✓ Compiled in 386ms
+[03:31:51.003] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:31:51.003] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/auth/login","route":"/auth/login"}
+[03:31:51.003] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/auth/login color: rgb(120, 120, 120) color: inherit {"dp":"/auth/login","o":"http://localhost:3000/auth/login","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764177658894}
+[03:31:59.985] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/auth/login color: rgb(120, 120, 120) color: inherit {"dp":"/auth/login","o":"http://localhost:3000/auth/login","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764177668713}
