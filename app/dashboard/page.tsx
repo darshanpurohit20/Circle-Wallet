@@ -1,9 +1,12 @@
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   // 1️⃣ Create Supabase client (server-safe cookies)
-  const supabase = createClient()
+ const supabase = await createClient()
+
 
   // 2️⃣ Get the logged-in user
   const {
