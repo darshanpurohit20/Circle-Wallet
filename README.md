@@ -1,5 +1,5 @@
 
-# Circle-Wallet – Prepaid Shared Wallet with Smart Splitting
+## Circle-Wallet – Prepaid Shared Wallet with Smart Splitting
 
 **Problem Statement ID:** AVS321  
 **Theme:** Digital empowerment for rural communities
@@ -75,16 +75,30 @@ This project addresses the challenges of group expense management during trips, 
 4. Run locally:  
    ```bash
    npm install  
-   npm start
+   npm run dev
    ```
 
 ## License  
 MIT
 
 ***
-<img width="1370" height="812" alt="Screenshot 2025-11-26 at 1 07 36 AM" src="https://github.com/user-attachments/assets/1ce097d4-cac2-49f1-a311-c9ff56fa9dc4" /> <img width="1424" height="816" alt="Screenshot 2025-11-26 at 1 14 49 AM" src="https://github.com/user-attachments/assets/7d6df845-6a6a-48c2-a80d-c4c49f9111c0" />
-<img width="1465" height="827" alt="Screenshot 2025-11-26 at 1 15 07 AM" src="https://github.com/user-attachments/assets/5f53d9de-170a-43dc-8f86-1c2c0c737562" /> <img width="1465" height="822" alt="Screenshot 2025-11-26 at 1 15 28 AM" src="https://github.com/user-attachments/assets/6ff4974a-5078-4fdc-9342-941c1a7a3940" />
+<img width="1470" height="885" alt="image" src="https://github.com/user-attachments/assets/f775d3da-cd27-4c40-9a80-70669e29f9d2" />
 
+<img width="1470" height="847" alt="image" src="https://github.com/user-attachments/assets/7dfac42c-23cb-4137-96bb-ddee95cf76cb" />
+
+<img width="1470" height="887" alt="image" src="https://github.com/user-attachments/assets/fc047ac0-2b25-414e-9d4c-c10cf3816360" />
+
+<img width="1470" height="836" alt="image" src="https://github.com/user-attachments/assets/57f4db15-5899-47d3-9780-45f6bce9f32a" />
+
+<img width="1462" height="872" alt="image" src="https://github.com/user-attachments/assets/840f3902-0f31-4afc-a6d4-65933db35f0c" />
+
+<img width="1470" height="884" alt="image" src="https://github.com/user-attachments/assets/4c6eb6c4-34ae-4d08-beb0-dcd41b86bde4" />
+
+<img width="797" height="652" alt="image" src="https://github.com/user-attachments/assets/a378aeae-cda3-4d4c-b572-4c2b6306e7fb" />
+
+<img width="1470" height="844" alt="image" src="https://github.com/user-attachments/assets/8b18edbc-255c-4730-bba9-1658774f5689" />
+
+<img width="1470" height="878" alt="image" src="https://github.com/user-attachments/assets/cde664ce-a544-4492-ae6e-ab556b1d1953" />
 
 
 
