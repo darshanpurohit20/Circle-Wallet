@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
@@ -21,12 +21,74 @@ interface HeaderProps {
 
 export function Header({ groupName }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [profile, setProfile] = useState<any>(null)
   const router = useRouter()
+  const supabase = createClient()
+
+  // Fetch user profile on mount
+  useEffect(() => {
+    let mounted = true
+
+    ;(async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      
+      if (user && mounted) {
+        const { data } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("email", user.email)
+          .maybeSingle()
+        
+        if (mounted) {
+          setProfile(data)
+        }
+      }
+    })()
+
+    return () => {
+      mounted = false
+    }
+  }, [supabase])
+
+  // Listen for profile updates from localStorage/storage events
+  useEffect(() => {
+    const handleStorageChange = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      
+      if (user) {
+        const { data } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("email", user.email)
+          .maybeSingle()
+        
+        setProfile(data)
+      }
+    }
+
+    // Listen for custom event when profile is updated
+    window.addEventListener("profile-updated", handleStorageChange)
+    
+    return () => {
+      window.removeEventListener("profile-updated", handleStorageChange)
+    }
+  }, [supabase])
 
   const handleSignOut = async () => {
-    const supabase = createClient()
     await supabase.auth.signOut()
     router.push("/auth/login")
+  }
+
+  const getInitials = () => {
+    if (profile?.full_name) {
+      return profile.full_name
+        .split(" ")
+        .map((n: string) => n[0])
+        .join("")
+        .toUpperCase()
+        .substring(0, 2)
+    }
+    return "U"
   }
 
   return (
@@ -71,12 +133,23 @@ export function Header({ groupName }: HeaderProps) {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Avatar className="w-8 h-8 cursor-pointer">
-                  <AvatarImage src="/placeholder.svg?key=user" alt="User" />
-                  <AvatarFallback className="bg-secondary text-secondary-foreground text-xs">RS</AvatarFallback>
+                <Avatar className="w-8 h-8 cursor-pointer ring-2 ring-transparent hover:ring-primary/20 transition-all">
+                  <AvatarImage src={profile?.avatar_url || ""} alt={profile?.full_name || "User"} />
+                  <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+                    {getInitials()}
+                  </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-56">
+                {profile && (
+                  <>
+                    <div className="px-2 py-2">
+                      <p className="text-sm font-medium">{profile.full_name || "User"}</p>
+                      <p className="text-xs text-muted-foreground">{profile.email}</p>
+                    </div>
+                    <DropdownMenuSeparator />
+                  </>
+                )}
                 <DropdownMenuItem asChild>
                   <Link href="/settings" className="flex items-center gap-2">
                     <SettingsIcon className="w-4 h-4" />
