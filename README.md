@@ -77,10 +77,17 @@ This project addresses the challenges of group expense management during trips, 
    npm install  
    npm run dev
    ```
+## 📘 Circle Wallet – Project Documentation
 
-## License  
-MIT
+Access the complete project report, design workflow, and technical documentation using the link below:
 
+<p align="center">
+  <a href="https://drive.google.com/file/d/1B5DJVEztLeRUsOitsZ1wVR_Nr8-PZ7R9/preview">
+    <img src="https://img.shields.io/badge/View%20Documentation-PDF-blue?style=for-the-badge&logo=adobeacrobatreader" alt="Circle Wallet Documentation">
+  </a>
+</p>
+
+## SNAPSHOTS  
 ***
 <img width="1470" height="885" alt="image" src="https://github.com/user-attachments/assets/f775d3da-cd27-4c40-9a80-70669e29f9d2" />
 
