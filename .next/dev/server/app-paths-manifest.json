@@ -3,6 +3,7 @@
   "/auth/reset-password/page": "app/auth/reset-password/page.js",
   "/auth/sign-up/page": "app/auth/sign-up/page.js",
   "/page": "app/page.js",
+  "/reports/page": "app/reports/page.js",
   "/settings/page": "app/settings/page.js",
   "/transactions/page": "app/transactions/page.js"
 }

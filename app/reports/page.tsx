@@ -341,10 +341,11 @@ const downloadPDF = () => {
 
           <Card className="p-4 flex items-center gap-3">
             <UsersIcon className="w-5 h-5" />
-            <div>
+            <div className="text-center">
               <p className="text-sm text-muted-foreground">Transactions</p>
               <p className="text-xl font-bold">{filteredTransactions.length}</p>
             </div>
+
           </Card>
         </div>
 

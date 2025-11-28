@@ -202,3 +202,9 @@ Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allow
 [00:32:26.246] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
 [00:32:26.246] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
 [00:32:26.246] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764335261833}
+[00:33:42.743] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://192.168.29.124:3000/reports color: rgb(120, 120, 120) color: inherit {"dp":"/reports","o":"http://192.168.29.124:3000/reports","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764335338337}
+[00:35:33.535] Server  LOG      ✓ Compiled in 72ms
+[00:35:42.415] Server  LOG      ✓ Compiled in 30ms
+[00:35:43.114] Server  LOG      ✓ Compiled in 32ms
+[00:35:43.663] Server  LOG      ✓ Compiled in 34ms
+[00:35:43.895] Server  LOG      ✓ Compiled in 35ms
