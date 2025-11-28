@@ -1,16 +1,24 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CircleIcon, MailIcon } from "@/components/icons"
+import { MailIcon } from "@/components/icons"
+import { ModeToggle } from "@/components/mode-toggle"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 export default function SignUpSuccessPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/10 p-4">
+      {/* Dark Mode Toggle - Fixed Top Right */}
+      <div className="fixed top-4 right-4 z-50">
+        <ModeToggle />
+      </div>
+
       <div className="w-full max-w-md">
         <div className="flex items-center justify-center gap-2 mb-8">
-          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-            <CircleIcon className="w-6 h-6 text-primary-foreground" />
-          </div>
+          <img 
+            src="/icon.svg" 
+            alt="Circle Wallet Logo" 
+            className="w-10 h-10"
+          />
           <span className="text-2xl font-bold text-foreground">Circle Wallet</span>
         </div>
 

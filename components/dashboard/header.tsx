@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { CircleWalletLogo, BellIcon, MenuIcon, XIcon, LogOutIcon, SettingsIcon } from "@/components/icons"
+import { ModeToggle } from "@/components/mode-toggle"
 import { createClient } from "@/lib/supabase/client"
 import Link from "next/link"
 
@@ -97,9 +98,14 @@ export function Header({ groupName }: HeaderProps) {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2">
-              <CircleWalletLogo className="w-8 h-8" />
-              <span className="font-bold text-lg text-foreground hidden sm:block">Circle Wallet</span>
-            </Link>
+  <img 
+    src="/icon.svg" 
+    alt="Circle Wallet Logo" 
+    className="w-8 h-8"
+  />
+  <span className="font-bold text-lg text-foreground hidden sm:block">Circle Wallet</span>
+</Link>
+
             <span className="text-muted-foreground hidden md:block">|</span>
             <span className="text-sm text-muted-foreground hidden md:block">{groupName}</span>
           </div>
@@ -126,6 +132,9 @@ export function Header({ groupName }: HeaderProps) {
           </nav>
 
           <div className="flex items-center gap-2">
+            {/* Dark Mode Toggle */}
+            <ModeToggle />
+
             <Button variant="ghost" size="icon" className="relative">
               <BellIcon className="w-5 h-5" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />

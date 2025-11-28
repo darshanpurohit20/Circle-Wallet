@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { CircleIcon } from "@/components/icons"
+import { ModeToggle } from "@/components/mode-toggle"
 
 export default function ResetPasswordPage() {
   const [newPassword, setNewPassword] = useState("")
@@ -93,6 +93,10 @@ export default function ResetPasswordPage() {
   if (isCheckingSession) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/10">
+        {/* Dark Mode Toggle - Even on loading screen */}
+        <div className="fixed top-4 right-4 z-50">
+          <ModeToggle />
+        </div>
         <div className="text-center">
           <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-muted-foreground">Verifying session...</p>
@@ -103,11 +107,18 @@ export default function ResetPasswordPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/10 p-4">
+      {/* Dark Mode Toggle - Fixed Top Right */}
+      <div className="fixed top-4 right-4 z-50">
+        <ModeToggle />
+      </div>
+
       <div className="w-full max-w-md">
         <div className="flex items-center justify-center gap-2 mb-8">
-          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-            <CircleIcon className="w-6 h-6 text-primary-foreground" />
-          </div>
+          <img 
+            src="/icon.svg" 
+            alt="Circle Wallet Logo" 
+            className="w-10 h-10"
+          />
           <span className="text-2xl font-bold text-foreground">Circle Wallet</span>
         </div>
 
