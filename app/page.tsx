@@ -1006,6 +1006,8 @@ export default function DashboardPage() {
             <QuickActions
               families={displayFamilies}
               walletBalance={walletBalance}
+              onAddFunds={() => setAddFundsOpen(true)}
+              onPayMerchant={() => setPayMerchantOpen(true)}
             />
 
             <Card className="p-4 md:p-6">

@@ -13,9 +13,13 @@ import Link from "next/link"
 interface QuickActionsProps {
   families: Family[]
   walletBalance: number
+  onAddFunds?: () => void
+  onPayMerchant?: () => void
+  onInvite?: () => void
 }
 
-export function QuickActions({ families, walletBalance }: QuickActionsProps) {
+export function QuickActions({ families, walletBalance, onAddFunds, onPayMerchant, onInvite }: QuickActionsProps) {
+  // Internal dialogs only used as a fallback when parent did not supply a handler.
   const [addFundsOpen, setAddFundsOpen] = useState(false)
   const [payMerchantOpen, setPayMerchantOpen] = useState(false)
   const [inviteOpen, setInviteOpen] = useState(false)
@@ -45,11 +49,11 @@ export function QuickActions({ families, walletBalance }: QuickActionsProps) {
       <Card className="p-4">
         <h3 className="font-semibold text-foreground mb-4">Quick Actions</h3>
         <div className="flex flex-wrap gap-2">
-          <Button onClick={() => setAddFundsOpen(true)} className="gap-2">
+          <Button onClick={() => (onAddFunds ? onAddFunds() : setAddFundsOpen(true))} className="gap-2">
             <PlusCircleIcon className="w-4 h-4" />
             Add Funds
           </Button>
-          <Button variant="outline" onClick={() => setPayMerchantOpen(true)} className="gap-2">
+          <Button variant="outline" onClick={() => (onPayMerchant ? onPayMerchant() : setPayMerchantOpen(true))} className="gap-2">
             {/* CreditCardIcon component is moved to the top */}
             <svg
               viewBox="0 0 24 24"
@@ -65,7 +69,7 @@ export function QuickActions({ families, walletBalance }: QuickActionsProps) {
             </svg>
             Pay Merchant
           </Button>
-          <Button variant="outline" onClick={() => setInviteOpen(true)} className="gap-2">
+          <Button variant="outline" onClick={() => (onInvite ? onInvite() : setInviteOpen(true))} className="gap-2">
             <UserPlusIcon className="w-4 h-4" />
             Invite
           </Button>

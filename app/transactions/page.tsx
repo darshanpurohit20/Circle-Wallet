@@ -51,6 +51,7 @@ export default function TransactionsPage() {
   const [selectedTransaction, setSelectedTransaction] = useState<SupaTransaction | null>(null)
   const [detailOpen, setDetailOpen] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [families, setFamilies] = useState<any[]>([])
 
   // helper: get current user and group
   useEffect(() => {
@@ -95,9 +96,31 @@ export default function TransactionsPage() {
           .maybeSingle()
         if (groupError) throw groupError
 
+        // load families + members so PayMerchantDialog has data to split among
+        const { data: familyRows } = await supabase
+          .from("families")
+          .select("*, family_members(*)")
+          .eq("group_id", gid)
+
+        const normalizedFamilies = (familyRows || []).map((family: any) => ({
+          id: family.id,
+          name: family.name,
+          balance: Number(family.balance || 0),
+          totalContribution: Number(family.total_contribution || 0),
+          members: (family.family_members || []).map((m: any) => ({
+            id: m.id,
+            name: m.name,
+            type: m.member_type,
+            age: m.age,
+            shareRatio: Number(m.share_ratio),
+            avatar: m.avatar_url || null,
+          })),
+        }))
+
         if (mounted) {
           setGroupId(gid)
           setGroup(groupData)
+          setFamilies(normalizedFamilies)
         }
 
         // initial fetch of latest 50 transactions
@@ -512,7 +535,7 @@ export default function TransactionsPage() {
       <PayMerchantDialog
         open={payMerchantOpen}
         onOpenChange={setPayMerchantOpen}
-        families={group?.families ?? []}
+        families={families}
         walletBalance={group?.shared_wallet_balance ?? 0}
         onSubmit={handlePayMerchantSubmit}
       />
@@ -521,7 +544,7 @@ export default function TransactionsPage() {
         open={detailOpen}
         onOpenChange={setDetailOpen}
         transaction={selectedTransaction as any}
-        allMembers={group?.families?.flatMap((f: any) => f.members) ?? []}
+        allMembers={families.flatMap((f: any) => f.members) ?? []}
         onApprove={() => selectedTransaction && handleApprove(selectedTransaction.id)}
         onDecline={() => selectedTransaction && handleDecline(selectedTransaction.id)}
       />
