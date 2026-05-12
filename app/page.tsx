@@ -90,7 +90,7 @@
 //             type: m.member_type,
 //             age: m.age,
 //             shareRatio: Number(m.share_ratio),
-//             avatar: m.avatar || null,
+//             avatar: m.avatar_url || null,
 //           })),
 //         }))
 
@@ -584,7 +584,7 @@ export default function DashboardPage() {
             type: m.member_type,
             age: m.age,
             shareRatio: Number(m.share_ratio),
-            avatar: m.avatar || null,
+            avatar: m.avatar_url || null,
           })),
         }))
 
