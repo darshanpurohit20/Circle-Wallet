@@ -46,6 +46,17 @@ export function normalizeSplitType(value: string | null | undefined): DbSplitTyp
 }
 
 /**
+ * Single source of truth for wallet balance.
+ * Always: walletBalance = totalDeposits - totalPayments.
+ * Rounded to 2dp to avoid float-drift like ₹63,130.01.
+ */
+export function calculateWalletBalance(totalDeposits: number, totalPayments: number): number {
+  const a = Number(totalDeposits) || 0
+  const b = Number(totalPayments) || 0
+  return Math.round((a - b) * 100) / 100
+}
+
+/**
  * Single source of truth for split-type display labels.
  * Accepts both DB values (`all`, `adults`, `children`, `custom`) and legacy UI values
  * (`everyone`, `kids`).

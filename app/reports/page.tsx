@@ -18,6 +18,7 @@ import {
 
 import jsPDF from "jspdf"
 import autoTable from "jspdf-autotable"
+import { calculateWalletBalance } from "@/lib/utils"
 
 // =====================
 // EXPORT-SAFE HELPERS
@@ -244,6 +245,27 @@ export default function ReportsPage() {
     .filter((t) => t.type === "payment" && t.status === "confirmed")
     .reduce((acc, t) => acc + Number(t.amount), 0)
 
+  // SINGLE SOURCE OF TRUTH for current balance.
+  const currentBalance = calculateWalletBalance(totalDeposits, totalPayments)
+  const familyBalanceTotal = families.reduce((s, f) => s + Number(f.balance || 0), 0)
+  const storedSharedWalletBalance = Number(group?.shared_wallet_balance || 0)
+
+  if (typeof window !== "undefined") {
+    console.log("📊 Reports balance audit", {
+      totalDeposits,
+      totalPayments,
+      calculatedBalance: currentBalance,
+      storedSharedWalletBalance,
+      familyBalanceTotal,
+      drift_stored_vs_calculated: Math.round((storedSharedWalletBalance - currentBalance) * 100) / 100,
+    })
+    if (process.env.NODE_ENV !== "production" && Math.abs(storedSharedWalletBalance - currentBalance) > 0.01) {
+      console.warn(
+        `⚠️ Stored shared_wallet_balance (₹${storedSharedWalletBalance}) differs from calculated (₹${currentBalance}). UI uses calculated value.`,
+      )
+    }
+  }
+
   const formatINR = (amount = 0) =>
     new Intl.NumberFormat("en-IN", { style: "currency", currency: group?.currency || "INR" }).format(amount)
 
@@ -319,8 +341,7 @@ export default function ReportsPage() {
   const downloadPDF = () => {
     const doc = new jsPDF({ unit: "pt", format: "a4" })
     const currency = group?.currency || "INR"
-    const balance = Number(group?.shared_wallet_balance || 0)
-    const remaining = totalDeposits - totalPayments
+    const remaining = currentBalance
     const generatedAt = new Date().toLocaleString("en-IN")
     const pageWidth = doc.internal.pageSize.getWidth()
 
@@ -346,8 +367,7 @@ export default function ReportsPage() {
     const summaryLines: [string, string][] = [
       ["Total Deposits", formatAmountAscii(totalDeposits, currency)],
       ["Total Payments", formatAmountAscii(totalPayments, currency)],
-      ["Remaining Wallet Balance", formatAmountAscii(remaining, currency)],
-      ["Stored Wallet Balance", formatAmountAscii(balance, currency)],
+      ["Current Balance", formatAmountAscii(remaining, currency)],
       ["Total Transactions", String(filteredTransactions.length)],
     ]
     summaryLines.forEach(([k, v], i) => {
@@ -451,7 +471,7 @@ export default function ReportsPage() {
             <WalletIcon className="w-5 h-5 text-primary" />
             <div>
               <p className="text-sm text-muted-foreground">Current Balance</p>
-              <p className="text-xl font-bold">{formatINR(Number(group?.shared_wallet_balance || 0))}</p>
+              <p className="text-xl font-bold">{formatINR(currentBalance)}</p>
             </div>
           </Card>
 

@@ -512,7 +512,7 @@ import { Button } from "@/components/ui/button"
 import { ChevronRightIcon } from "@/components/icons"
 
 import Link from "next/link"
-import { normalizeSplitType, computeWeightedSplits } from "@/lib/utils"
+import { normalizeSplitType, computeWeightedSplits, calculateWalletBalance } from "@/lib/utils"
 
 export default function DashboardPage() {
   const supabase = createClient()
@@ -644,7 +644,7 @@ export default function DashboardPage() {
   const totalPayments = transactions
     .filter((t) => t.type === "payment" && t.status === "confirmed")
     .reduce((acc, t) => acc + Number(t.amount || 0), 0)
-  const walletBalance = totalDeposits - totalPayments
+  const walletBalance = calculateWalletBalance(totalDeposits, totalPayments)
   const totalExpenses = totalPayments
   const pendingTransactions = transactions.filter((t) => t.status === "pending").length
 
