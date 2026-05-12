@@ -1,11 +1,31 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { formatINR, type Transaction, type FamilyMember } from "@/lib/mock-data"
 import { CheckCircleIcon, ClockIcon, XIcon, BuildingIcon } from "@/components/icons"
+import { createClient } from "@/lib/supabase/client"
+
+type SplitMember = { id: string; name: string; member_type?: string | null; avatar_url?: string | null; amount: number }
+
+export function getSplitLabel(splitType: string | null | undefined, customNames: string[] = []): string {
+  switch (splitType) {
+    case "adults":
+      return "Adults Only"
+    case "kids":
+    case "children":
+      return "Kids Only"
+    case "custom":
+      return customNames.length > 0 ? `Custom: ${customNames.join(", ")}` : "Custom Split"
+    case "all":
+    case "everyone":
+    default:
+      return "Everyone"
+  }
+}
 
 interface TransactionDetailDialogProps {
   open: boolean
@@ -35,30 +55,49 @@ export function TransactionDetailDialog({
     })
   }
 
-  const getSplitLabel = (splitType: string) => {
-    switch (splitType) {
-      case "adults":
-        return "Adults Only"
-      case "kids":
-      case "children":
-        return "Kids Only"
-      case "custom":
-        return "Custom Split"
-      case "everyone":
-      default:
-        return "Everyone"
+  // Fetch transaction_splits + joined family_members for the active transaction.
+  const supabase = createClient()
+  const [splitMembers, setSplitMembers] = useState<SplitMember[]>([])
+  const [splitsLoading, setSplitsLoading] = useState(false)
+
+  useEffect(() => {
+    if (!open || !transaction?.id) {
+      setSplitMembers([])
+      return
     }
-  }
-
-  // Get split info with proper fallbacks
-  const splitAmong = transaction.split_among || transaction.splitAmong || []
-  const membersInSplit = allMembers.filter((m) => splitAmong.includes(m.id))
-
-  // Calculate total ratio
-  const totalRatio = membersInSplit.reduce(
-    (acc, m) => acc + Number(m.shareRatio || 0),
-    0
-  )
+    let cancelled = false
+    ;(async () => {
+      setSplitsLoading(true)
+      const { data, error } = await supabase
+        .from("transaction_splits")
+        .select("amount, family_members(id, name, member_type, avatar_url)")
+        .eq("transaction_id", transaction.id)
+      if (cancelled) return
+      if (error) {
+        console.error("Failed to load transaction_splits", error)
+        setSplitMembers([])
+      } else {
+        const rows: SplitMember[] = (data || [])
+          .map((r: any) => {
+            const fm = r.family_members
+            if (!fm) return null
+            return {
+              id: fm.id,
+              name: fm.name,
+              member_type: fm.member_type,
+              avatar_url: fm.avatar_url,
+              amount: Number(r.amount || 0),
+            }
+          })
+          .filter(Boolean) as SplitMember[]
+        setSplitMembers(rows)
+      }
+      setSplitsLoading(false)
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [open, transaction?.id, supabase])
 
   const isDeposit = transaction.type === "deposit"
   const isPending = transaction.status === "pending"
@@ -162,43 +201,49 @@ export function TransactionDetailDialog({
             <span className="font-medium">{paidByName}</span>
           </div>
 
-          {/* Split Breakdown */}
+          {/* Split Details */}
           {!isDeposit && splitType && (
             <>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Split Type</span>
-                <Badge variant="secondary">{getSplitLabel(splitType)}</Badge>
+                <span className="text-muted-foreground">Split Among</span>
+                <Badge variant="secondary">
+                  {getSplitLabel(
+                    splitType,
+                    splitType === "custom" ? splitMembers.map((m) => m.name) : [],
+                  )}
+                </Badge>
               </div>
 
-              {membersInSplit.length > 0 && (
-                <div className="border-t pt-4">
-                  <p className="text-sm font-medium text-foreground mb-3">Split Breakdown</p>
+              <div className="border-t pt-4">
+                <p className="text-sm font-medium text-foreground mb-3">
+                  {splitType === "custom" ? "Custom Split Members" : "Split Breakdown"}
+                </p>
+                {splitsLoading ? (
+                  <p className="text-sm text-muted-foreground">Loading split members…</p>
+                ) : splitMembers.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No split records found.</p>
+                ) : (
                   <div className="space-y-2 max-h-48 overflow-y-auto">
-                    {membersInSplit.map((member) => {
-                      const ratio = Number(member.shareRatio || 0)
-                      const share = totalRatio > 0 ? (transaction.amount * ratio) / totalRatio : 0
-
-                      return (
-                        <div key={member.id} className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Avatar className="w-6 h-6">
-                              <AvatarImage src={member.avatar || "/placeholder.svg"} />
-                              <AvatarFallback className="text-[10px]">
-                                {member.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            </Avatar>
-                            <span className="text-sm">{member.name}</span>
-                          </div>
-                          <span className="text-sm font-medium">{formatINR(share)}</span>
+                    {splitMembers.map((member) => (
+                      <div key={member.id} className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Avatar className="w-6 h-6">
+                            <AvatarImage src={member.avatar_url || "/placeholder.svg"} />
+                            <AvatarFallback className="text-[10px]">
+                              {member.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </AvatarFallback>
+                          </Avatar>
+                          <span className="text-sm">{member.name}</span>
                         </div>
-                      )
-                    })}
+                        <span className="text-sm font-medium">{formatINR(member.amount)}</span>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </>
           )}
 

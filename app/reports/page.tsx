@@ -248,10 +248,43 @@ export default function ReportsPage() {
     new Intl.NumberFormat("en-IN", { style: "currency", currency: group?.currency || "INR" }).format(amount)
 
   // =====================
+  // SPLIT INFO RESOLVER
+  // =====================
+  const memberNameById = new Map<string, string>()
+  members.forEach((m) => memberNameById.set(m.id, m.name))
+
+  const splitMembersByTx = new Map<string, string[]>()
+  splits.forEach((s) => {
+    const name = memberNameById.get(s.member_id)
+    if (!name) return
+    const list = splitMembersByTx.get(s.transaction_id) || []
+    list.push(name)
+    splitMembersByTx.set(s.transaction_id, list)
+  })
+
+  const splitInfoFor = (t: Tx): string => {
+    if (t.type !== "payment") return "-"
+    const names = splitMembersByTx.get(t.id) || []
+    switch (t.split_type) {
+      case "adults":
+        return "Adults Only"
+      case "kids":
+      case "children":
+        return "Kids Only"
+      case "custom":
+        return names.length > 0 ? `Custom: ${names.join(", ")}` : "Custom"
+      case "all":
+      case "everyone":
+      default:
+        return "Everyone"
+    }
+  }
+
+  // =====================
   // EXPORT CSV (UTF-8 with BOM so Excel renders ₹ correctly)
   // =====================
   const downloadCSV = () => {
-    const headers = ["Date", "Type", "Description", "Category", "Merchant", "Amount", "Status", "Paid By"]
+    const headers = ["Date", "Type", "Description", "Category", "Merchant", "Split Info", "Amount", "Paid By"]
 
     const rows = filteredTransactions.map((t) => [
       new Date(t.created_at).toLocaleString(),
@@ -259,8 +292,8 @@ export default function ReportsPage() {
       t.description ?? "",
       t.category || "-",
       t.merchant_name || "-",
+      splitInfoFor(t),
       Number(t.amount).toFixed(2),
-      t.status,
       t.paid_by_name || "-",
     ])
 
@@ -330,27 +363,27 @@ export default function ReportsPage() {
       stripUnsafeForPdf(t.description),
       stripUnsafeForPdf(t.category || "-"),
       stripUnsafeForPdf(t.merchant_name || "-"),
+      stripUnsafeForPdf(splitInfoFor(t)),
       formatAmountAscii(Number(t.amount), currency),
-      stripUnsafeForPdf(t.status),
       stripUnsafeForPdf(t.paid_by_name || "-"),
     ])
 
     autoTable(doc, {
-      head: [["Date", "Type", "Description", "Category", "Merchant", "Amount", "Status", "Paid By"]],
+      head: [["Date", "Type", "Description", "Category", "Merchant", "Split Info", "Amount", "Paid By"]],
       body: rows,
       startY: 128 + summaryLines.length * 16 + 16,
       styles: { font: "helvetica", fontSize: 9, cellPadding: 5, overflow: "linebreak", valign: "middle" },
       headStyles: { fillColor: [22, 163, 74], textColor: 255, fontStyle: "bold" },
       alternateRowStyles: { fillColor: [248, 250, 252] },
       columnStyles: {
-        0: { cellWidth: 60 },
-        1: { cellWidth: 50 },
-        2: { cellWidth: 130 },
-        3: { cellWidth: 65 },
-        4: { cellWidth: 70 },
-        5: { cellWidth: 75, halign: "right" },
-        6: { cellWidth: 55 },
-        7: { cellWidth: 65 },
+        0: { cellWidth: 58 },  // Date
+        1: { cellWidth: 45 },  // Type
+        2: { cellWidth: 110 }, // Description
+        3: { cellWidth: 60 },  // Category
+        4: { cellWidth: 65 },  // Merchant
+        5: { cellWidth: 95 },  // Split Info
+        6: { cellWidth: 70, halign: "right" }, // Amount
+        7: { cellWidth: 65 },  // Paid By
       },
       margin: { left: 40, right: 40 },
       didDrawPage: (data) => {

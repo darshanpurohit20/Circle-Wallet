@@ -705,3 +705,51 @@ Import traces:
 [01:51:20.561] Browser LOG     ✅ Payment complete!
 [01:51:20.561] Browser LOG     📊 Dashboard stats {"families":[{"contribution":50000,"derivedBalance":13185.328185328186,"name":"Patel Family"},{"contribution":27500,"derivedBalance":7251.930501930502,"name":"Purohit Family"},{"contribution":52000,"derivedBalance":13712.741312741311,"name":"Sharma Family"}],"storedSharedWalletBalance":63130.01000000001,"totalContributions":129500,"totalDeposits":129500,"totalPayments":95350,"walletBalance":34150}
 [01:51:20.561] Browser LOG     [2;38;2;124;124;124m%s[0m 📊 Dashboard stats {"families":[{"contribution":50000,"derivedBalance":13185.328185328186,"name":"Patel Family"},{"contribution":27500,"derivedBalance":7251.930501930502,"name":"Purohit Family"},{"contribution":52000,"derivedBalance":13712.741312741311,"name":"Sharma Family"}],"storedSharedWalletBalance":63130.01000000001,"totalContributions":129500,"totalDeposits":129500,"totalPayments":95350,"walletBalance":34150}
+[01:51:37.018] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/invites color: rgb(120, 120, 120) color: inherit {"dp":"/invites","o":"http://localhost:3000/invites","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778568781020} /_vercel/insights/view
+[01:52:33.971] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/settings color: rgb(120, 120, 120) color: inherit {"dp":"/settings","o":"http://localhost:3000/settings","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778568837973} /_vercel/insights/view
+[01:52:41.995] Browser LOG     📊 Dashboard stats {"families":[],"totalContributions":0,"totalDeposits":0,"totalPayments":0,"walletBalance":0}
+[01:52:41.995] Browser LOG     [2;38;2;124;124;124m%s[0m 📊 Dashboard stats {"families":[],"totalContributions":0,"totalDeposits":0,"totalPayments":0,"walletBalance":0}
+[01:52:41.995] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778568845997} /_vercel/insights/view
+[01:52:42.781] Browser LOG     📊 Dashboard stats {"families":[],"totalContributions":0,"totalDeposits":0,"totalPayments":0,"walletBalance":0}
+[01:52:42.781] Browser LOG     [2;38;2;124;124;124m%s[0m 📊 Dashboard stats {"families":[],"totalContributions":0,"totalDeposits":0,"totalPayments":0,"walletBalance":0}
+[01:52:42.782] Browser LOG     📊 Dashboard stats {"families":[{"contribution":50000,"derivedBalance":13185.328185328186,"name":"Patel Family"},{"contribution":27500,"derivedBalance":7251.930501930502,"name":"Purohit Family"},{"contribution":52000,"derivedBalance":13712.741312741311,"name":"Sharma Family"}],"storedSharedWalletBalance":63130.01,"totalContributions":129500,"totalDeposits":129500,"totalPayments":95350,"walletBalance":34150}
+[01:52:42.782] Browser LOG     [2;38;2;124;124;124m%s[0m 📊 Dashboard stats {"families":[{"contribution":50000,"derivedBalance":13185.328185328186,"name":"Patel Family"},{"contribution":27500,"derivedBalance":7251.930501930502,"name":"Purohit Family"},{"contribution":52000,"derivedBalance":13712.741312741311,"name":"Sharma Family"}],"storedSharedWalletBalance":63130.01,"totalContributions":129500,"totalDeposits":129500,"totalPayments":95350,"walletBalance":34150}
+[01:53:07.007] Server  LOG     📊 Dashboard stats {}
+[01:53:07.301] Browser LOG     📊 Dashboard stats {"families":[],"totalContributions":0,"totalDeposits":0,"totalPayments":0,"walletBalance":0}
+[01:53:07.301] Browser LOG     [2;38;2;124;124;124m%s[0m 📊 Dashboard stats {"families":[],"totalContributions":0,"totalDeposits":0,"totalPayments":0,"walletBalance":0}
+[01:53:07.301] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:53:07.301] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:53:07.301] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778568871303} /_vercel/insights/view
+[01:53:07.851] Browser LOG     📊 Dashboard stats {"families":[{"contribution":50000,"derivedBalance":13185.328185328186,"name":"Patel Family"},{"contribution":27500,"derivedBalance":7251.930501930502,"name":"Purohit Family"},{"contribution":52000,"derivedBalance":13712.741312741311,"name":"Sharma Family"}],"storedSharedWalletBalance":63130.01,"totalContributions":129500,"totalDeposits":129500,"totalPayments":95350,"walletBalance":34150}
+[01:53:07.851] Browser LOG     [2;38;2;124;124;124m%s[0m 📊 Dashboard stats {"families":[{"contribution":50000,"derivedBalance":13185.328185328186,"name":"Patel Family"},{"contribution":27500,"derivedBalance":7251.930501930502,"name":"Purohit Family"},{"contribution":52000,"derivedBalance":13712.741312741311,"name":"Sharma Family"}],"storedSharedWalletBalance":63130.01,"totalContributions":129500,"totalDeposits":129500,"totalPayments":95350,"walletBalance":34150}
+[01:53:10.577] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778568874579} /_vercel/insights/view
+[01:53:14.261] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:53:14.261] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:56:34.982] Server  LOG      ✓ Compiled in 235ms
+[01:56:45.567] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:56:45.567] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/transactions","route":"/transactions"}
+[01:56:45.567] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778569089570} /_vercel/insights/view
+[01:56:47.350] Browser ERROR   Internal React error: Expected static flag was missing. Please notify the React team.
+[01:56:47.350] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:56:47.350] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:56:51.591] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:56:51.591] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:56:58.524] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:56:58.524] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:10.638] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:10.639] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:14.724] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:14.724] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:33.745] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:33.746] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:37.855] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:37.855] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:43.677] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:43.679] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:49.750] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:49.750] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:57.202] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:57:57.202] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+[01:58:49.033] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:58:49.033] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/transactions","route":"/transactions"}
+[01:58:49.033] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778569213034} /_vercel/insights/view
