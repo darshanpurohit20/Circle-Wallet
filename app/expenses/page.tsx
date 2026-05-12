@@ -120,6 +120,9 @@ export default function ExpensesPage() {
   const pendingAmount = transactions
     .filter((e) => e.status === "pending")
     .reduce((acc, e) => acc + Number(e.amount), 0)
+  const totalSpent = transactions
+    .filter((e) => e.type === "payment" && e.status === "confirmed")
+    .reduce((acc, e) => acc + Number(e.amount), 0)
 
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat("en-IN", { style: "currency", currency: group.currency }).format(amount)
@@ -150,7 +153,7 @@ export default function ExpensesPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <Card className="p-4">
             <p className="text-sm text-muted-foreground">Total Spent</p>
-            <p className="text-xl font-bold">{formatCurrency(group.total_spent || 0)}</p>
+            <p className="text-xl font-bold">{formatCurrency(totalSpent)}</p>
           </Card>
 
           <Card className="p-4">

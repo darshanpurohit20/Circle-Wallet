@@ -625,7 +625,6 @@ export default function DashboardPage() {
             setGroup((g: any) => ({ 
               ...g, 
               shared_wallet_balance: Number(g.shared_wallet_balance || 0) - Number(newRow.amount || 0),
-              total_spent: Number(g.total_spent || 0) + Number(newRow.amount || 0)
             }))
           }
         }
@@ -888,8 +887,6 @@ export default function DashboardPage() {
         }
       }
 
-      const newTotalSpent = Number(group.total_spent || 0) + Number(data.amount)
-
       const { data: updatedFamilies } = await supabase
         .from("families")
         .select("*, family_members(*)")
@@ -918,7 +915,6 @@ export default function DashboardPage() {
         .from("groups")
         .update({
           shared_wallet_balance: newWalletBalance,
-          total_spent: newTotalSpent,
         })
         .eq("id", group.id)
 
@@ -929,7 +925,6 @@ export default function DashboardPage() {
         setGroup((g: any) => ({ 
           ...g, 
           shared_wallet_balance: newWalletBalance, 
-          total_spent: newTotalSpent 
         }))
         setFamilies(normalizedFamilies)
         setTransactions((prev) => [inserted, ...prev].slice(0, 10))
@@ -961,14 +956,14 @@ export default function DashboardPage() {
             <WalletCard
               balance={group.shared_wallet_balance}
               totalContributions={totalContributions}
-              totalSpent={group.total_spent || 0}
+              totalSpent={totalExpenses}
               onAddFunds={() => setAddFundsOpen(true)}
               onPayMerchant={() => setPayMerchantOpen(true)}
             />
 
             <StatsCards
               totalMembers={totalMembers}
-              totalSpent={group.total_spent || 0}
+              totalSpent={totalExpenses}
               walletBalance={group.shared_wallet_balance}
               pendingApprovals={pendingTransactions}
             />
