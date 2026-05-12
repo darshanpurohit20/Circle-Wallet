@@ -28,6 +28,23 @@ export function formatTimeAgo(date: string | Date): string {
   })
 }
 
+// Schema-allowed split_type values: all | adults | children | custom
+export type DbSplitType = "all" | "adults" | "children" | "custom"
+
+const SPLIT_TYPE_MAP: Record<string, DbSplitType> = {
+  everyone: "all",
+  all: "all",
+  adults: "adults",
+  kids: "children",
+  children: "children",
+  custom: "custom",
+}
+
+export function normalizeSplitType(value: string | null | undefined): DbSplitType {
+  if (!value) return "all"
+  return SPLIT_TYPE_MAP[value] ?? "all"
+}
+
 export function formatFullDateTime(date: string | Date): string {
   return new Date(date).toLocaleString('en-IN', {
     day: 'numeric',

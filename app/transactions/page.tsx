@@ -12,6 +12,7 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { XIcon, PlusCircleIcon, ReceiptIcon } from "@/components/icons"
+import { normalizeSplitType } from "@/lib/utils"
 
 type SupaTransaction = {
   id: string
@@ -251,8 +252,9 @@ export default function TransactionsPage() {
         group.require_approval_above_threshold && Number(data.amount) >= Number(group.large_payment_threshold)
       const initialStatus = requiresApproval ? "pending" : "confirmed"
 
-      // insert transaction row
-      const { error: insertError } = await supabase.from("transactions").insert({
+      const splitAmong: string[] = data.splitAmong || []
+
+      const txPayload = {
         group_id: groupId,
         type: "payment",
         description: data.description,
@@ -262,12 +264,46 @@ export default function TransactionsPage() {
         paid_by_name: user.email ?? user.id,
         merchant_name: data.merchantName,
         merchant_id: data.merchantUpi ?? null,
-        split_type: data.splitType,
+        split_type: normalizeSplitType(data.splitType),
         status: initialStatus,
         requires_approval: requiresApproval,
-      })
+      }
+      console.log("📦 Transaction insert payload:", txPayload)
 
-      if (insertError) throw insertError
+      // insert transaction row and capture id for transaction_splits
+      const { data: insertedTx, error: insertError } = await supabase
+        .from("transactions")
+        .insert(txPayload)
+        .select()
+        .single()
+
+      if (insertError) {
+        console.error("❌ Transaction insert error:", insertError)
+        throw insertError
+      }
+      console.log("✅ Transaction inserted:", insertedTx)
+
+      // Insert per-member split rows (normalized table)
+      if (insertedTx && splitAmong.length > 0) {
+        const perMemberAmount = Number(data.amount) / splitAmong.length
+        const splitRows = splitAmong.map((memberId) => ({
+          transaction_id: insertedTx.id,
+          member_id: memberId,
+          amount: perMemberAmount,
+        }))
+        console.log("📦 transaction_splits insert payload:", splitRows)
+
+        const { data: splitsInserted, error: splitsError } = await supabase
+          .from("transaction_splits")
+          .insert(splitRows)
+          .select()
+
+        if (splitsError) {
+          console.error("❌ transaction_splits insert error:", splitsError)
+        } else {
+          console.log("✅ transaction_splits inserted:", splitsInserted)
+        }
+      }
 
       // If the payment is auto-confirmed, deduct from group.shared_wallet_balance
       if (!requiresApproval) {

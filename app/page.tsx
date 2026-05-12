@@ -512,6 +512,7 @@ import { Button } from "@/components/ui/button"
 import { ChevronRightIcon } from "@/components/icons"
 
 import Link from "next/link"
+import { normalizeSplitType } from "@/lib/utils"
 
 export default function DashboardPage() {
   const supabase = createClient()
@@ -814,33 +815,24 @@ export default function DashboardPage() {
         }
       }
 
-      // Normalize split_type to allowed schema values: all | adults | children | custom
-      const rawSplitType = data.splitType || "all"
-      const splitTypeMap: Record<string, "all" | "adults" | "children" | "custom"> = {
-        everyone: "all",
-        all: "all",
-        adults: "adults",
-        kids: "children",
-        children: "children",
-        custom: "custom",
-      }
-      const normalizedSplitType = splitTypeMap[rawSplitType] || "all"
-
       const splitAmong: string[] = data.splitAmong || []
+
+      const txPayload = {
+        group_id: group.id,
+        type: "payment",
+        description: data.description,
+        amount: data.amount,
+        merchant_name: data.merchantName,
+        category: data.category,
+        status: "confirmed",
+        paid_by_name: "Group Wallet",
+        split_type: normalizeSplitType(data.splitType),
+      }
+      console.log("📦 Transaction insert payload:", txPayload)
 
       const { data: inserted, error: insertError } = await supabase
         .from("transactions")
-        .insert({
-          group_id: group.id,
-          type: "payment",
-          description: data.description,
-          amount: data.amount,
-          merchant_name: data.merchantName,
-          category: data.category,
-          status: "confirmed",
-          paid_by_name: "Group Wallet",
-          split_type: normalizedSplitType,
-        })
+        .insert(txPayload)
         .select()
         .single()
 
