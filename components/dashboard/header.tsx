@@ -97,7 +97,7 @@ export function Header({ groupName }: HeaderProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/dashboard" className="flex items-center gap-2">
   <img 
     src="/icon.svg" 
     alt="Circle Wallet Logo" 
@@ -112,7 +112,7 @@ export function Header({ groupName }: HeaderProps) {
 
           <nav className="hidden md:flex items-center gap-1">
             <Button variant="ghost" size="sm" asChild>
-              <Link href="/">Dashboard</Link>
+              <Link href="/dashboard">Dashboard</Link>
             </Button>
             <Button variant="ghost" size="sm" asChild>
               <Link href="/transactions">Transactions</Link>
@@ -188,7 +188,7 @@ export function Header({ groupName }: HeaderProps) {
           <nav className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-1">
               <Button variant="ghost" className="justify-start" asChild>
-                <Link href="/">Dashboard</Link>
+                <Link href="/dashboard">Dashboard</Link>
               </Button>
               <Button variant="ghost" className="justify-start" asChild>
                 <Link href="/transactions">Transactions</Link>

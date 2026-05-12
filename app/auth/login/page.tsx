@@ -38,7 +38,7 @@ export default function LoginPage() {
       })
       if (error) throw error
 
-      router.replace("/")
+      router.replace("/dashboard")
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred")
     } finally {

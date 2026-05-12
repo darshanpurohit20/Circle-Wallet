@@ -1,1094 +1,236 @@
-// "use client"
-
-// import { useEffect, useState } from "react"
-// import { useRouter } from "next/navigation"
-// import { createClient } from "@/lib/supabase/client"
-
-// import { Header } from "@/components/dashboard/header"
-// import { WalletCard } from "@/components/dashboard/wallet-card"
-// import { StatsCards } from "@/components/dashboard/stats-cards"
-// import { FamilyCard } from "@/components/dashboard/family-card"
-// import { TransactionItem } from "@/components/dashboard/transaction-item"
-// import { QuickActions } from "@/components/dashboard/quick-actions"
-
-// import { AddFundsDialog } from "@/components/wallet/add-funds-dialog"
-// import { PayMerchantDialog } from "@/components/wallet/pay-merchant-dialog"
-
-// import { Card } from "@/components/ui/card"
-// import { Button } from "@/components/ui/button"
-// import { ChevronRightIcon } from "@/components/icons"
-
-// import Link from "next/link"
-
-// export default function DashboardPage() {
-//   const supabase = createClient()
-//   const router = useRouter()
-
-//   const [loading, setLoading] = useState(true)
-//   const [group, setGroup] = useState<any>(null)
-//   const [families, setFamilies] = useState<any[]>([])
-//   const [transactions, setTransactions] = useState<any[]>([])
-
-//   const [addFundsOpen, setAddFundsOpen] = useState(false)
-//   const [payMerchantOpen, setPayMerchantOpen] = useState(false)
-
-//   useEffect(() => {
-//     let mounted = true
-//     ;(async () => {
-//       setLoading(true)
-
-//       try {
-//         const { data: userData } = await supabase.auth.getUser()
-//         const user = userData?.user
-
-//         if (!user) {
-//           router.push("/auth/login")
-//           return
-//         }
-
-//         const { data: gm } = await supabase
-//           .from("group_members")
-//           .select("group_id")
-//           .eq("profile_id", user.id)
-//           .maybeSingle()
-
-//         if (!gm) {
-//           router.push("/settings")
-//           return
-//         }
-
-//         const groupId = gm.group_id
-
-//         const { data: groupRow } = await supabase
-//           .from("groups")
-//           .select("*")
-//           .eq("id", groupId)
-//           .maybeSingle()
-
-//         const { data: familyRows } = await supabase
-//           .from("families")
-//           .select("*, family_members(*)")
-//           .eq("group_id", groupId)
-
-//         const { data: trx } = await supabase
-//           .from("transactions")
-//           .select("*")
-//           .eq("group_id", groupId)
-//           .order("created_at", { ascending: false })
-//           .limit(10)
-
-//         if (!mounted) return
-
-//         const normalizedFamilies = (familyRows || []).map((family) => ({
-//           id: family.id,
-//           name: family.name,
-//           balance: Number(family.balance || 0),
-//           totalContribution: Number(family.total_contribution || 0),
-//           members: (family.family_members || []).map((m: any) => ({
-//             id: m.id,
-//             name: m.name,
-//             type: m.member_type,
-//             age: m.age,
-//             shareRatio: Number(m.share_ratio),
-//             avatar: m.avatar_url || null,
-//           })),
-//         }))
-
-//         setGroup(groupRow || null)
-//         setFamilies(normalizedFamilies)
-//         setTransactions(trx || [])
-//       } catch (error) {
-//         console.error("Error loading dashboard data:", error)
-//       } finally {
-//         setLoading(false)
-//       }
-//     })()
-
-//     return () => {
-//       mounted = false
-//     }
-//   }, [router, supabase])
-
-//   useEffect(() => {
-//     if (!group) return
-    
-//     const channel = supabase
-//       .channel("realtime-dashboard")
-//       .on(
-//         "postgres_changes",
-//         { event: "INSERT", schema: "public", table: "transactions", filter: `group_id=eq.${group.id}` },
-//         (payload) => {
-//           const newRow = payload.new
-//           if (!newRow) return
-          
-//           setTransactions((prev) => [newRow, ...prev].slice(0, 10))
-          
-//           if (newRow.type === "deposit") {
-//             setGroup((g: any) => ({ 
-//               ...g, 
-//               shared_wallet_balance: Number(g.shared_wallet_balance || 0) + Number(newRow.amount || 0) 
-//             }))
-//           } else if (newRow.type === "payment") {
-//             setGroup((g: any) => ({ 
-//               ...g, 
-//               shared_wallet_balance: Number(g.shared_wallet_balance || 0) - Number(newRow.amount || 0),
-//               total_spent: Number(g.total_spent || 0) + Number(newRow.amount || 0)
-//             }))
-//           }
-//         }
-//       )
-//       .subscribe()
-
-//     return () => {
-//       supabase.removeChannel(channel)
-//     }
-//   }, [group, supabase])
-
-//   const totalMembers = families.reduce((acc, fam) => acc + fam.members.length, 0)
-//   const totalContributions = families.reduce((acc, fam) => acc + fam.totalContribution, 0)
-//   const totalExpenses = transactions
-//     .filter((t) => t.type !== "deposit")
-//     .reduce((acc, t) => acc + Number(t.amount || 0), 0)
-//   const pendingTransactions = transactions.filter((t) => t.status === "pending").length
-
-//   const handleAddFundsSubmit = async ({ 
-//     familyId, 
-//     amount 
-//   }: { 
-//     familyId?: string
-//     amount: number 
-//   }) => {
-//     if (!group) return
-
-//     try {
-//       const { data: inserted, error: insertError } = await supabase
-//         .from("transactions")
-//         .insert({
-//           group_id: group.id,
-//           type: "deposit",
-//           description: familyId 
-//             ? `${families.find(f => f.id === familyId)?.name || "Family"} deposit`
-//             : "Group deposit",
-//           amount: amount,
-//           status: "confirmed",
-//           paid_by: null,
-//           paid_by_name: familyId 
-//             ? families.find(f => f.id === familyId)?.name 
-//             : "Group",
-//         })
-//         .select()
-//         .single()
-
-//       if (insertError) {
-//         alert("Failed to add funds. Please try again.")
-//         return
-//       }
-
-//       if (familyId) {
-//         const family = families.find(f => f.id === familyId)
-//         if (family) {
-//           const newFamilyBalance = Number(family.balance || 0) + Number(amount)
-//           const newFamilyContribution = Number(family.totalContribution || 0) + Number(amount)
-
-//           await supabase
-//             .from("families")
-//             .update({ 
-//               balance: newFamilyBalance,
-//               total_contribution: newFamilyContribution 
-//             })
-//             .eq("id", familyId)
-//         }
-//       }
-
-//       // 👇 FIX: Calculate wallet as sum of family balances
-//       const { data: updatedFamilies } = await supabase
-//         .from("families")
-//         .select("*, family_members(*)")
-//         .eq("group_id", group.id)
-
-//       const normalizedFamilies = (updatedFamilies || []).map((family) => ({
-//         id: family.id,
-//         name: family.name,
-//         balance: Number(family.balance || 0),
-//         totalContribution: Number(family.total_contribution || 0),
-//         members: (family.family_members || []).map((m: any) => ({
-//           id: m.id,
-//           name: m.name,
-//           type: m.member_type,
-//           age: m.age,
-//           shareRatio: Number(m.share_ratio),
-//           avatar: m.avatar || null,
-//         })),
-//       }))
-
-//       const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
-      
-//       const { error: updateError } = await supabase
-//         .from("groups")
-//         .update({ shared_wallet_balance: newWalletBalance })
-//         .eq("id", group.id)
-
-//       if (updateError) {
-//         alert("Funds added but balance update failed. Please refresh.")
-//       } else {
-//         setGroup((g: any) => ({ ...g, shared_wallet_balance: newWalletBalance }))
-//         setFamilies(normalizedFamilies)
-//         setTransactions((prev) => [inserted, ...prev].slice(0, 10))
-//       }
-
-//       setAddFundsOpen(false)
-//     } catch (error) {
-//       alert("An unexpected error occurred.")
-//     }
-//   }
-
-//   const handlePayMerchantSubmit = async (data: {
-//     merchantName: string
-//     amount: number
-//     description: string
-//     category: string
-//     splitType?: string
-//     splitAmong?: string[]
-//   }) => {
-//     if (!group) return
-
-//     try {
-//       let totalShares = 0
-//       let familySplits: { familyId: string; shares: number; amount: number }[] = []
-
-//       families.forEach(family => {
-//         let familyShares = 0
-        
-//         family.members.forEach((member: any) => {
-//           let shouldInclude = false
-
-//           if (data.splitType === "everyone") {
-//             shouldInclude = true
-//           } else if (data.splitType === "adults") {
-//             shouldInclude = member.type === "adult"
-//           } else if (data.splitType === "kids") {
-//             shouldInclude = member.type !== "adult"
-//           } else if (data.splitType === "custom" && data.splitAmong) {
-//             shouldInclude = data.splitAmong.includes(member.id)
-//           } else {
-//             shouldInclude = true
-//           }
-
-//           if (shouldInclude) {
-//             familyShares += Number(member.shareRatio || 1)
-//           }
-//         })
-
-//         if (familyShares > 0) {
-//           totalShares += familyShares
-//           familySplits.push({
-//             familyId: family.id,
-//             shares: familyShares,
-//             amount: 0
-//           })
-//         }
-//       })
-
-//       familySplits = familySplits.map(split => ({
-//         ...split,
-//         amount: (split.shares / totalShares) * data.amount
-//       }))
-
-//       // 👇 FIX: Validate family balances BEFORE payment
-//       for (const split of familySplits) {
-//         const family = families.find(f => f.id === split.familyId)
-//         if (family) {
-//           const newBalance = Number(family.balance || 0) - split.amount
-//           if (newBalance < 0) {
-//             alert(`${family.name} has insufficient balance (₹${family.balance.toFixed(2)}). They need ₹${Math.abs(newBalance).toFixed(2)} more.`)
-//             return
-//           }
-//         }
-//       }
-
-//       const { data: inserted, error: insertError } = await supabase
-//         .from("transactions")
-//         .insert({
-//           group_id: group.id,
-//           type: "payment",
-//           description: data.description,
-//           amount: data.amount,
-//           merchant_name: data.merchantName,
-//           category: data.category,
-//           status: "confirmed",
-//           paid_by_name: "Group Wallet",
-//           split_type: data.splitType || "everyone",      // 👈 ADD THIS
-//           split_among: data.splitAmong || [],  
-//         })
-//         .select()
-//         .single()
-
-//       if (insertError) {
-//         alert("Payment failed. Please try again.")
-//         return
-//       }
-
-//       for (const split of familySplits) {
-//         const family = families.find(f => f.id === split.familyId)
-//         if (family) {
-//           const newFamilyBalance = Number(family.balance || 0) - split.amount
-
-//           await supabase
-//             .from("families")
-//             .update({ balance: newFamilyBalance })
-//             .eq("id", split.familyId)
-//         }
-//       }
-
-//       const newTotalSpent = Number(group.total_spent || 0) + Number(data.amount)
-
-//       // 👇 FIX: Calculate wallet as sum of family balances
-//       const { data: updatedFamilies } = await supabase
-//         .from("families")
-//         .select("*, family_members(*)")
-//         .eq("group_id", group.id)
-
-//       const normalizedFamilies = (updatedFamilies || []).map((family) => ({
-//         id: family.id,
-//         name: family.name,
-//         balance: Number(family.balance || 0),
-//         totalContribution: Number(family.total_contribution || 0),
-//         members: (family.family_members || []).map((m: any) => ({
-//           id: m.id,
-//           name: m.name,
-//           type: m.member_type,
-//           age: m.age,
-//           shareRatio: Number(m.share_ratio),
-//           avatar: m.avatar || null,
-//         })),
-//       }))
-
-//       const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
-
-//       const { error: updateError } = await supabase
-//         .from("groups")
-//         .update({
-//           shared_wallet_balance: newWalletBalance,
-//           total_spent: newTotalSpent,
-//         })
-//         .eq("id", group.id)
-
-//       if (updateError) {
-//         alert("Payment recorded but balance update failed. Please refresh.")
-//       } else {
-//         setGroup((g: any) => ({ 
-//           ...g, 
-//           shared_wallet_balance: newWalletBalance, 
-//           total_spent: newTotalSpent 
-//         }))
-//         setFamilies(normalizedFamilies)
-//         setTransactions((prev) => [inserted, ...prev].slice(0, 10))
-//       }
-
-//       setPayMerchantOpen(false)
-//     } catch (error) {
-//       alert("An unexpected error occurred.")
-//     }
-//   }
-
-//   if (loading || !group)
-//     return <div className="p-6 text-center text-muted-foreground">Loading dashboard...</div>
-
-//   return (
-//     <div className="min-h-screen bg-background">
-//       <Header groupName={group.name} />
-
-//       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-//         <div className="mb-6">
-//           <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-1">{group.name}</h1>
-//           <p className="text-muted-foreground">{group.description}</p>
-//         </div>
-
-//         <div className="grid gap-6 lg:grid-cols-3">
-//           <div className="lg:col-span-2 space-y-6">
-//             <WalletCard
-//               balance={group.shared_wallet_balance}
-//               totalContributions={totalContributions}
-//               totalSpent={group.total_spent || 0}
-//               onAddFunds={() => setAddFundsOpen(true)}
-//               onPayMerchant={() => setPayMerchantOpen(true)}
-//             />
-
-//             <StatsCards
-//               totalMembers={totalMembers}
-//               totalSpent={group.total_spent || 0}
-//               walletBalance={group.shared_wallet_balance}
-//               pendingApprovals={pendingTransactions}
-//             />
-
-//             <Card className="p-4 md:p-6">
-//               <div className="flex items-center justify-between mb-4">
-//                 <h2 className="text-lg font-semibold text-foreground">Recent Transactions</h2>
-//                 <Button variant="ghost" size="sm" asChild className="gap-1">
-//                   <Link href="/transactions">
-//                     View All <ChevronRightIcon className="w-4 h-4" />
-//                   </Link>
-//                 </Button>
-//               </div>
-
-//               <div className="divide-y divide-border">
-//                 {transactions.length === 0 ? (
-//                   <p className="text-sm py-3 text-muted-foreground">No recent transactions</p>
-//                 ) : (
-//                   transactions.map((transaction) => (
-//                     <TransactionItem
-//                       key={transaction.id}
-//                       transaction={transaction}
-//                       onClick={() => {}}
-//                     />
-//                   ))
-//                 )}
-//               </div>
-//             </Card>
-//           </div>
-
-//           <div className="space-y-6">
-//             <QuickActions
-//               families={families}
-//               walletBalance={group.shared_wallet_balance}
-//             />
-
-//             <Card className="p-4 md:p-6">
-//               <div className="flex items-center justify-between mb-4">
-//                 <h2 className="text-lg font-semibold text-foreground">Families & Members</h2>
-//                 <Button variant="ghost" size="sm" asChild className="gap-1">
-//                   <Link href="/members">
-//                     Manage <ChevronRightIcon className="w-4 h-4" />
-//                   </Link>
-//                 </Button>
-//               </div>
-
-//               <div className="space-y-3">
-//                 {families.map((family) => (
-//                   <FamilyCard key={family.id} family={family} onClick={() => {}} />
-//                 ))}
-//               </div>
-//             </Card>
-//           </div>
-//         </div>
-//       </main>
-
-//       <AddFundsDialog
-//         open={addFundsOpen}
-//         onOpenChange={setAddFundsOpen}
-//         families={families}
-//         onSubmit={handleAddFundsSubmit}
-//       />
-
-//       <PayMerchantDialog
-//         open={payMerchantOpen}
-//         onOpenChange={setPayMerchantOpen}
-//         families={families}
-//         walletBalance={group.shared_wallet_balance}
-//         onSubmit={handlePayMerchantSubmit}
-//       />
-//     </div>
-//   )
-// }
-
 "use client"
 
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
-
-import { Header } from "@/components/dashboard/header"
-import { WalletCard } from "@/components/dashboard/wallet-card"
-import { StatsCards } from "@/components/dashboard/stats-cards"
-import { FamilyCard } from "@/components/dashboard/family-card"
-import { TransactionItem } from "@/components/dashboard/transaction-item"
-import { QuickActions } from "@/components/dashboard/quick-actions"
-
-import { AddFundsDialog } from "@/components/wallet/add-funds-dialog"
-import { PayMerchantDialog } from "@/components/wallet/pay-merchant-dialog"
-
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ChevronRightIcon } from "@/components/icons"
-
 import Link from "next/link"
-import { normalizeSplitType, computeWeightedSplits, calculateWalletBalance } from "@/lib/utils"
+import { motion, Variants } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { ModeToggle } from "@/components/mode-toggle"
+import { ArrowRight, PieChart, Users, Wallet, Shield, Zap, RefreshCw } from "lucide-react"
 
-export default function DashboardPage() {
-  const supabase = createClient()
-  const router = useRouter()
-
-  const [loading, setLoading] = useState(true)
-  const [group, setGroup] = useState<any>(null)
-  const [families, setFamilies] = useState<any[]>([])
-  const [transactions, setTransactions] = useState<any[]>([])
-
-  const [addFundsOpen, setAddFundsOpen] = useState(false)
-  const [payMerchantOpen, setPayMerchantOpen] = useState(false)
-
-  useEffect(() => {
-    let mounted = true
-    ;(async () => {
-      setLoading(true)
-
-      try {
-        const { data: userData } = await supabase.auth.getUser()
-        const user = userData?.user
-
-        if (!user) {
-          router.push("/auth/login")
-          return
-        }
-
-        const { data: gm } = await supabase
-          .from("group_members")
-          .select("group_id")
-          .eq("profile_id", user.id)
-          .maybeSingle()
-
-        if (!gm) {
-          router.push("/settings")
-          return
-        }
-
-        const groupId = gm.group_id
-
-        const { data: groupRow } = await supabase
-          .from("groups")
-          .select("*")
-          .eq("id", groupId)
-          .maybeSingle()
-
-        const { data: familyRows } = await supabase
-          .from("families")
-          .select("*, family_members(*)")
-          .eq("group_id", groupId)
-
-        // Load ALL transactions for accurate aggregate stats; UI slices to last 10 for the Recent list.
-        const { data: trx } = await supabase
-          .from("transactions")
-          .select("*")
-          .eq("group_id", groupId)
-          .order("created_at", { ascending: false })
-
-        if (!mounted) return
-
-        const normalizedFamilies = (familyRows || []).map((family) => ({
-          id: family.id,
-          name: family.name,
-          balance: Number(family.balance || 0),
-          totalContribution: Number(family.total_contribution || 0),
-          members: (family.family_members || []).map((m: any) => ({
-            id: m.id,
-            name: m.name,
-            type: m.member_type,
-            age: m.age,
-            shareRatio: m.share_ratio == null ? 1 : Number(m.share_ratio),
-            avatar: m.avatar_url || null,
-          })),
-        }))
-
-        setGroup(groupRow || null)
-        setFamilies(normalizedFamilies)
-        setTransactions(trx || [])
-      } catch (error) {
-        console.error("Error loading dashboard data:", error)
-      } finally {
-        setLoading(false)
-      }
-    })()
-
-    return () => {
-      mounted = false
-    }
-  }, [router, supabase])
-
-  useEffect(() => {
-    if (!group) return
-    
-    const channel = supabase
-      .channel("realtime-dashboard")
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "transactions", filter: `group_id=eq.${group.id}` },
-        (payload) => {
-          const newRow = payload.new
-          if (!newRow) return
-          
-          // Do NOT truncate: dashboard derives totals from the full transactions array.
-          // Truncating to 10 caused wallet balance to flip negative right after a payment
-          // (older deposits got sliced out of the aggregate until a refetch).
-          setTransactions((prev) => {
-            if (prev.some((t) => t.id === newRow.id)) return prev
-            return [newRow, ...prev]
-          })
-          console.log("🔔 New transaction received via realtime:", newRow)
-        }
-      )
-      .subscribe()
-
-    return () => {
-      supabase.removeChannel(channel)
-    }
-  }, [group, supabase])
-
-  // ----------------------------------
-  // SINGLE SOURCE OF TRUTH FOR WALLET BALANCE
-  // walletBalance = totalDeposits − totalPayments (only confirmed rows)
-  // ----------------------------------
-  const totalMembers = families.reduce((acc, fam) => acc + fam.members.length, 0)
-  const totalContributions = families.reduce((acc, fam) => acc + fam.totalContribution, 0)
-  const totalDeposits = transactions
-    .filter((t) => t.type === "deposit" && t.status === "confirmed")
-    .reduce((acc, t) => acc + Number(t.amount || 0), 0)
-  const totalPayments = transactions
-    .filter((t) => t.type === "payment" && t.status === "confirmed")
-    .reduce((acc, t) => acc + Number(t.amount || 0), 0)
-  const walletBalance = calculateWalletBalance(totalDeposits, totalPayments)
-  const totalExpenses = totalPayments
-  const pendingTransactions = transactions.filter((t) => t.status === "pending").length
-
-  // Family balances are derived so that sum(family.balance) === walletBalance.
-  // Each family bears the wallet balance in proportion to its contribution share.
-  const displayFamilies = families.map((f) => {
-    const share = totalContributions > 0 ? f.totalContribution / totalContributions : 0
-    return { ...f, balance: walletBalance * share }
-  })
-
-  console.log("📊 Dashboard stats", {
-    totalDeposits,
-    totalPayments,
-    walletBalance,
-    totalContributions,
-    storedSharedWalletBalance: group?.shared_wallet_balance,
-    families: displayFamilies.map((f) => ({ name: f.name, contribution: f.totalContribution, derivedBalance: f.balance })),
-  })
-
-  const handleAddFundsSubmit = async ({ 
-    familyId, 
-    amount 
-  }: { 
-    familyId?: string
-    amount: number 
-  }) => {
-    if (!group) return
-
-    try {
-      const { data: inserted, error: insertError } = await supabase
-        .from("transactions")
-        .insert({
-          group_id: group.id,
-          type: "deposit",
-          description: familyId 
-            ? `${families.find(f => f.id === familyId)?.name || "Family"} deposit`
-            : "Group deposit",
-          amount: amount,
-          status: "confirmed",
-          paid_by: null,
-          paid_by_name: familyId 
-            ? families.find(f => f.id === familyId)?.name 
-            : "Group",
-        })
-        .select()
-        .single()
-
-      if (insertError) {
-        alert("Failed to add funds. Please try again.")
-        return
-      }
-
-      if (familyId) {
-        const family = families.find(f => f.id === familyId)
-        if (family) {
-          const newFamilyBalance = Number(family.balance || 0) + Number(amount)
-          const newFamilyContribution = Number(family.totalContribution || 0) + Number(amount)
-
-          await supabase
-            .from("families")
-            .update({ 
-              balance: newFamilyBalance,
-              total_contribution: newFamilyContribution 
-            })
-            .eq("id", familyId)
-        }
-      }
-
-      const { data: updatedFamilies } = await supabase
-        .from("families")
-        .select("*, family_members(*)")
-        .eq("group_id", group.id)
-
-      const normalizedFamilies = (updatedFamilies || []).map((family) => ({
-        id: family.id,
-        name: family.name,
-        balance: Number(family.balance || 0),
-        totalContribution: Number(family.total_contribution || 0),
-        members: (family.family_members || []).map((m: any) => ({
-          id: m.id,
-          name: m.name,
-          type: m.member_type,
-          age: m.age,
-          shareRatio: m.share_ratio == null ? 1 : Number(m.share_ratio),
-          avatar: m.avatar || null,
-        })),
-      }))
-
-      const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
-      
-      const { error: updateError } = await supabase
-        .from("groups")
-        .update({ shared_wallet_balance: newWalletBalance })
-        .eq("id", group.id)
-
-      if (updateError) {
-        alert("Funds added but balance update failed. Please refresh.")
-      } else {
-        setGroup((g: any) => ({ ...g, shared_wallet_balance: newWalletBalance }))
-        setFamilies(normalizedFamilies)
-        setTransactions((prev) =>
-          prev.some((t) => t.id === inserted.id) ? prev : [inserted, ...prev],
-        )
-      }
-
-      setAddFundsOpen(false)
-    } catch (error) {
-      alert("An unexpected error occurred.")
-    }
+export default function LandingPage() {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
   }
 
-  const handlePayMerchantSubmit = async (data: {
-    merchantName: string
-    amount: number
-    description: string
-    category: string
-    splitType?: string
-    splitAmong?: string[]
-  }) => {
-    if (!group) return
-
-    console.log("💰 Dashboard received:", data)
-    console.log("👥 Split among:", data.splitAmong)
-
-    try {
-      let totalShares = 0
-      let familySplits: { familyId: string; shares: number; amount: number }[] = []
-
-      console.log("🔍 All families:", families.map(f => ({ 
-        name: f.name, 
-        members: f.members.map(m => ({ name: m.name, id: m.id.substring(0, 8) + "...", type: m.type }))
-      })))
-
-      families.forEach(family => {
-        let familyShares = 0
-        
-        family.members.forEach((member: any) => {
-          let shouldInclude = false
-
-          if (data.splitType === "everyone") {
-            shouldInclude = true
-          } else if (data.splitType === "adults") {
-            shouldInclude = member.type === "adult"
-          } else if (data.splitType === "kids") {
-            shouldInclude = member.type !== "adult"
-          } else if (data.splitType === "custom" && data.splitAmong) {
-            shouldInclude = data.splitAmong.includes(member.id)
-          } else {
-            shouldInclude = true
-          }
-
-          console.log(`👤 ${member.name} (${member.id.substring(0, 8)}...): type=${member.type}, included=${shouldInclude}`)
-
-          if (shouldInclude) {
-            familyShares += Number(member.shareRatio || 1)
-          }
-        })
-
-        console.log(`👨‍👩‍👧 ${family.name}: ${familyShares} shares`)
-
-        if (familyShares > 0) {
-          totalShares += familyShares
-          familySplits.push({
-            familyId: family.id,
-            shares: familyShares,
-            amount: 0
-          })
-        }
-      })
-
-      console.log("📊 Total shares:", totalShares)
-      console.log("📊 Family splits BEFORE amount:", familySplits)
-
-      familySplits = familySplits.map(split => ({
-        ...split,
-        amount: (split.shares / totalShares) * data.amount
-      }))
-
-      console.log("📊 Family splits AFTER amount:", familySplits)
-
-      // Validate family balances BEFORE payment
-      for (const split of familySplits) {
-        const family = families.find(f => f.id === split.familyId)
-        if (family) {
-          const newBalance = Number(family.balance || 0) - split.amount
-          if (newBalance < 0) {
-            alert(`${family.name} has insufficient balance (₹${family.balance.toFixed(2)}). They need ₹${Math.abs(newBalance).toFixed(2)} more.`)
-            return
-          }
-        }
-      }
-
-      // ✅ FIX: Derive splitAmong from families if not provided, to prevent
-      // the weighted insert block from being skipped.
-      let splitAmong: string[] = data.splitAmong || []
-      if (splitAmong.length === 0) {
-        const allMembers = families.flatMap((f: any) => f.members ?? [])
-        if (data.splitType === "adults") {
-          splitAmong = allMembers.filter((m: any) => m.type === "adult").map((m: any) => m.id)
-        } else if (data.splitType === "kids") {
-          splitAmong = allMembers.filter((m: any) => m.type !== "adult").map((m: any) => m.id)
-        } else {
-          // "everyone" or undefined — include all members
-          splitAmong = allMembers.map((m: any) => m.id)
-        }
-        console.log("⚠️ splitAmong was empty, derived from families:", splitAmong.length, "members")
-      }
-
-      const txPayload = {
-        group_id: group.id,
-        type: "payment",
-        description: data.description,
-        amount: data.amount,
-        merchant_name: data.merchantName,
-        category: data.category,
-        status: "confirmed",
-        paid_by_name: "Group Wallet",
-        split_type: normalizeSplitType(data.splitType),
-      }
-      console.log("📦 Transaction insert payload:", txPayload)
-
-      const { data: inserted, error: insertError } = await supabase
-        .from("transactions")
-        .insert(txPayload)
-        .select()
-        .single()
-
-      if (insertError) {
-        console.error("❌ Insert error:", insertError)
-        alert("Payment failed. Please try again.")
-        return
-      }
-
-      console.log("✅ Transaction inserted:", inserted)
-
-      // Insert per-member split rows using WEIGHTED share_ratio split.
-      if (inserted && splitAmong.length > 0) {
-        const allMembers = families.flatMap((f: any) => f.members ?? [])
-        const selectedMembers = allMembers.filter((m: any) => splitAmong.includes(m.id))
-
-        console.log("🔍 Selected members for splits:", selectedMembers.map((m: any) => ({
-          name: m.name, id: m.id.substring(0, 8), shareRatio: m.shareRatio
-        })))
-
-        const weighted = computeWeightedSplits(selectedMembers, Number(data.amount))
-        console.log("⚖️  Calculated weighted splits:", {
-          totalAmount: Number(data.amount),
-          totalRatio: weighted.reduce((s, r) => s + r.ratio, 0),
-          breakdown: weighted.map((r) => ({ name: r.member.name, ratio: r.ratio, amount: r.amount })),
-          sum: weighted.reduce((s, r) => s + r.amount, 0),
-        })
-
-        // Validate total matches
-        const splitSum = weighted.reduce((s, r) => s + r.amount, 0)
-        if (Math.abs(splitSum - Number(data.amount)) > 0.01) {
-          console.error("❌ Split total mismatch!", { splitSum, transactionAmount: data.amount })
-        }
-
-        const splitRows = weighted.map((r) => ({
-          transaction_id: inserted.id,
-          member_id: r.member.id,
-          amount: r.amount,
-        }))
-        console.log("📦 transaction_splits insert payload:", splitRows)
-
-        const { data: splitsInserted, error: splitsError } = await supabase
-          .from("transaction_splits")
-          .insert(splitRows)
-          .select()
-
-        if (splitsError) {
-          console.error("❌ Transaction splits insert error:", splitsError)
-        } else {
-          console.log("✅ Inserted transaction splits:", splitsInserted)
-        }
-      } else if (inserted) {
-        console.warn("⚠️ No splitAmong members — transaction_splits NOT inserted")
-      }
-
-      for (const split of familySplits) {
-        const family = families.find(f => f.id === split.familyId)
-        if (family) {
-          const newFamilyBalance = Number(family.balance || 0) - split.amount
-
-          await supabase
-            .from("families")
-            .update({ balance: newFamilyBalance })
-            .eq("id", split.familyId)
-          
-          console.log(`💸 ${family.name}: ${family.balance} → ${newFamilyBalance}`)
-        }
-      }
-
-      const { data: updatedFamilies } = await supabase
-        .from("families")
-        .select("*, family_members(*)")
-        .eq("group_id", group.id)
-
-      const normalizedFamilies = (updatedFamilies || []).map((family) => ({
-        id: family.id,
-        name: family.name,
-        balance: Number(family.balance || 0),
-        totalContribution: Number(family.total_contribution || 0),
-        members: (family.family_members || []).map((m: any) => ({
-          id: m.id,
-          name: m.name,
-          type: m.member_type,
-          age: m.age,
-          shareRatio: m.share_ratio == null ? 1 : Number(m.share_ratio),
-          avatar: m.avatar || null,
-        })),
-      }))
-
-      const newWalletBalance = normalizedFamilies.reduce((sum, f) => sum + f.balance, 0)
-
-      console.log("💰 New wallet balance:", newWalletBalance)
-
-      const { error: updateError } = await supabase
-        .from("groups")
-        .update({
-          shared_wallet_balance: newWalletBalance,
-        })
-        .eq("id", group.id)
-
-      if (updateError) {
-        console.error("❌ Group update error:", updateError)
-        alert("Payment recorded but balance update failed. Please refresh.")
-      } else {
-        setGroup((g: any) => ({ 
-          ...g, 
-          shared_wallet_balance: newWalletBalance, 
-        }))
-        setFamilies(normalizedFamilies)
-        setTransactions((prev) =>
-          prev.some((t) => t.id === inserted.id) ? prev : [inserted, ...prev],
-        )
-        console.log("✅ Payment complete!")
-      }
-
-      setPayMerchantOpen(false)
-    } catch (error) {
-      console.error("❌ Unexpected error:", error)
-      alert("An unexpected error occurred.")
-    }
+  const itemVariants: Variants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+      },
+    },
   }
-
-  if (loading || !group)
-    return <div className="p-6 text-center text-muted-foreground">Loading dashboard...</div>
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header groupName={group.name} />
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-        <div className="mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-1">{group.name}</h1>
-          <p className="text-muted-foreground">{group.description}</p>
-        </div>
-
-        <div className="grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2 space-y-6">
-            <WalletCard
-              balance={walletBalance}
-              totalContributions={totalDeposits}
-              totalSpent={totalPayments}
-              onAddFunds={() => setAddFundsOpen(true)}
-              onPayMerchant={() => setPayMerchantOpen(true)}
-            />
-
-            <StatsCards
-              totalMembers={totalMembers}
-              totalSpent={totalPayments}
-              walletBalance={walletBalance}
-              pendingApprovals={pendingTransactions}
-            />
-
-            <Card className="p-4 md:p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-foreground">Recent Transactions</h2>
-                <Button variant="ghost" size="sm" asChild className="gap-1">
-                  <Link href="/transactions">
-                    View All <ChevronRightIcon className="w-4 h-4" />
-                  </Link>
+    <div className="min-h-screen bg-background flex flex-col overflow-hidden">
+      {/* Navigation */}
+      <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            <div className="flex items-center gap-2">
+              <img src="/icon.svg" alt="Circle Wallet Logo" className="w-8 h-8" />
+              <span className="text-xl font-bold tracking-tight">Circle Wallet</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <ModeToggle />
+              <div className="hidden sm:flex gap-2">
+                <Button variant="ghost" asChild>
+                  <Link href="/auth/login">Log in</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/auth/sign-up">Sign up</Link>
                 </Button>
               </div>
-
-              <div className="divide-y divide-border">
-                {transactions.length === 0 ? (
-                  <p className="text-sm py-3 text-muted-foreground">No recent transactions</p>
-                ) : (
-                  transactions.slice(0, 10).map((transaction) => (
-                    <TransactionItem
-                      key={transaction.id}
-                      transaction={transaction}
-                      onClick={() => {}}
-                    />
-                  ))
-                )}
-              </div>
-            </Card>
-          </div>
-
-          <div className="space-y-6">
-            <QuickActions
-              families={displayFamilies}
-              walletBalance={walletBalance}
-              onAddFunds={() => setAddFundsOpen(true)}
-              onPayMerchant={() => setPayMerchantOpen(true)}
-            />
-
-            <Card className="p-4 md:p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-foreground">Families & Members</h2>
-                <Button variant="ghost" size="sm" asChild className="gap-1">
-                  <Link href="/members">
-                    Manage <ChevronRightIcon className="w-4 h-4" />
-                  </Link>
-                </Button>
-              </div>
-
-              <div className="space-y-3">
-                {displayFamilies.map((family) => (
-                  <FamilyCard key={family.id} family={family} onClick={() => {}} />
-                ))}
-              </div>
-            </Card>
+            </div>
           </div>
         </div>
+      </header>
+
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="relative pt-24 pb-32 lg:pt-36 lg:pb-40 overflow-hidden">
+          {/* Background decorative elements */}
+          <div className="absolute top-0 left-1/2 w-full -translate-x-1/2 overflow-hidden -z-10 h-full">
+            <div className="absolute -top-40 left-1/2 w-[800px] h-[800px] -translate-x-1/2 opacity-20 dark:opacity-10 bg-primary/30 rounded-full blur-3xl mix-blend-multiply dark:mix-blend-lighten" />
+            <div className="absolute top-20 left-[20%] w-[600px] h-[600px] opacity-20 dark:opacity-10 bg-secondary/30 rounded-full blur-3xl mix-blend-multiply dark:mix-blend-lighten" />
+          </div>
+
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <motion.div
+              className="text-center max-w-4xl mx-auto"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary mb-6 text-sm font-medium">
+                <SparklesIcon className="w-4 h-4" />
+                <span>The ultimate expense manager for group trips</span>
+              </motion.div>
+              
+              <motion.h1 
+                variants={itemVariants}
+                className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8 leading-tight"
+              >
+                Fair splits. Zero drama. <br className="hidden sm:block" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-500">
+                  Perfect memories.
+                </span>
+              </motion.h1>
+              
+              <motion.p 
+                variants={itemVariants}
+                className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto"
+              >
+                Circle Wallet elegantly handles complex group expenses with weighted share ratios for adults, teens, and kids.
+              </motion.p>
+              
+              <motion.div 
+                variants={itemVariants}
+                className="flex flex-col sm:flex-row items-center justify-center gap-4"
+              >
+                <Button size="lg" className="h-14 px-8 text-lg w-full sm:w-auto rounded-full" asChild>
+                  <Link href="/auth/sign-up">
+                    Get Started <ArrowRight className="ml-2 w-5 h-5" />
+                  </Link>
+                </Button>
+                <Button size="lg" variant="outline" className="h-14 px-8 text-lg w-full sm:w-auto rounded-full" asChild>
+                  <Link href="/auth/login">Try Demo Account</Link>
+                </Button>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="py-24 bg-muted/50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Everything you need for seamless group travel</h2>
+              <p className="text-lg text-muted-foreground">
+                Say goodbye to complex spreadsheets and awkward IOUs. We've built the smartest way to manage shared wallets.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                  className="bg-card p-8 rounded-2xl border shadow-sm hover:shadow-md transition-all"
+                >
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 text-primary">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {feature.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Call to Action */}
+        <section className="py-24 relative overflow-hidden">
+          <div className="absolute inset-0 bg-primary/5 dark:bg-primary/10" />
+          <div className="container mx-auto px-4 relative z-10 text-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="max-w-3xl mx-auto bg-card p-10 rounded-3xl border shadow-xl"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to simplify your next trip?</h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                Join thousands of families using Circle Wallet to keep their finances transparent and stress-free.
+              </p>
+              <Button size="lg" className="h-12 px-8 rounded-full" asChild>
+                <Link href="/auth/sign-up">Create Your Shared Wallet</Link>
+              </Button>
+            </motion.div>
+          </div>
+        </section>
       </main>
 
-      <AddFundsDialog
-        open={addFundsOpen}
-        onOpenChange={setAddFundsOpen}
-        families={displayFamilies}
-        onSubmit={handleAddFundsSubmit}
-      />
-
-      <PayMerchantDialog
-        open={payMerchantOpen}
-        onOpenChange={setPayMerchantOpen}
-        families={displayFamilies}
-        walletBalance={walletBalance}
-        onSubmit={handlePayMerchantSubmit}
-      />
+      {/* Footer */}
+      <footer className="border-t py-12 bg-card">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <img src="/icon.svg" alt="Logo" className="w-6 h-6 grayscale opacity-50" />
+            <span>© 2026 Circle Wallet. All rights reserved.</span>
+          </div>
+          <div className="flex gap-6 text-sm text-muted-foreground">
+            <Link href="#" className="hover:text-foreground transition-colors">Privacy</Link>
+            <Link href="#" className="hover:text-foreground transition-colors">Terms</Link>
+            <Link href="#" className="hover:text-foreground transition-colors">Contact</Link>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
+
+function SparklesIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+    </svg>
+  )
+}
+
+const features = [
+  {
+    title: "Weighted Splitting",
+    description: "Assign ratios (e.g., Adults 1.0, Kids 0.5) to automatically calculate fair shares for every expense without doing the math yourself.",
+    icon: <PieChart className="w-6 h-6" />,
+  },
+  {
+    title: "Shared Wallet Balance",
+    description: "Track total contributions and real-time balances for the entire group and individual families in one unified dashboard.",
+    icon: <Wallet className="w-6 h-6" />,
+  },
+  {
+    title: "Multi-Family Support",
+    description: "Group members into family units. See which family is owed money and who needs to top up their contribution.",
+    icon: <Users className="w-6 h-6" />,
+  },
+  {
+    title: "Real-time Sync",
+    description: "All expenses, payments, and balances update instantly across everyone's devices as soon as a transaction is logged.",
+    icon: <RefreshCw className="w-6 h-6" />,
+  },
+  {
+    title: "Approval Workflows",
+    description: "Set thresholds for large payments that require co-admin approval before funds are deducted from the shared wallet.",
+    icon: <Shield className="w-6 h-6" />,
+  },
+  {
+    title: "Detailed Reports",
+    description: "Generate comprehensive breakdowns by category, family, or individual member to settle up cleanly at the end of the trip.",
+    icon: <Zap className="w-6 h-6" />,
+  },
+]
