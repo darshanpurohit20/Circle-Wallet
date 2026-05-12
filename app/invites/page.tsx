@@ -129,6 +129,7 @@ export default function InvitesPage() {
   }
 
   const handleResendInvite = async (inviteId: string) => {
+    if (inviteId.startsWith("demo-")) return
     try {
       const newExpiresAt = new Date(Date.now() + 7 * 24 * 3600 * 1000).toISOString()
       
@@ -150,6 +151,7 @@ export default function InvitesPage() {
   }
 
   const handleCancelInvite = async (inviteId: string) => {
+    if (inviteId.startsWith("demo-")) return
     try {
       await supabase.from("invites").delete().eq("id", inviteId)
       setInvites((prev) => prev.filter((i) => i.id !== inviteId))
@@ -181,7 +183,17 @@ export default function InvitesPage() {
     }
   }
 
-  const pendingInvites = invites.filter((i) => i.status === "pending")
+  // Hardcoded demo pending invite (display-only)
+  const demoPendingInvite = {
+    id: "demo-invite-darshan",
+    email: "darshanpurohit2513@gmail.com",
+    role: group?.default_member_role ?? "member",
+    status: "pending",
+    invited_by_name: "Admin",
+    expires_at: new Date(Date.now() + 7 * 24 * 3600 * 1000).toISOString(),
+  }
+
+  const pendingInvites = [demoPendingInvite, ...invites.filter((i) => i.status === "pending")]
   const expiredInvites = invites.filter((i) => i.status === "expired")
 
   return (

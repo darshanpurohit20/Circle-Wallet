@@ -287,3 +287,246 @@ https://supabase.com/dashboard/project/_/settings/api
 [01:19:22.347] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778566846341} /_vercel/insights/view
 [01:19:44.316] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778566868298} /_vercel/insights/view
 [01:19:57.195] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/reports color: rgb(120, 120, 120) color: inherit {"dp":"/reports","o":"http://localhost:3000/reports","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778566881191} /_vercel/insights/view
+[01:20:48.327] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/invites color: rgb(120, 120, 120) color: inherit {"dp":"/invites","o":"http://localhost:3000/invites","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778566932322} /_vercel/insights/view
+[01:20:48.995] Browser ERROR   uncaughtError: TypeError: Cannot read properties of null (reading '0')
+[01:21:34.744] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:21:34.744] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:21:34.744] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778566978741} /_vercel/insights/view
+[01:21:43.741] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/reports color: rgb(120, 120, 120) color: inherit {"dp":"/reports","o":"http://localhost:3000/reports","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778566987735} /_vercel/insights/view
+[01:22:13.871] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778567017868} /_vercel/insights/view
+[01:22:21.746] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778567025743} /_vercel/insights/view
+[01:22:24.742] Browser ERROR   ./components/invites/pending-invites.tsx:103:4
+Parsing ecmascript source code failed
+  101 |       )}
+  102 |     </div>
+> 103 |   ))}
+      |    ^
+  104 | </Card>
+  105 |
+  106 | )
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/invites/pending-invites.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/invites/pending-invites.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Server Component]
+[01:22:30.475] Browser ERROR   ./components/invites/pending-invites.tsx:103:4
+Parsing ecmascript source code failed
+  101 |       )}
+  102 |     </div>
+> 103 |   ))}
+      |    ^
+  104 | </Card>
+  105 |
+  106 | )
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/invites/pending-invites.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/invites/pending-invites.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Server Component]
+[01:22:30.832] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:22:30.832] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/transactions","route":"/transactions"}
+[01:22:30.832] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778567034723} /_vercel/insights/view
+[01:22:30.832] Browser ERROR   ./components/invites/pending-invites.tsx:103:4
+Parsing ecmascript source code failed
+  101 |       )}
+  102 |     </div>
+> 103 |   ))}
+      |    ^
+  104 | </Card>
+  105 |
+  106 | )
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/invites/pending-invites.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/invites/pending-invites.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Server Component]
+[01:22:30.832] Browser ERROR   ./components/invites/pending-invites.tsx:103:4
+Parsing ecmascript source code failed
+  101 |       )}
+  102 |     </div>
+> 103 |   ))}
+      |    ^
+  104 | </Card>
+  105 |
+  106 | )
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/invites/pending-invites.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/invites/pending-invites.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Server Component]
+[01:22:32.906] Browser ERROR   ./components/invites/pending-invites.tsx:103:4
+Parsing ecmascript source code failed
+  101 |       )}
+  102 |     </div>
+> 103 |   ))}
+      |    ^
+  104 | </Card>
+  105 |
+  106 | )
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/invites/pending-invites.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/invites/pending-invites.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Server Component]
+[01:22:32.906] Browser ERROR   ./components/invites/pending-invites.tsx:103:4
+Parsing ecmascript source code failed
+  101 |       )}
+  102 |     </div>
+> 103 |   ))}
+      |    ^
+  104 | </Card>
+  105 |
+  106 | )
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/invites/pending-invites.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/invites/pending-invites.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Server Component]
+[01:22:32.906] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:22:32.906] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/transactions","route":"/transactions"}
+[01:22:32.906] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778567036904} /_vercel/insights/view
+[01:22:33.638] Browser ERROR   ./components/invites/pending-invites.tsx:103:4
+Parsing ecmascript source code failed
+  101 |       )}
+  102 |     </div>
+> 103 |   ))}
+      |    ^
+  104 | </Card>
+  105 |
+  106 | )
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/invites/pending-invites.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/invites/pending-invites.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Server Component]
+[01:22:33.638] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:22:33.638] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/transactions","route":"/transactions"}
+[01:22:33.638] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778567037636} /_vercel/insights/view
+[01:22:33.638] Browser ERROR   ./components/invites/pending-invites.tsx:103:4
+Parsing ecmascript source code failed
+  101 |       )}
+  102 |     </div>
+> 103 |   ))}
+      |    ^
+  104 | </Card>
+  105 |
+  106 | )
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/invites/pending-invites.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/invites/pending-invites.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Server Component]
+[01:22:34.366] Browser ERROR   ./components/invites/pending-invites.tsx:103:4
+Parsing ecmascript source code failed
+  101 |       )}
+  102 |     </div>
+> 103 |   ))}
+      |    ^
+  104 | </Card>
+  105 |
+  106 | )
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/invites/pending-invites.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/invites/pending-invites.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Server Component]
+[01:22:34.366] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:22:34.366] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/transactions","route":"/transactions"}
+[01:22:34.366] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778567038335} /_vercel/insights/view
+[01:22:34.366] Browser ERROR   ./components/invites/pending-invites.tsx:103:4
+Parsing ecmascript source code failed
+  101 |       )}
+  102 |     </div>
+> 103 |   ))}
+      |    ^
+  104 | </Card>
+  105 |
+  106 | )
+
+Expected '</', got ')'
+
+Import traces:
+  Client Component Browser:
+    ./components/invites/pending-invites.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Client Component Browser]
+    ./app/invites/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/invites/pending-invites.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Client Component SSR]
+    ./app/invites/page.tsx [Server Component]
+[01:22:37.275] Server  LOG      ✓ Compiled in 102ms
+[01:23:40.674] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778567104671} /_vercel/insights/view
+[01:24:20.769] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/transactions color: rgb(120, 120, 120) color: inherit {"dp":"/transactions","o":"http://localhost:3000/transactions","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1778567144749} /_vercel/insights/view

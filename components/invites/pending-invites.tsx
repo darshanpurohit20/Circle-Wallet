@@ -59,22 +59,27 @@ export function PendingInvites({ invites, onResend, onCancel }: PendingInvitesPr
 
   return (
   <Card className="divide-y divide-border">
-  {invites.map((invite) => (
+  {invites.map((invite) => {
+    const email = (invite as any).email ?? (invite as any).phone ?? ""
+    const initial = email ? email[0].toUpperCase() : "?"
+    const invitedByName = (invite as any).invitedByName ?? (invite as any).invited_by_name ?? "Admin"
+    const expiresAt = (invite as any).expiresAt ?? (invite as any).expires_at
+    return (
     <div key={invite.id} className="p-4 flex items-center gap-4">
       <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-sm font-medium text-secondary-foreground">
-        {invite.email[0].toUpperCase()}
+        {initial}
       </div>
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <p className="font-medium text-foreground truncate">{invite.email}</p>
+          <p className="font-medium text-foreground truncate">{email || "(no contact)"}</p>
           {getStatusBadge(invite.status)}
           <Badge variant="outline" className="capitalize">
             {invite.role}
           </Badge>
         </div>
         <p className="text-sm text-muted-foreground">
-          Invited by {invite.invitedByName} • Expires {formatDate(invite.expiresAt)}
+          Invited by {invitedByName}{expiresAt ? ` • Expires ${formatDate(expiresAt)}` : ""}
         </p>
       </div>
 
@@ -95,7 +100,8 @@ export function PendingInvites({ invites, onResend, onCancel }: PendingInvitesPr
         </Button>
       )}
     </div>
-  ))}
+    )
+  })}
 </Card>
 
 )
