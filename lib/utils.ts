@@ -91,10 +91,14 @@ export function computeWeightedSplits<
   totalAmount: number,
 ): Array<{ member: T; ratio: number; amount: number }> {
   const total = Number(totalAmount) || 0
-  const withRatios = members.map((m) => ({
-    member: m,
-    ratio: Number(m.shareRatio ?? m.share_ratio ?? 1) || 0,
-  }))
+  const withRatios = members.map((m) => {
+    // Prefer camelCase shareRatio (normalized), fall back to snake_case share_ratio (raw DB)
+    const raw = m.shareRatio ?? m.share_ratio
+    // Only default to 1.0 if truly null/undefined; preserve 0.5, 0.7, 0.8 etc.
+    const parsed = raw == null ? 1 : Number(raw)
+    const ratio = Number.isFinite(parsed) ? parsed : 1
+    return { member: m, ratio }
+  })
   const totalRatio = withRatios.reduce((s, r) => s + r.ratio, 0)
   if (withRatios.length === 0 || totalRatio <= 0) return []
 

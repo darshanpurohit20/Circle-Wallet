@@ -583,7 +583,7 @@ export default function DashboardPage() {
             name: m.name,
             type: m.member_type,
             age: m.age,
-            shareRatio: Number(m.share_ratio),
+            shareRatio: m.share_ratio == null ? 1 : Number(m.share_ratio),
             avatar: m.avatar_url || null,
           })),
         }))
@@ -728,7 +728,7 @@ export default function DashboardPage() {
           name: m.name,
           type: m.member_type,
           age: m.age,
-          shareRatio: Number(m.share_ratio),
+          shareRatio: m.share_ratio == null ? 1 : Number(m.share_ratio),
           avatar: m.avatar || null,
         })),
       }))
@@ -837,7 +837,21 @@ export default function DashboardPage() {
         }
       }
 
-      const splitAmong: string[] = data.splitAmong || []
+      // ✅ FIX: Derive splitAmong from families if not provided, to prevent
+      // the weighted insert block from being skipped.
+      let splitAmong: string[] = data.splitAmong || []
+      if (splitAmong.length === 0) {
+        const allMembers = families.flatMap((f: any) => f.members ?? [])
+        if (data.splitType === "adults") {
+          splitAmong = allMembers.filter((m: any) => m.type === "adult").map((m: any) => m.id)
+        } else if (data.splitType === "kids") {
+          splitAmong = allMembers.filter((m: any) => m.type !== "adult").map((m: any) => m.id)
+        } else {
+          // "everyone" or undefined — include all members
+          splitAmong = allMembers.map((m: any) => m.id)
+        }
+        console.log("⚠️ splitAmong was empty, derived from families:", splitAmong.length, "members")
+      }
 
       const txPayload = {
         group_id: group.id,
@@ -871,19 +885,30 @@ export default function DashboardPage() {
         const allMembers = families.flatMap((f: any) => f.members ?? [])
         const selectedMembers = allMembers.filter((m: any) => splitAmong.includes(m.id))
 
+        console.log("🔍 Selected members for splits:", selectedMembers.map((m: any) => ({
+          name: m.name, id: m.id.substring(0, 8), shareRatio: m.shareRatio
+        })))
+
         const weighted = computeWeightedSplits(selectedMembers, Number(data.amount))
-        console.log("⚖️  Weighted split computation:", {
+        console.log("⚖️  Calculated weighted splits:", {
           totalAmount: Number(data.amount),
           totalRatio: weighted.reduce((s, r) => s + r.ratio, 0),
           breakdown: weighted.map((r) => ({ name: r.member.name, ratio: r.ratio, amount: r.amount })),
           sum: weighted.reduce((s, r) => s + r.amount, 0),
         })
 
+        // Validate total matches
+        const splitSum = weighted.reduce((s, r) => s + r.amount, 0)
+        if (Math.abs(splitSum - Number(data.amount)) > 0.01) {
+          console.error("❌ Split total mismatch!", { splitSum, transactionAmount: data.amount })
+        }
+
         const splitRows = weighted.map((r) => ({
           transaction_id: inserted.id,
           member_id: r.member.id,
           amount: r.amount,
         }))
+        console.log("📦 transaction_splits insert payload:", splitRows)
 
         const { data: splitsInserted, error: splitsError } = await supabase
           .from("transaction_splits")
@@ -893,8 +918,10 @@ export default function DashboardPage() {
         if (splitsError) {
           console.error("❌ Transaction splits insert error:", splitsError)
         } else {
-          console.log("✅ Transaction splits inserted:", splitsInserted)
+          console.log("✅ Inserted transaction splits:", splitsInserted)
         }
+      } else if (inserted) {
+        console.warn("⚠️ No splitAmong members — transaction_splits NOT inserted")
       }
 
       for (const split of familySplits) {
@@ -926,7 +953,7 @@ export default function DashboardPage() {
           name: m.name,
           type: m.member_type,
           age: m.age,
-          shareRatio: Number(m.share_ratio),
+          shareRatio: m.share_ratio == null ? 1 : Number(m.share_ratio),
           avatar: m.avatar || null,
         })),
       }))

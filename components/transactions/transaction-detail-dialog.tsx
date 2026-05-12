@@ -87,6 +87,20 @@ export function TransactionDetailDialog({
           })
           .filter(Boolean) as SplitMember[]
         console.log("📦 Split members loaded:", rows)
+
+        // ✅ Debug: Validate split total matches transaction amount
+        const splitTotal = rows.reduce((s, r) => s + r.amount, 0)
+        const txAmount = Number(transaction.amount || 0)
+        console.log("✅ Split total validation:", {
+          splitTotal: Math.round(splitTotal * 100) / 100,
+          transactionAmount: txAmount,
+          match: Math.abs(splitTotal - txAmount) < 0.01,
+          breakdown: rows.map(r => ({ name: r.name, ratio: r.share_ratio, amount: r.amount })),
+        })
+        if (Math.abs(splitTotal - txAmount) > 0.01) {
+          console.warn("⚠️ Split total does NOT match transaction amount!", { splitTotal, txAmount, diff: txAmount - splitTotal })
+        }
+
         setSplitMembers(rows)
       }
       setSplitsLoading(false)

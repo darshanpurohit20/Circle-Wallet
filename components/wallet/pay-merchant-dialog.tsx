@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   Dialog,
   DialogContent,
@@ -18,6 +18,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { formatINR, transactionCategories, type Family } from "@/lib/mock-data"
 import { AlertCircleIcon } from "@/components/icons"
+import { computeWeightedSplits } from "@/lib/utils"
 
 interface PayMerchantDialogProps {
   open: boolean
@@ -54,6 +55,14 @@ export function PayMerchantDialog({
 
   const adults = allMembers.filter((m) => m.type === "adult")
   const kids = allMembers.filter((m) => m.type !== "adult")
+
+  // ✅ FIX: Initialize selectedMembers to all members when dialog opens
+  // This prevents splitAmong from ever being empty for non-custom splits
+  useEffect(() => {
+    if (open && splitType === "everyone" && selectedMembers.length === 0 && allMembers.length > 0) {
+      setSelectedMembers(allMembers.map((m) => m.id))
+    }
+  }, [open, allMembers.length])
 
   const handleSplitTypeChange = (type: string) => {
     setSplitType(type)
@@ -119,6 +128,8 @@ export function PayMerchantDialog({
   const amountNum = Number(amount) || 0
   const insufficientBalance = amountNum > walletBalance
 
+  // ✅ FIX: Use the SAME computeWeightedSplits helper used during DB insert
+  // so that preview amounts and persisted amounts are always identical.
   const calculateSplit = () => {
     if (!amount) return null
 
@@ -132,11 +143,13 @@ export function PayMerchantDialog({
         : allMembers.map((m) => m.id)
 
     const membersData = allMembers.filter((m) => membersToSplit.includes(m.id))
-    const totalRatio = membersData.reduce((acc, m) => acc + m.shareRatio, 0)
 
-    return membersData.map((m) => ({
-      ...m,
-      share: (amountNum * m.shareRatio) / totalRatio,
+    // Use the shared weighted split helper (same as DB insert path)
+    const weighted = computeWeightedSplits(membersData, amountNum)
+
+    return weighted.map((r) => ({
+      ...r.member,
+      share: r.amount,
     }))
   }
 
