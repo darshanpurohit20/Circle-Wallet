@@ -26,16 +26,15 @@ export default function LoginPage() {
   const router = useRouter()
 
   // Email + Password Login
-  const handleEmailLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const signIn = async (emailValue: string, passwordValue: string) => {
     const supabase = createClient()
     setIsLoading(true)
     setError(null)
 
     try {
       const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+        email: emailValue,
+        password: passwordValue,
       })
       if (error) throw error
 
@@ -45,6 +44,17 @@ export default function LoginPage() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handleEmailLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    await signIn(email, password)
+  }
+
+  const handleDemoLogin = async () => {
+    setEmail(DEMO_EMAIL)
+    setPassword(DEMO_PASSWORD)
+    await signIn(DEMO_EMAIL, DEMO_PASSWORD)
   }
 
   // Forgot Password
@@ -198,36 +208,37 @@ export default function LoginPage() {
             )}
 
             {!showForgotPassword && (
-              <div className="mt-6 rounded-lg border border-dashed border-border bg-muted/40 p-4">
-                <div className="flex items-center justify-between gap-2 mb-3">
+              <div className="mt-6 rounded-lg border border-border/60 bg-muted/30 p-4 space-y-3">
+                <div className="flex items-center justify-between gap-2">
                   <Badge variant="secondary" className="gap-1 text-xs font-medium">
                     <Sparkles className="h-3 w-3" />
                     Demo Account
                   </Badge>
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="outline"
-                    className="h-7 text-xs"
-                    onClick={() => {
-                      setEmail(DEMO_EMAIL)
-                      setPassword(DEMO_PASSWORD)
-                      setError(null)
-                    }}
-                  >
-                    Use Demo Account
-                  </Button>
+                  <span className="text-[11px] text-muted-foreground">For testing</span>
                 </div>
-                <div className="space-y-1 text-xs text-muted-foreground">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
-                    <span className="font-medium text-foreground/70 sm:w-20">Email</span>
-                    <code className="font-mono text-[11px] break-all">{DEMO_EMAIL}</code>
+
+                <div className="space-y-1.5 text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="w-20 text-muted-foreground">Email</span>
+                    <code className="font-mono text-foreground/90 break-all">{DEMO_EMAIL}</code>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
-                    <span className="font-medium text-foreground/70 sm:w-20">Password</span>
-                    <code className="font-mono text-[11px]">{DEMO_PASSWORD}</code>
+                  <div className="flex items-center gap-2">
+                    <span className="w-20 text-muted-foreground">Password</span>
+                    <code className="font-mono text-foreground/90">{DEMO_PASSWORD}</code>
                   </div>
                 </div>
+
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  className="w-full"
+                  onClick={handleDemoLogin}
+                  disabled={isLoading}
+                >
+                  <Sparkles className="h-3.5 w-3.5" />
+                  {isLoading ? "Signing in..." : "Use Demo Account"}
+                </Button>
               </div>
             )}
 
