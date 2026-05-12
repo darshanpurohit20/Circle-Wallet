@@ -564,12 +564,12 @@ export default function DashboardPage() {
           .select("*, family_members(*)")
           .eq("group_id", groupId)
 
+        // Load ALL transactions for accurate aggregate stats; UI slices to last 10 for the Recent list.
         const { data: trx } = await supabase
           .from("transactions")
           .select("*")
           .eq("group_id", groupId)
           .order("created_at", { ascending: false })
-          .limit(10)
 
         if (!mounted) return
 
@@ -617,17 +617,8 @@ export default function DashboardPage() {
           
           setTransactions((prev) => [newRow, ...prev].slice(0, 10))
           
-          if (newRow.type === "deposit") {
-            setGroup((g: any) => ({ 
-              ...g, 
-              shared_wallet_balance: Number(g.shared_wallet_balance || 0) + Number(newRow.amount || 0) 
-            }))
-          } else if (newRow.type === "payment") {
-            setGroup((g: any) => ({ 
-              ...g, 
-              shared_wallet_balance: Number(g.shared_wallet_balance || 0) - Number(newRow.amount || 0),
-            }))
-          }
+          // Wallet balance is now derived from `transactions` state, no manual mutation needed.
+          console.log("🔔 New transaction received via realtime:", newRow)
         }
       )
       .subscribe()
@@ -637,12 +628,37 @@ export default function DashboardPage() {
     }
   }, [group, supabase])
 
+  // ----------------------------------
+  // SINGLE SOURCE OF TRUTH FOR WALLET BALANCE
+  // walletBalance = totalDeposits − totalPayments (only confirmed rows)
+  // ----------------------------------
   const totalMembers = families.reduce((acc, fam) => acc + fam.members.length, 0)
   const totalContributions = families.reduce((acc, fam) => acc + fam.totalContribution, 0)
-  const totalExpenses = transactions
-    .filter((t) => t.type !== "deposit")
+  const totalDeposits = transactions
+    .filter((t) => t.type === "deposit" && t.status === "confirmed")
     .reduce((acc, t) => acc + Number(t.amount || 0), 0)
+  const totalPayments = transactions
+    .filter((t) => t.type === "payment" && t.status === "confirmed")
+    .reduce((acc, t) => acc + Number(t.amount || 0), 0)
+  const walletBalance = totalDeposits - totalPayments
+  const totalExpenses = totalPayments
   const pendingTransactions = transactions.filter((t) => t.status === "pending").length
+
+  // Family balances are derived so that sum(family.balance) === walletBalance.
+  // Each family bears the wallet balance in proportion to its contribution share.
+  const displayFamilies = families.map((f) => {
+    const share = totalContributions > 0 ? f.totalContribution / totalContributions : 0
+    return { ...f, balance: walletBalance * share }
+  })
+
+  console.log("📊 Dashboard stats", {
+    totalDeposits,
+    totalPayments,
+    walletBalance,
+    totalContributions,
+    storedSharedWalletBalance: group?.shared_wallet_balance,
+    families: displayFamilies.map((f) => ({ name: f.name, contribution: f.totalContribution, derivedBalance: f.balance })),
+  })
 
   const handleAddFundsSubmit = async ({ 
     familyId, 
@@ -946,17 +962,17 @@ export default function DashboardPage() {
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
             <WalletCard
-              balance={group.shared_wallet_balance}
-              totalContributions={totalContributions}
-              totalSpent={totalExpenses}
+              balance={walletBalance}
+              totalContributions={totalDeposits}
+              totalSpent={totalPayments}
               onAddFunds={() => setAddFundsOpen(true)}
               onPayMerchant={() => setPayMerchantOpen(true)}
             />
 
             <StatsCards
               totalMembers={totalMembers}
-              totalSpent={totalExpenses}
-              walletBalance={group.shared_wallet_balance}
+              totalSpent={totalPayments}
+              walletBalance={walletBalance}
               pendingApprovals={pendingTransactions}
             />
 
@@ -974,7 +990,7 @@ export default function DashboardPage() {
                 {transactions.length === 0 ? (
                   <p className="text-sm py-3 text-muted-foreground">No recent transactions</p>
                 ) : (
-                  transactions.map((transaction) => (
+                  transactions.slice(0, 10).map((transaction) => (
                     <TransactionItem
                       key={transaction.id}
                       transaction={transaction}
@@ -988,8 +1004,8 @@ export default function DashboardPage() {
 
           <div className="space-y-6">
             <QuickActions
-              families={families}
-              walletBalance={group.shared_wallet_balance}
+              families={displayFamilies}
+              walletBalance={walletBalance}
             />
 
             <Card className="p-4 md:p-6">
@@ -1003,7 +1019,7 @@ export default function DashboardPage() {
               </div>
 
               <div className="space-y-3">
-                {families.map((family) => (
+                {displayFamilies.map((family) => (
                   <FamilyCard key={family.id} family={family} onClick={() => {}} />
                 ))}
               </div>
@@ -1015,15 +1031,15 @@ export default function DashboardPage() {
       <AddFundsDialog
         open={addFundsOpen}
         onOpenChange={setAddFundsOpen}
-        families={families}
+        families={displayFamilies}
         onSubmit={handleAddFundsSubmit}
       />
 
       <PayMerchantDialog
         open={payMerchantOpen}
         onOpenChange={setPayMerchantOpen}
-        families={families}
-        walletBalance={group.shared_wallet_balance}
+        families={displayFamilies}
+        walletBalance={walletBalance}
         onSubmit={handlePayMerchantSubmit}
       />
     </div>
