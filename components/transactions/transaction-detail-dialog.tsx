@@ -8,24 +8,19 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { formatINR, type Transaction, type FamilyMember } from "@/lib/mock-data"
 import { CheckCircleIcon, ClockIcon, XIcon, BuildingIcon } from "@/components/icons"
 import { createClient } from "@/lib/supabase/client"
+import { getSplitDisplayLabel } from "@/lib/utils"
 
-type SplitMember = { id: string; name: string; member_type?: string | null; avatar_url?: string | null; amount: number }
-
-export function getSplitLabel(splitType: string | null | undefined, customNames: string[] = []): string {
-  switch (splitType) {
-    case "adults":
-      return "Adults Only"
-    case "kids":
-    case "children":
-      return "Kids Only"
-    case "custom":
-      return customNames.length > 0 ? `Custom: ${customNames.join(", ")}` : "Custom Split"
-    case "all":
-    case "everyone":
-    default:
-      return "Everyone"
-  }
+type SplitMember = {
+  id: string
+  name: string
+  member_type?: string | null
+  avatar_url?: string | null
+  share_ratio?: number | null
+  amount: number
 }
+
+// Re-export so existing imports keep working.
+export const getSplitLabel = getSplitDisplayLabel
 
 interface TransactionDetailDialogProps {
   open: boolean
@@ -70,7 +65,7 @@ export function TransactionDetailDialog({
       setSplitsLoading(true)
       const { data, error } = await supabase
         .from("transaction_splits")
-        .select("amount, family_members(id, name, member_type, avatar_url)")
+        .select("amount, family_members(id, name, member_type, avatar_url, share_ratio)")
         .eq("transaction_id", transaction.id)
       if (cancelled) return
       if (error) {
@@ -86,10 +81,12 @@ export function TransactionDetailDialog({
               name: fm.name,
               member_type: fm.member_type,
               avatar_url: fm.avatar_url,
+              share_ratio: fm.share_ratio == null ? null : Number(fm.share_ratio),
               amount: Number(r.amount || 0),
             }
           })
           .filter(Boolean) as SplitMember[]
+        console.log("📦 Split members loaded:", rows)
         setSplitMembers(rows)
       }
       setSplitsLoading(false)
@@ -224,7 +221,9 @@ export function TransactionDetailDialog({
                   <p className="text-sm text-muted-foreground">No split records found.</p>
                 ) : (
                   <div className="space-y-2 max-h-48 overflow-y-auto">
-                    {splitMembers.map((member) => (
+                    {splitMembers.map((member) => {
+                      const ratio = member.share_ratio == null ? null : Number(member.share_ratio)
+                      return (
                       <div key={member.id} className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Avatar className="w-6 h-6">
@@ -236,11 +235,17 @@ export function TransactionDetailDialog({
                                 .join("")}
                             </AvatarFallback>
                           </Avatar>
-                          <span className="text-sm">{member.name}</span>
+                          <span className="text-sm">
+                            {member.name}
+                            {ratio != null && (
+                              <span className="text-xs text-muted-foreground ml-1">({ratio}x)</span>
+                            )}
+                          </span>
                         </div>
                         <span className="text-sm font-medium">{formatINR(member.amount)}</span>
                       </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 )}
               </div>

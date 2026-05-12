@@ -512,7 +512,7 @@ import { Button } from "@/components/ui/button"
 import { ChevronRightIcon } from "@/components/icons"
 
 import Link from "next/link"
-import { normalizeSplitType } from "@/lib/utils"
+import { normalizeSplitType, computeWeightedSplits } from "@/lib/utils"
 
 export default function DashboardPage() {
   const supabase = createClient()
@@ -866,13 +866,23 @@ export default function DashboardPage() {
 
       console.log("✅ Transaction inserted:", inserted)
 
-      // Insert per-member split rows into the normalized transaction_splits table
+      // Insert per-member split rows using WEIGHTED share_ratio split.
       if (inserted && splitAmong.length > 0) {
-        const perMemberAmount = Number(data.amount) / splitAmong.length
-        const splitRows = splitAmong.map((memberId) => ({
+        const allMembers = families.flatMap((f: any) => f.members ?? [])
+        const selectedMembers = allMembers.filter((m: any) => splitAmong.includes(m.id))
+
+        const weighted = computeWeightedSplits(selectedMembers, Number(data.amount))
+        console.log("⚖️  Weighted split computation:", {
+          totalAmount: Number(data.amount),
+          totalRatio: weighted.reduce((s, r) => s + r.ratio, 0),
+          breakdown: weighted.map((r) => ({ name: r.member.name, ratio: r.ratio, amount: r.amount })),
+          sum: weighted.reduce((s, r) => s + r.amount, 0),
+        })
+
+        const splitRows = weighted.map((r) => ({
           transaction_id: inserted.id,
-          member_id: memberId,
-          amount: perMemberAmount,
+          member_id: r.member.id,
+          amount: r.amount,
         }))
 
         const { data: splitsInserted, error: splitsError } = await supabase

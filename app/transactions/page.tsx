@@ -12,7 +12,7 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { XIcon, PlusCircleIcon, ReceiptIcon } from "@/components/icons"
-import { normalizeSplitType } from "@/lib/utils"
+import { normalizeSplitType, computeWeightedSplits } from "@/lib/utils"
 
 type SupaTransaction = {
   id: string
@@ -306,13 +306,23 @@ export default function TransactionsPage() {
       }
       console.log("✅ Transaction inserted:", insertedTx)
 
-      // Insert per-member split rows (normalized table)
+      // Insert per-member split rows using WEIGHTED share_ratio split.
       if (insertedTx && splitAmong.length > 0) {
-        const perMemberAmount = Number(data.amount) / splitAmong.length
-        const splitRows = splitAmong.map((memberId) => ({
+        const allMembers = families.flatMap((f: any) => f.members ?? [])
+        const selectedMembers = allMembers.filter((m: any) => splitAmong.includes(m.id))
+
+        const weighted = computeWeightedSplits(selectedMembers, Number(data.amount))
+        console.log("⚖️  Weighted split computation:", {
+          totalAmount: Number(data.amount),
+          totalRatio: weighted.reduce((s, r) => s + r.ratio, 0),
+          breakdown: weighted.map((r) => ({ name: r.member.name, ratio: r.ratio, amount: r.amount })),
+          sum: weighted.reduce((s, r) => s + r.amount, 0),
+        })
+
+        const splitRows = weighted.map((r) => ({
           transaction_id: insertedTx.id,
-          member_id: memberId,
-          amount: perMemberAmount,
+          member_id: r.member.id,
+          amount: r.amount,
         }))
         console.log("📦 transaction_splits insert payload:", splitRows)
 

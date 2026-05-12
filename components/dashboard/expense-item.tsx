@@ -2,6 +2,7 @@
 import { Badge } from "@/components/ui/badge"
 import { CheckCircleIcon, ClockIcon } from "@/components/icons"
 import type { Expense } from "@/lib/mock-data"
+import { getSplitDisplayLabel } from "@/lib/utils"
 
 interface ExpenseItemProps {
   expense: Expense
@@ -24,18 +25,7 @@ export function ExpenseItem({ expense, currency, onClick }: ExpenseItemProps) {
     })
   }
 
-  const getSplitLabel = (splitType: string) => {
-    switch (splitType) {
-      case "adults":
-        return "Adults only"
-      case "children":
-        return "Kids only"
-      case "custom":
-        return "Custom split"
-      default:
-        return "Everyone"
-    }
-  }
+  const getSplitLabel = getSplitDisplayLabel
 
   return (
     <div

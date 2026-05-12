@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge"
 import { CheckCircleIcon, ClockIcon, PlusCircleIcon, UsersIcon } from "@/components/icons"
 import { formatINR, type Transaction } from "@/lib/mock-data"
-import { formatTimeAgo, formatFullDateTime } from "@/lib/utils"
+import { formatTimeAgo, formatFullDateTime, getSplitDisplayLabel } from "@/lib/utils"
 
 interface TransactionItemProps {
   transaction: Transaction
@@ -11,28 +11,16 @@ interface TransactionItemProps {
 }
 
 export function TransactionItem({ transaction, onClick }: TransactionItemProps) {
-  const getSplitLabel = (splitType: string) => {
-    switch (splitType) {
-      case "adults":
-        return "Adults"
-      case "kids":
-        return "Kids"
-      case "custom":
-        return "Custom"
-      case "everyone":
-      default:
-        return "Everyone"
-    }
-  }
-
   const getSplitBadgeColor = (splitType: string) => {
     switch (splitType) {
       case "adults":
         return "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300"
       case "kids":
+      case "children":
         return "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300"
       case "custom":
         return "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300"
+      case "all":
       case "everyone":
       default:
         return "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
@@ -99,7 +87,7 @@ export function TransactionItem({ transaction, onClick }: TransactionItemProps) 
           {/* Split Type Badge */}
           {!isDeposit && transaction.split_type && (
             <Badge className={`text-xs font-medium ${getSplitBadgeColor(transaction.split_type)}`}>
-              {getSplitLabel(transaction.split_type)}
+              {getSplitDisplayLabel(transaction.split_type)}
             </Badge>
           )}
         </div>

@@ -45,6 +45,62 @@ export function normalizeSplitType(value: string | null | undefined): DbSplitTyp
   return SPLIT_TYPE_MAP[value] ?? "all"
 }
 
+/**
+ * Single source of truth for split-type display labels.
+ * Accepts both DB values (`all`, `adults`, `children`, `custom`) and legacy UI values
+ * (`everyone`, `kids`).
+ */
+export function getSplitDisplayLabel(
+  splitType: string | null | undefined,
+  customNames: string[] = [],
+): string {
+  switch (splitType) {
+    case "adults":
+      return "Adults Only"
+    case "kids":
+    case "children":
+      return "Kids Only"
+    case "custom":
+      return customNames.length > 0 ? `Custom: ${customNames.join(", ")}` : "Custom Split"
+    case "all":
+    case "everyone":
+    default:
+      return "Everyone"
+  }
+}
+
+/**
+ * Compute weighted split amounts using each member's share_ratio.
+ * Guarantees sum(splitAmounts) === totalAmount (paise-precision adjustment on last row).
+ */
+export function computeWeightedSplits<
+  T extends { id: string; shareRatio?: number | null; share_ratio?: number | null },
+>(
+  members: T[],
+  totalAmount: number,
+): Array<{ member: T; ratio: number; amount: number }> {
+  const total = Number(totalAmount) || 0
+  const withRatios = members.map((m) => ({
+    member: m,
+    ratio: Number(m.shareRatio ?? m.share_ratio ?? 1) || 0,
+  }))
+  const totalRatio = withRatios.reduce((s, r) => s + r.ratio, 0)
+  if (withRatios.length === 0 || totalRatio <= 0) return []
+
+  // Round to 2dp; absorb residual into last entry so sums match exactly.
+  const rows = withRatios.map(({ member, ratio }) => ({
+    member,
+    ratio,
+    amount: Math.round(((ratio / totalRatio) * total) * 100) / 100,
+  }))
+  const sumSoFar = rows.reduce((s, r) => s + r.amount, 0)
+  const residual = Math.round((total - sumSoFar) * 100) / 100
+  if (residual !== 0 && rows.length > 0) {
+    rows[rows.length - 1].amount = Math.round((rows[rows.length - 1].amount + residual) * 100) / 100
+  }
+  return rows
+}
+
 export function formatFullDateTime(date: string | Date): string {
   return new Date(date).toLocaleString('en-IN', {
     day: 'numeric',
