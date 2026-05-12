@@ -230,14 +230,11 @@ export default function LoginPage() {
 
                 <Button
                   type="button"
-                  size="sm"
-                  variant="outline"
                   className="w-full"
                   onClick={handleDemoLogin}
                   disabled={isLoading}
                 >
-                  <Sparkles className="h-3.5 w-3.5" />
-                  {isLoading ? "Signing in..." : "Use Demo Account"}
+                  Use Demo Account
                 </Button>
               </div>
             )}
