@@ -214,6 +214,11 @@ export default function SettingsPage() {
   const handleDeleteGroup = async () => {
     if (!group) return
 
+    if (group.created_by !== profile?.id) {
+      showToast("Only the group creator can delete this group.", "error")
+      return
+    }
+
     const expectedText = `DELETE ${groupName}`
     
     if (deleteConfirmText !== expectedText) {
@@ -347,13 +352,28 @@ export default function SettingsPage() {
                 transactions, and balances will be permanently deleted.
               </p>
 
-              <Button 
-                variant="destructive" 
-                onClick={() => setDeleteDialogOpen(true)}
-                className="w-full sm:w-auto"
-              >
-                Delete "{groupName}" Group
-              </Button>
+              {profile?.id === group.created_by ? (
+                <Button 
+                  variant="destructive" 
+                  onClick={() => setDeleteDialogOpen(true)}
+                  className="w-full sm:w-auto"
+                >
+                  Delete "{groupName}" Group
+                </Button>
+              ) : (
+                <div className="space-y-2">
+                  <Button 
+                    variant="destructive" 
+                    disabled
+                    className="w-full sm:w-auto opacity-50 cursor-not-allowed"
+                  >
+                    Delete "{groupName}" Group
+                  </Button>
+                  <p className="text-xs text-destructive font-medium">
+                    Only the group creator can delete this group.
+                  </p>
+                </div>
+              )}
             </Card>
           </TabsContent>
 

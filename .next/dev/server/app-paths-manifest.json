@@ -2,5 +2,7 @@
   "/auth/login/page": "app/auth/login/page.js",
   "/auth/sign-up/page": "app/auth/sign-up/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/reports/page": "app/reports/page.js",
+  "/settings/page": "app/settings/page.js"
 }
