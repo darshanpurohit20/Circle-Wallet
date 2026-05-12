@@ -615,9 +615,13 @@ export default function DashboardPage() {
           const newRow = payload.new
           if (!newRow) return
           
-          setTransactions((prev) => [newRow, ...prev].slice(0, 10))
-          
-          // Wallet balance is now derived from `transactions` state, no manual mutation needed.
+          // Do NOT truncate: dashboard derives totals from the full transactions array.
+          // Truncating to 10 caused wallet balance to flip negative right after a payment
+          // (older deposits got sliced out of the aggregate until a refetch).
+          setTransactions((prev) => {
+            if (prev.some((t) => t.id === newRow.id)) return prev
+            return [newRow, ...prev]
+          })
           console.log("🔔 New transaction received via realtime:", newRow)
         }
       )
@@ -741,7 +745,9 @@ export default function DashboardPage() {
       } else {
         setGroup((g: any) => ({ ...g, shared_wallet_balance: newWalletBalance }))
         setFamilies(normalizedFamilies)
-        setTransactions((prev) => [inserted, ...prev].slice(0, 10))
+        setTransactions((prev) =>
+          prev.some((t) => t.id === inserted.id) ? prev : [inserted, ...prev],
+        )
       }
 
       setAddFundsOpen(false)
@@ -935,7 +941,9 @@ export default function DashboardPage() {
           shared_wallet_balance: newWalletBalance, 
         }))
         setFamilies(normalizedFamilies)
-        setTransactions((prev) => [inserted, ...prev].slice(0, 10))
+        setTransactions((prev) =>
+          prev.some((t) => t.id === inserted.id) ? prev : [inserted, ...prev],
+        )
         console.log("✅ Payment complete!")
       }
 
