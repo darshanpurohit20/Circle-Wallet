@@ -10,6 +10,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ModeToggle } from "@/components/mode-toggle"
+import { Badge } from "@/components/ui/badge"
+import { Sparkles } from "lucide-react"
+
+const DEMO_EMAIL = "test@gmail.com"
+const DEMO_PASSWORD = "123456"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -190,6 +195,40 @@ export default function LoginPage() {
                   </div>
                 )}
               </form>
+            )}
+
+            {!showForgotPassword && (
+              <div className="mt-6 rounded-lg border border-dashed border-border bg-muted/40 p-4">
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <Badge variant="secondary" className="gap-1 text-xs font-medium">
+                    <Sparkles className="h-3 w-3" />
+                    Demo Account
+                  </Badge>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    className="h-7 text-xs"
+                    onClick={() => {
+                      setEmail(DEMO_EMAIL)
+                      setPassword(DEMO_PASSWORD)
+                      setError(null)
+                    }}
+                  >
+                    Use Demo Account
+                  </Button>
+                </div>
+                <div className="space-y-1 text-xs text-muted-foreground">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
+                    <span className="font-medium text-foreground/70 sm:w-20">Email</span>
+                    <code className="font-mono text-[11px] break-all">{DEMO_EMAIL}</code>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
+                    <span className="font-medium text-foreground/70 sm:w-20">Password</span>
+                    <code className="font-mono text-[11px]">{DEMO_PASSWORD}</code>
+                  </div>
+                </div>
+              </div>
             )}
 
             <div className="mt-6 text-center text-sm">
