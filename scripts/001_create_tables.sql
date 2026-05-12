@@ -2,6 +2,7 @@
 -- Prepaid wallet system for group expense management
 
 -- Users/Profiles table (linked to auth.users)
+--writing user schema
 CREATE TABLE IF NOT EXISTS public.profiles (
   id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   email TEXT,
