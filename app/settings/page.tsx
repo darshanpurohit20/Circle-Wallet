@@ -505,7 +505,7 @@ export default function SettingsPage() {
                     variant="outline" 
                     onClick={async () => {
                       await supabase.auth.signOut()
-                      router.push("/auth/login")
+                      router.push("/")
                     }}
                     className="w-full"
                   >

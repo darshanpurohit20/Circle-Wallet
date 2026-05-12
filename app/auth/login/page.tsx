@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ModeToggle } from "@/components/mode-toggle"
 import { Badge } from "@/components/ui/badge"
-import { Sparkles } from "lucide-react"
+import { Sparkles, ArrowLeft } from "lucide-react"
 
 const DEMO_EMAIL = "test@gmail.com"
 const DEMO_PASSWORD = "123456"
@@ -244,6 +244,15 @@ export default function LoginPage() {
               <Link href="/auth/sign-up" className="text-primary hover:underline font-medium">
                 Sign up
               </Link>
+            </div>
+            
+            <div className="mt-4 pt-4 border-t text-center">
+              <Button variant="ghost" size="sm" asChild className="text-muted-foreground hover:text-foreground">
+                <Link href="/" className="flex items-center gap-2">
+                  <ArrowLeft className="w-4 h-4" />
+                  Back to Home
+                </Link>
+              </Button>
             </div>
           </CardContent>
         </Card>
