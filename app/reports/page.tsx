@@ -17,7 +17,42 @@ import {
 } from "@/components/icons"
 
 import jsPDF from "jspdf"
-import autoTable from "jspdf-autotable" 
+import autoTable from "jspdf-autotable"
+
+// =====================
+// EXPORT-SAFE HELPERS
+// =====================
+// jsPDF's default Helvetica font is WinAnsi-only — emojis, the ₹ symbol and other
+// non-ASCII glyphs render as garbage. Sanitize strings before drawing.
+const stripUnsafeForPdf = (input: unknown): string => {
+  const str = String(input ?? "")
+  return str
+    // strip emoji / pictograph ranges
+    .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F2FF}\u{FE00}-\u{FE0F}\u{200D}]/gu, "")
+    // common typographic punctuation → ASCII
+    .replace(/[\u2014\u2013]/g, "-")
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    .replace(/[\u2022]/g, "*")
+    // anything else outside printable ASCII
+    .replace(/[^\x20-\x7E\n]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
+const formatAmountAscii = (amount = 0, currency = "INR"): string => {
+  const n = new Intl.NumberFormat("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(
+    Number(amount) || 0,
+  )
+  return `${currency} ${n}`
+}
+
+const csvEscape = (value: unknown): string => {
+  const s = String(value ?? "")
+  if (/[",\n\r]/.test(s)) return `"${s.replace(/"/g, '""')}"`
+  return s
+}
+
 
 // TYPES
 type Tx = {
@@ -213,7 +248,7 @@ export default function ReportsPage() {
     new Intl.NumberFormat("en-IN", { style: "currency", currency: group?.currency || "INR" }).format(amount)
 
   // =====================
-  // EXPORT CSV
+  // EXPORT CSV (UTF-8 with BOM so Excel renders ₹ correctly)
   // =====================
   const downloadCSV = () => {
     const headers = ["Date", "Type", "Description", "Category", "Merchant", "Amount", "Status", "Paid By"]
@@ -221,17 +256,20 @@ export default function ReportsPage() {
     const rows = filteredTransactions.map((t) => [
       new Date(t.created_at).toLocaleString(),
       t.type,
-      t.description,
+      t.description ?? "",
       t.category || "-",
       t.merchant_name || "-",
-      Number(t.amount),
+      Number(t.amount).toFixed(2),
       t.status,
       t.paid_by_name || "-",
     ])
 
-    const csv = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n")
+    const csv = [headers, ...rows]
+      .map((row) => row.map(csvEscape).join(","))
+      .join("\r\n")
 
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" })
+    // \uFEFF BOM keeps Excel/Numbers from mangling Unicode (₹, accents, etc.)
+    const blob = new Blob(["\uFEFF", csv], { type: "text/csv;charset=utf-8;" })
     const url = URL.createObjectURL(blob)
 
     const a = document.createElement("a")
@@ -243,33 +281,94 @@ export default function ReportsPage() {
   }
 
   // =====================
-  // EXPORT PDF
+  // EXPORT PDF (ASCII-safe, professional layout)
   // =====================
-const downloadPDF = () => {
-  const doc = new jsPDF({ unit: "pt", format: "a4" })
+  const downloadPDF = () => {
+    const doc = new jsPDF({ unit: "pt", format: "a4" })
+    const currency = group?.currency || "INR"
+    const balance = Number(group?.shared_wallet_balance || 0)
+    const remaining = totalDeposits - totalPayments
+    const generatedAt = new Date().toLocaleString("en-IN")
+    const pageWidth = doc.internal.pageSize.getWidth()
 
-  doc.setFontSize(14)
-  doc.text(`${group?.name} — Transactions Report`, 40, 40)
+    // Header
+    doc.setFont("helvetica", "bold")
+    doc.setFontSize(18)
+    doc.text(stripUnsafeForPdf(`${group?.name || "Group"} - Transactions Report`), 40, 50)
 
-  const rows = filteredTransactions.map((t) => [
-    new Date(t.created_at).toLocaleDateString(),
-    t.type,
-    t.description,
-    t.category || "-",
-    t.merchant_name || "-",
-    formatINR(Number(t.amount)),
-    t.status,
-    t.paid_by_name || "-",
-  ])
+    doc.setFont("helvetica", "normal")
+    doc.setFontSize(10)
+    doc.setTextColor(100)
+    doc.text(`Generated: ${generatedAt}`, 40, 68)
+    doc.text(`Date Range: ${dateRange === "all" ? "All Time" : dateRange}`, 40, 82)
+    doc.setTextColor(0)
 
-  autoTable(doc, {  // use autoTable imported function, pass doc explicitly
-    head: [["Date", "Type", "Desc", "Category", "Merchant", "Amount", "Status", "Paid By"]],
-    body: rows,
-    startY: 70,
-  })
+    // Summary
+    doc.setFont("helvetica", "bold")
+    doc.setFontSize(12)
+    doc.text("Summary", 40, 110)
 
-  doc.save(`circle-report-${new Date().toISOString().slice(0, 10)}.pdf`)
-}
+    doc.setFont("helvetica", "normal")
+    doc.setFontSize(10)
+    const summaryLines: [string, string][] = [
+      ["Total Deposits", formatAmountAscii(totalDeposits, currency)],
+      ["Total Payments", formatAmountAscii(totalPayments, currency)],
+      ["Remaining Wallet Balance", formatAmountAscii(remaining, currency)],
+      ["Stored Wallet Balance", formatAmountAscii(balance, currency)],
+      ["Total Transactions", String(filteredTransactions.length)],
+    ]
+    summaryLines.forEach(([k, v], i) => {
+      const y = 128 + i * 16
+      doc.text(k, 40, y)
+      doc.text(v, pageWidth - 40, y, { align: "right" })
+    })
+
+    // Transactions table
+    const rows = filteredTransactions.map((t) => [
+      new Date(t.created_at).toLocaleDateString("en-IN"),
+      stripUnsafeForPdf(t.type),
+      stripUnsafeForPdf(t.description),
+      stripUnsafeForPdf(t.category || "-"),
+      stripUnsafeForPdf(t.merchant_name || "-"),
+      formatAmountAscii(Number(t.amount), currency),
+      stripUnsafeForPdf(t.status),
+      stripUnsafeForPdf(t.paid_by_name || "-"),
+    ])
+
+    autoTable(doc, {
+      head: [["Date", "Type", "Description", "Category", "Merchant", "Amount", "Status", "Paid By"]],
+      body: rows,
+      startY: 128 + summaryLines.length * 16 + 16,
+      styles: { font: "helvetica", fontSize: 9, cellPadding: 5, overflow: "linebreak", valign: "middle" },
+      headStyles: { fillColor: [22, 163, 74], textColor: 255, fontStyle: "bold" },
+      alternateRowStyles: { fillColor: [248, 250, 252] },
+      columnStyles: {
+        0: { cellWidth: 60 },
+        1: { cellWidth: 50 },
+        2: { cellWidth: 130 },
+        3: { cellWidth: 65 },
+        4: { cellWidth: 70 },
+        5: { cellWidth: 75, halign: "right" },
+        6: { cellWidth: 55 },
+        7: { cellWidth: 65 },
+      },
+      margin: { left: 40, right: 40 },
+      didDrawPage: (data) => {
+        const page = doc.getNumberOfPages()
+        doc.setFontSize(9)
+        doc.setTextColor(120)
+        doc.text(
+          `Page ${data.pageNumber} of ${page}`,
+          pageWidth - 40,
+          doc.internal.pageSize.getHeight() - 20,
+          { align: "right" },
+        )
+        doc.setTextColor(0)
+      },
+    })
+
+    doc.save(`circle-report-${new Date().toISOString().slice(0, 10)}.pdf`)
+  }
 
   // =====================
   // RENDER UI
