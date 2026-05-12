@@ -815,6 +815,20 @@ export default function DashboardPage() {
         }
       }
 
+      // Normalize split_type to allowed schema values: all | adults | children | custom
+      const rawSplitType = data.splitType || "all"
+      const splitTypeMap: Record<string, "all" | "adults" | "children" | "custom"> = {
+        everyone: "all",
+        all: "all",
+        adults: "adults",
+        kids: "children",
+        children: "children",
+        custom: "custom",
+      }
+      const normalizedSplitType = splitTypeMap[rawSplitType] || "all"
+
+      const splitAmong: string[] = data.splitAmong || []
+
       const { data: inserted, error: insertError } = await supabase
         .from("transactions")
         .insert({
@@ -826,8 +840,7 @@ export default function DashboardPage() {
           category: data.category,
           status: "confirmed",
           paid_by_name: "Group Wallet",
-          split_type: data.splitType || "everyone",
-          split_among: data.splitAmong || [],  
+          split_type: normalizedSplitType,
         })
         .select()
         .single()
@@ -839,6 +852,27 @@ export default function DashboardPage() {
       }
 
       console.log("✅ Transaction inserted:", inserted)
+
+      // Insert per-member split rows into the normalized transaction_splits table
+      if (inserted && splitAmong.length > 0) {
+        const perMemberAmount = Number(data.amount) / splitAmong.length
+        const splitRows = splitAmong.map((memberId) => ({
+          transaction_id: inserted.id,
+          member_id: memberId,
+          amount: perMemberAmount,
+        }))
+
+        const { data: splitsInserted, error: splitsError } = await supabase
+          .from("transaction_splits")
+          .insert(splitRows)
+          .select()
+
+        if (splitsError) {
+          console.error("❌ Transaction splits insert error:", splitsError)
+        } else {
+          console.log("✅ Transaction splits inserted:", splitsInserted)
+        }
+      }
 
       for (const split of familySplits) {
         const family = families.find(f => f.id === split.familyId)
