@@ -149,6 +149,11 @@ export default function SettingsPage() {
   const handleSaveGroup = async () => {
     if (!group) return
     
+    if (profile?.email === "test@gmail.com") {
+      showToast("Demo account cannot modify group settings.", "error")
+      return
+    }
+
     setSavingGroup(true)
     try {
       const { error } = await supabase
@@ -174,6 +179,11 @@ export default function SettingsPage() {
   // Save Profile Settings
   const handleSaveProfile = async () => {
     if (!profile) return
+
+    if (profile?.email === "test@gmail.com") {
+      showToast("Demo account cannot modify profile settings.", "error")
+      return
+    }
 
     setSavingProfile(true)
     try {
@@ -213,6 +223,11 @@ export default function SettingsPage() {
   // Delete Group (with dialog)
   const handleDeleteGroup = async () => {
     if (!group) return
+
+    if (profile?.email === "test@gmail.com") {
+      showToast("Demo account cannot delete groups.", "error")
+      return
+    }
 
     if (group.created_by !== profile?.id) {
       showToast("Only the group creator can delete this group.", "error")
@@ -283,6 +298,12 @@ export default function SettingsPage() {
           <p className="text-muted-foreground text-lg">
             Manage your group and account preferences
           </p>
+          {profile?.email === "test@gmail.com" && (
+            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-600 text-sm font-medium">
+              <AlertCircleIcon className="w-4 h-4" />
+              <span>You are using a Demo Account. Settings are strictly Read-Only.</span>
+            </div>
+          )}
         </div>
 
         <Tabs defaultValue="group" className="w-full">
@@ -319,6 +340,7 @@ export default function SettingsPage() {
                     onChange={(e) => setGroupName(e.target.value)}
                     placeholder="Enter group name"
                     className="mt-2"
+                    disabled={profile?.email === "test@gmail.com"}
                   />
                 </div>
 
@@ -331,10 +353,15 @@ export default function SettingsPage() {
                     placeholder="What's this group for?"
                     rows={4}
                     className="mt-2"
+                    disabled={profile?.email === "test@gmail.com"}
                   />
                 </div>
 
-                <Button onClick={handleSaveGroup} disabled={savingGroup} className="w-full sm:w-auto">
+                <Button 
+                  onClick={handleSaveGroup} 
+                  disabled={savingGroup || profile?.email === "test@gmail.com"} 
+                  className="w-full sm:w-auto"
+                >
                   {savingGroup ? "Saving..." : "Save Group Settings"}
                 </Button>
               </div>
@@ -502,6 +529,7 @@ export default function SettingsPage() {
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Enter your full name"
                     className="mt-2"
+                    disabled={profile?.email === "test@gmail.com"}
                   />
                 </div>
 
@@ -513,10 +541,15 @@ export default function SettingsPage() {
                     onChange={(e) => setAvatarUrl(e.target.value)}
                     placeholder="https://example.com/avatar.jpg"
                     className="mt-2"
+                    disabled={profile?.email === "test@gmail.com"}
                   />
                 </div>
 
-                <Button onClick={handleSaveProfile} disabled={savingProfile} className="w-full sm:w-auto">
+                <Button 
+                  onClick={handleSaveProfile} 
+                  disabled={savingProfile || profile?.email === "test@gmail.com"} 
+                  className="w-full sm:w-auto"
+                >
                   {savingProfile ? "Saving..." : "Save Profile"}
                 </Button>
 
